@@ -44,7 +44,7 @@ while (@ARGV > 0){
 
 #Pad Targeting binary to 4k page size, then add ECC data
 run_command("dd if=$op_target_dir/PALMETTO_HB.targeting.bin of=$scratch_dir/PALMETTO_HB.targeting.bin ibs=4k conv=sync");
-run_command("ecc --inject $scratch_dir/PALMETTO_HB.targeting.bin --output $scratch_dir/PALMETTO_HB.targeting.bin --p8");
+run_command("ecc --inject $scratch_dir/PALMETTO_HB.targeting.bin --output $scratch_dir/PALMETTO_HB.targeting.bin.ecc --p8");
 
 run_command("echo \"00000000001800000000000008000000000000000007EF80\" | xxd -r -ps - $scratch_dir/sbe.header");
 run_command("echo -en VERSION\\\\0 > $scratch_dir/hostboot.sha.bin");

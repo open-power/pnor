@@ -8,7 +8,9 @@ use File::Basename;
 my $op_target_dir = "";
 my $hb_image_dir = "";
 my $scratch_dir = "";
-my $hb_binary_dir = "";;
+my $hb_binary_dir = "";
+my $targeting_binary_filename = "";
+my $targeting_binary_source = "";
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -34,6 +36,14 @@ while (@ARGV > 0){
         $hb_binary_dir = $ARGV[1] or die "Bad command line arg given: expecting a config type.\n";
         shift;
     }
+    elsif (/^-targeting_binary_filename/i){
+        $targeting_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting a config type.\n";
+        shift;
+    }
+    elsif (/^-targeting_binary_source/i){
+        $targeting_binary_source = $ARGV[1] or die "Bad command line arg given: expecting a config type.\n";
+        shift;
+    }
     else {
         print "Unrecognized command line arg: $_ \n";
         #print "To view all the options and help text run \'$program_name -h\' \n";
@@ -43,8 +53,8 @@ while (@ARGV > 0){
 }
 
 #Pad Targeting binary to 4k page size, then add ECC data
-run_command("dd if=$op_target_dir/PALMETTO_HB.targeting.bin of=$scratch_dir/PALMETTO_HB.targeting.bin ibs=4k conv=sync");
-run_command("ecc --inject $scratch_dir/PALMETTO_HB.targeting.bin --output $scratch_dir/PALMETTO_HB.targeting.bin.ecc --p8");
+run_command("dd if=$op_target_dir/$targeting_binary_source of=$scratch_dir/$targeting_binary_source ibs=4k conv=sync");
+run_command("ecc --inject $scratch_dir/$targeting_binary_source --output $scratch_dir/$targeting_binary_filename --p8");
 
 run_command("echo \"00000000001800000000000008000000000000000007EF80\" | xxd -r -ps - $scratch_dir/sbe.header");
 run_command("echo -en VERSION\\\\0 > $scratch_dir/hostboot.sha.bin");
@@ -128,4 +138,3 @@ sub trim_string {
     $str =~ s/\s+$//;
     return $str;
 }
-

@@ -106,6 +106,10 @@ run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/d
 #Add ECC Data to CVPD Data (CVPD) Partition
 run_command("ecc --inject $hb_binary_dir/cvpd.bin --output $scratch_dir/cvpd.bin.ecc --p8");
 
+#Create blank binary file for OCC Partition
+run_command("dd if=/dev/zero bs=908K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");
+run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/occ.bin.ecc --p8");
+
 #Copy Binary Data files for consistency
 run_command("cp $hb_binary_dir/palmetto_sbec_pad.img.ecc $scratch_dir/");
 run_command("cp $hb_binary_dir/palmetto_sbe.img.ecc $scratch_dir/");

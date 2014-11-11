@@ -107,8 +107,8 @@ run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/d
 run_command("ecc --inject $hb_binary_dir/cvpd.bin --output $scratch_dir/cvpd.bin.ecc --p8");
 
 #Copy Binary Data files for consistency
-run_command("cp $hb_binary_dir/palmetto_sbec_pad.img.ecc $scratch_dir/");
-run_command("cp $hb_binary_dir/palmetto_sbe.img.ecc $scratch_dir/");
+run_command("cp $hb_binary_dir/centaur_sbec_pad.img.ecc $scratch_dir/");
+run_command("cp $hb_binary_dir/venice_sbe.img.ecc $scratch_dir/");
 run_command("cp $hb_binary_dir/p8.ref_image.hdr.bin.ecc $scratch_dir/");
 
 #END MAIN

@@ -165,6 +165,13 @@ Layout Description
         <ecc/>
     </section>
     <section>
+        <description>OCC Lid (1MB)</description>
+        <eyeCatch>OCC</eyeCatch>
+        <physicalOffset>0x2305000</physicalOffset>
+        <physicalRegionSize>0x100000</physicalRegionSize>
+        <ecc/>
+    </section>
+    <section>
         <description>Special PNOR Test Space (36K)</description>
         <eyeCatch>TEST</eyeCatch>
         <physicalOffset>0x3590000</physicalOffset>
@@ -172,7 +179,7 @@ Layout Description
         <testonly/>
         <ecc/>
     </section>
-   <section>
+    <section>
         <description>Nvram (576K)</description>
         <eyeCatch>NVRAM</eyeCatch>
         <physicalOffset>0x3A59000</physicalOffset>

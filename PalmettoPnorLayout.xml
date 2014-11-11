@@ -183,7 +183,15 @@ Layout Description
         <sha512Version/>
         <ecc/>
     </section>
-    <section>    
+    <section>
+        <description>OCC Lid (1MB)</description>
+        <eyeCatch>OCC</eyeCatch>
+        <physicalOffset>0x1D29000</physicalOffset>
+        <physicalRegionSize>0x100000</physicalRegionSize>
+        <side>A</side>
+        <ecc/>
+    </section>
+    <section>
         <description>Hostboot Base (576K)</description>
         <eyeCatch>HBB</eyeCatch>
         <physicalOffset>0x1F67000</physicalOffset>

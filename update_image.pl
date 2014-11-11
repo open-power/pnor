@@ -124,6 +124,9 @@ run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/a
 run_command("dd if=/dev/zero bs=28K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");
 run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/attr_perm.bin.ecc --p8");
 
+#Create blank binary file for OCC Partition
+run_command("dd if=/dev/zero bs=908K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");
+run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/occ.bin.ecc --p8");
 
 #Copy Binary Data files for consistency
 run_command("cp $hb_binary_dir/$sbec_binary_filename $scratch_dir/");

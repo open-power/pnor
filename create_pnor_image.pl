@@ -95,6 +95,8 @@ $build_pnor_command .= " --binFile_NVRAM $scratch_dir/nvram.bin.ecc";
 $build_pnor_command .= " --binFile_MVPD $scratch_dir/mvpd_fill.bin.ecc";
 $build_pnor_command .= " --binFile_DJVPD $scratch_dir/djvpd_fill.bin.ecc";
 $build_pnor_command .= " --binFile_CVPD $scratch_dir/cvpd.bin.ecc";
+$build_pnor_command .= " --binFile_ATTR_TMP $scratch_dir/attr_tmp.bin.ecc";
+$build_pnor_command .= " --binFile_ATTR_PERM $scratch_dir/attr_perm.bin.ecc";
 $build_pnor_command .= " --fpartCmd \"fpart\"";
 $build_pnor_command .= " --fcpCmd \"fcp\"";
 print "###############################";

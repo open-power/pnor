@@ -11,6 +11,8 @@ my $scratch_dir = "";
 my $hb_binary_dir = "";
 my $targeting_binary_filename = "";
 my $targeting_binary_source = "";
+my $sbe_binary_filename = "";
+my $sbec_binary_filename = "";
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -42,6 +44,14 @@ while (@ARGV > 0){
     }
     elsif (/^-targeting_binary_source/i){
         $targeting_binary_source = $ARGV[1] or die "Bad command line arg given: expecting a config type.\n";
+        shift;
+    }
+    elsif (/^-sbe_binary_filename/i){
+        $sbe_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting a config type.\n";
+        shift;
+    }
+    elsif (/^-sbec_binary_filename/i){
+        $sbec_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting a config type.\n";
         shift;
     }
     else {
@@ -107,8 +117,8 @@ run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/d
 run_command("ecc --inject $hb_binary_dir/cvpd.bin --output $scratch_dir/cvpd.bin.ecc --p8");
 
 #Copy Binary Data files for consistency
-run_command("cp $hb_binary_dir/centaur_sbec_pad.img.ecc $scratch_dir/");
-run_command("cp $hb_binary_dir/venice_sbe.img.ecc $scratch_dir/");
+run_command("cp $hb_binary_dir/$sbec_binary_filename $scratch_dir/");
+run_command("cp $hb_binary_dir/$sbe_binary_filename $scratch_dir/");
 run_command("cp $hb_binary_dir/p8.ref_image.hdr.bin.ecc $scratch_dir/");
 
 #END MAIN

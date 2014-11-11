@@ -151,6 +151,20 @@ Layout Description
         <physicalRegionSize>0x1680000</physicalRegionSize>
     </section>
     <section>
+        <description>Temporary Attribute Override (32K)</description>
+        <eyeCatch>ATTR_TMP</eyeCatch>
+        <physicalOffset>0x22F5000</physicalOffset>
+        <physicalRegionSize>0x8000</physicalRegionSize>
+        <ecc/>
+    </section>
+    <section>
+        <description>Permanent Attribute Override (32K)</description>
+        <eyeCatch>ATTR_PERM</eyeCatch>
+        <physicalOffset>0x22FD000</physicalOffset>
+        <physicalRegionSize>0x8000</physicalRegionSize>
+        <ecc/>
+    </section>
+    <section>
         <description>Special PNOR Test Space (36K)</description>
         <eyeCatch>TEST</eyeCatch>
         <physicalOffset>0x3590000</physicalOffset>

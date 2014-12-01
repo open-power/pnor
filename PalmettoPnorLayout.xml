@@ -119,6 +119,22 @@ Layout Description
         <ecc/>
     </section>
     <section>
+        <description>Temporary Attribute Override (32K)</description>
+        <eyeCatch>ATTR_TMP</eyeCatch>
+        <physicalOffset>0x8c8000</physicalOffset>
+        <physicalRegionSize>0x8000</physicalRegionSize>
+        <side>A</side> <!-- Choices: A, B -->
+        <ecc/>
+    </section>
+    <section>
+        <description>Permanent Attribute Override (32K)</description>
+        <eyeCatch>ATTR_PERM</eyeCatch>
+        <physicalOffset>0x8D0000</physicalOffset>
+        <physicalRegionSize>0x8000</physicalRegionSize>
+        <side>A</side> <!-- Choices: A, B -->
+        <ecc/>
+    </section>
+    <section>
         <description>Sleep Winkle Ref Image (1.125MB)</description>
         <eyeCatch>WINK</eyeCatch>
         <physicalOffset>0x910000</physicalOffset>
@@ -167,7 +183,15 @@ Layout Description
         <sha512Version/>
         <ecc/>
     </section>
-    <section>    
+    <section>
+        <description>OCC Lid (1MB)</description>
+        <eyeCatch>OCC</eyeCatch>
+        <physicalOffset>0x1D29000</physicalOffset>
+        <physicalRegionSize>0x100000</physicalRegionSize>
+        <side>A</side>
+        <ecc/>
+    </section>
+    <section>
         <description>Hostboot Base (576K)</description>
         <eyeCatch>HBB</eyeCatch>
         <physicalOffset>0x1F67000</physicalOffset>

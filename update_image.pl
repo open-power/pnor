@@ -13,6 +13,7 @@ my $targeting_binary_filename = "";
 my $targeting_binary_source = "";
 my $sbe_binary_filename = "";
 my $sbec_binary_filename = "";
+my $occ_binary_filename = "";
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -52,6 +53,10 @@ while (@ARGV > 0){
     }
     elsif (/^-sbec_binary_filename/i){
         $sbec_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting a config type.\n";
+        shift;
+    }
+    elsif (/^-occ_binary_filename/i){
+        $occ_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting a config type.\n";
         shift;
     }
     else {
@@ -125,8 +130,10 @@ run_command("dd if=/dev/zero bs=28K count=1 | tr \"\\000\" \"\\377\" > $scratch_
 run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/attr_perm.bin.ecc --p8");
 
 #Create blank binary file for OCC Partition
-run_command("dd if=/dev/zero bs=908K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");
-run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/occ.bin.ecc --p8");
+run_command("cat $occ_binary_filename >> $scratch_dir/hostboot.temp.bin");
+run_command("dd if=$scratch_dir/hostboot.temp.bin of=$scratch_dir/occ.tmp.bin ibs=908k conv=sync");
+run_command("ecc --inject $scratch_dir/occ.tmp.bin --output $occ_binary_filename.ecc --p8");
+run_command("rm $scratch_dir/occ.tmp.bin");
 
 #Copy Binary Data files for consistency
 run_command("cp $hb_binary_dir/$sbec_binary_filename $scratch_dir/");

@@ -14,6 +14,7 @@ my $xml_layout_file = "";
 my $targeting_binary_filename = "";
 my $sbec_binary_filename = "";
 my $sbe_binary_filename = "";
+my $occ_binary_filename = "";
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -64,6 +65,10 @@ while (@ARGV > 0){
         $sbec_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting an sbec binary filename.\n";
         shift;
     }
+    elsif (/^-occ_binary_filename/i){
+        $occ_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting an occ binary filename.\n";
+        shift;
+    }
     else {
         print "Unrecognized command line arg: $_ \n";
         print "To view all the options and help text run \'$program_name -h\' \n";
@@ -97,7 +102,7 @@ $build_pnor_command .= " --binFile_DJVPD $scratch_dir/djvpd_fill.bin.ecc";
 $build_pnor_command .= " --binFile_CVPD $scratch_dir/cvpd.bin.ecc";
 $build_pnor_command .= " --binFile_ATTR_TMP $scratch_dir/attr_tmp.bin.ecc";
 $build_pnor_command .= " --binFile_ATTR_PERM $scratch_dir/attr_perm.bin.ecc";
-$build_pnor_command .= " --binFile_OCC $scratch_dir/occ.bin.ecc";
+$build_pnor_command .= " --binFile_OCC $occ_binary_filename.ecc";
 $build_pnor_command .= " --fpartCmd \"fpart\"";
 $build_pnor_command .= " --fcpCmd \"fcp\"";
 print "###############################";

@@ -67,7 +67,10 @@ while (@ARGV > 0){
     shift;
 }
 
-#Pad Targeting binary to 4k page size, then add ECC data
+# Pad Targeting binary to 4k page size, then add ECC data
+###
+### To calculate the pad, ibs=(<partition size>/9)*8
+###
 run_command("dd if=$op_target_dir/$targeting_binary_source of=$scratch_dir/$targeting_binary_source ibs=4k conv=sync");
 run_command("ecc --inject $scratch_dir/$targeting_binary_source --output $scratch_dir/$targeting_binary_filename --p8");
 
@@ -130,10 +133,8 @@ run_command("dd if=/dev/zero bs=28K count=1 | tr \"\\000\" \"\\377\" > $scratch_
 run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/attr_perm.bin.ecc --p8");
 
 #Create blank binary file for OCC Partition
-run_command("cat $occ_binary_filename >> $scratch_dir/hostboot.temp.bin");
-run_command("dd if=$scratch_dir/hostboot.temp.bin of=$scratch_dir/occ.tmp.bin ibs=908k conv=sync");
-run_command("ecc --inject $scratch_dir/occ.tmp.bin --output $occ_binary_filename.ecc --p8");
-run_command("rm $scratch_dir/occ.tmp.bin");
+run_command("dd if=$occ_binary_filename of=$scratch_dir/hostboot.temp.bin ibs=1M conv=sync");
+run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $occ_binary_filename.ecc --p8");
 
 #Copy Binary Data files for consistency
 run_command("cp $hb_binary_dir/$sbec_binary_filename $scratch_dir/");

@@ -184,10 +184,10 @@ Layout Description
         <ecc/>
     </section>
     <section>
-        <description>OCC Lid (1MB)</description>
+        <description>OCC Lid (1.125M)</description>
         <eyeCatch>OCC</eyeCatch>
         <physicalOffset>0x1D29000</physicalOffset>
-        <physicalRegionSize>0x100000</physicalRegionSize>
+        <physicalRegionSize>0x120000</physicalRegionSize>
         <side>A</side>
         <ecc/>
     </section>

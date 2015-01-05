@@ -103,6 +103,7 @@ $build_pnor_command .= " --binFile_CVPD $scratch_dir/cvpd.bin.ecc";
 $build_pnor_command .= " --binFile_ATTR_TMP $scratch_dir/attr_tmp.bin.ecc";
 $build_pnor_command .= " --binFile_ATTR_PERM $scratch_dir/attr_perm.bin.ecc";
 $build_pnor_command .= " --binFile_OCC $occ_binary_filename.ecc";
+$build_pnor_command .= " --binFile_FIRDATA $scratch_dir/firdata.bin.ecc";
 $build_pnor_command .= " --fpartCmd \"fpart\"";
 $build_pnor_command .= " --fcpCmd \"fcp\"";
 print "###############################";

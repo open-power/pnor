@@ -200,6 +200,14 @@ Layout Description
         <ecc/>
     </section>
     <section>
+        <description>CAPP Lid (38K)</description>
+        <eyeCatch>CAPP</eyeCatch>
+        <physicalOffset>0x1E4C000</physicalOffset>
+        <physicalRegionSize>0xB000</physicalRegionSize>
+        <side>A</side>
+        <ecc/>
+    </section>
+    <section>
         <description>Hostboot Base (576K)</description>
         <eyeCatch>HBB</eyeCatch>
         <physicalOffset>0x1F67000</physicalOffset>

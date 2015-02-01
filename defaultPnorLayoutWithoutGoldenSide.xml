@@ -171,10 +171,17 @@ Layout Description
         <ecc/>
     </section>
     <section>
-        <description>Payload (16MB)</description>
+        <description>Payload (1MB)</description>
         <eyeCatch>PAYLOAD</eyeCatch>
         <physicalOffset>0xCA9000</physicalOffset>
-        <physicalRegionSize>0x1000000</physicalRegionSize>
+        <physicalRegionSize>0x100000</physicalRegionSize>
+        <side>A</side>
+    </section>
+    <section>
+        <description>Bootloader Kernel (15MB)</description>
+        <eyeCatch>BOOTKERNEL</eyeCatch>
+        <physicalOffset>0xDA9000</physicalOffset>
+        <physicalRegionSize>0xF00000</physicalRegionSize>
         <side>A</side>
     </section>
     <section>
@@ -309,10 +316,17 @@ Layout Description
         <ecc/>
     </section>
     <section>
-        <description>Payload (16MB)</description>
+        <description>Payload (1MB)</description>
         <eyeCatch>PAYLOAD</eyeCatch>
         <physicalOffset>0x2C80000</physicalOffset>
-        <physicalRegionSize>0x1000000</physicalRegionSize>
+        <physicalRegionSize>0x100000</physicalRegionSize>
+        <side>B</side>
+    </section>
+    <section>
+        <description>Bootloader Kernel (15MB)</description>
+        <eyeCatch>BOOTKERNEL</eyeCatch>
+        <physicalOffset>0x2D80000</physicalOffset>
+        <physicalRegionSize>0xF00000</physicalRegionSize>
         <side>B</side>
     </section>
     <section>

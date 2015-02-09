@@ -121,8 +121,9 @@ run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/m
 run_command("dd if=/dev/zero bs=256K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");
 run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/djvpd_fill.bin.ecc --p8");
 
-#Add ECC Data to CVPD Data (CVPD) Partition
-run_command("ecc --inject $hb_binary_dir/cvpd.bin --output $scratch_dir/cvpd.bin.ecc --p8");
+#Add ECC Data to CVPD Data Partition
+run_command("dd if=$hb_binary_dir/cvpd.bin of=$scratch_dir/hostboot.temp.bin ibs=256K conv=sync");
+run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/cvpd.bin.ecc --p8");
 
 #Create blank binary file for ATTR_TMP Partition
 run_command("dd if=/dev/zero bs=28K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");

@@ -142,7 +142,7 @@ run_command("dd if=/dev/zero bs=8K count=1 | tr \"\\000\" \"\\377\" > $scratch_d
 run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/firdata.bin.ecc --p8");
 
 #Create blank binary file for CAPP Partition
-run_command("dd if=/dev/zero bs=38K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");
+run_command("dd if=/dev/zero bs=144K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");
 run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/capp.bin.ecc --p8");
 
 #Copy Binary Data files for consistency

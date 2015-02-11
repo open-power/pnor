@@ -145,10 +145,16 @@ Layout Description
         <ecc/>
     </section>
     <section>
-        <description>Payload (22.5MB)</description>
+        <description>Skiboot Payload (1MB)</description>
         <eyeCatch>PAYLOAD</eyeCatch>
         <physicalOffset>0xC75000</physicalOffset>
-        <physicalRegionSize>0x1680000</physicalRegionSize>
+        <physicalRegionSize>0x100000</physicalRegionSize>
+    </section>
+    <section>
+        <description>Kernel (21.5MB)</description>
+        <eyeCatch>KERNEL</eyeCatch>
+        <physicalOffset>0xD75000</physicalOffset>
+        <physicalRegionSize>0x1580000</physicalRegionSize>
     </section>
     <section>
         <description>Temporary Attribute Override (32K)</description>

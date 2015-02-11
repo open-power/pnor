@@ -160,10 +160,17 @@ Layout Description
         <ecc/>
     </section>
     <section> <!-- WGH DISCUSSION NEEDED ABOUT SHA512 + ECC, for now - neither -->
-        <description>Payload (16MB)</description>
+        <description>Skiboot Payload (1MB)</description>
         <eyeCatch>PAYLOAD</eyeCatch>
         <physicalOffset>0xA59000</physicalOffset>
-        <physicalRegionSize>0x1000000</physicalRegionSize>
+        <physicalRegionSize>0x100000</physicalRegionSize>
+        <side>A</side>  <!-- Choices: A, B -->
+    </section>
+    <section> <!-- WGH DISCUSSION NEEDED ABOUT SHA512 + ECC, for now - neither -->
+        <description>Kernel (15MB)</description>
+        <eyeCatch>KERNEL</eyeCatch>
+        <physicalOffset>0xB59000</physicalOffset>
+        <physicalRegionSize>0xF00000</physicalRegionSize>
         <side>A</side>  <!-- Choices: A, B -->
     </section>
     <section>

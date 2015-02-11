@@ -9,6 +9,7 @@ my $scratch_dir = "";
 my $pnor_data_dir = "";
 my $pnor_filename = "";
 my $payload = "";
+my $kernel = "";
 my $hb_image_dir = "";
 my $xml_layout_file = "";
 my $targeting_binary_filename = "";
@@ -51,6 +52,10 @@ while (@ARGV > 0){
     }
     elsif (/^-payload/i){
         $payload = $ARGV[1] or die "Bad command line arg given: expecting a filepath to payload binary file.\n";
+        shift;
+    }
+    elsif (/^-kernel/i){
+        $kernel = $ARGV[1] or die "Bad command line arg given: expecting a filepath to kernel image.\n";
         shift;
     }
     elsif (/^-targeting_binary_filename/i){
@@ -96,6 +101,7 @@ $build_pnor_command .= " --binFile_HBRT $scratch_dir/hostboot_runtime.header.bin
 $build_pnor_command .= " --binFile_HBEL $scratch_dir/hbel.bin.ecc";
 $build_pnor_command .= " --binFile_GUARD $scratch_dir/guard.bin.ecc";
 $build_pnor_command .= " --binFile_PAYLOAD $payload";
+$build_pnor_command .= " --binFile_KERNEL $kernel";
 $build_pnor_command .= " --binFile_NVRAM $scratch_dir/nvram.bin.ecc";
 $build_pnor_command .= " --binFile_MVPD $scratch_dir/mvpd_fill.bin.ecc";
 $build_pnor_command .= " --binFile_DJVPD $scratch_dir/djvpd_fill.bin.ecc";

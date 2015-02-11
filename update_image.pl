@@ -14,6 +14,7 @@ my $targeting_binary_source = "";
 my $sbe_binary_filename = "";
 my $sbec_binary_filename = "";
 my $occ_binary_filename = "";
+my $capp_binary_filename = "";
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -59,7 +60,10 @@ while (@ARGV > 0){
         $occ_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting a config type.\n";
         shift;
     }
-    else {
+    elsif (/^-capp_binary_filename/i){
+        $capp_binary_filename = $ARGV[1] or die "Bad command line arg given: execting a config type.\n";
+        shift;
+    }    else {
         print "Unrecognized command line arg: $_ \n";
         #print "To view all the options and help text run \'$program_name -h\' \n";
         exit 1;
@@ -136,6 +140,10 @@ run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/a
 #Create blank binary file for OCC Partition
 run_command("dd if=$occ_binary_filename of=$scratch_dir/hostboot.temp.bin ibs=1M conv=sync");
 run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $occ_binary_filename.ecc --p8");
+
+#Encode Ecc into CAPP Partition
+run_command("dd if=$capp_binary_filename bs=144K count=1 > $scratch_dir/hostboot.temp.bin");
+run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/cappucode.bin.ecc --p8");
 
 #Create blank binary file for FIRDATA Partition
 run_command("dd if=/dev/zero bs=8K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");

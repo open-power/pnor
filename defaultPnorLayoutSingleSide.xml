@@ -208,10 +208,10 @@ Layout Description
         <ecc/>
     </section>
     <section>
-        <description>CAPP Lid (38K)</description>
+        <description>CAPP Lid (144K)</description>
         <eyeCatch>CAPP</eyeCatch>
         <physicalOffset>0x1E74000</physicalOffset>
-        <physicalRegionSize>0xB000</physicalRegionSize>
+        <physicalRegionSize>0x24000</physicalRegionSize>
         <side>A</side>
         <ecc/>
     </section>

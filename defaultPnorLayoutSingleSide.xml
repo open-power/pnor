@@ -26,8 +26,13 @@ Layout Description
    the PNOR layout.
     <imageSize> -> Size of PNOR image in bytes.
     <blockSize> -> size of erase blocks in bytes.
-    <sideAOffset> -> Location of Side A Partition Table
-    <sideBOffset> -> Location of Side B Partition Table
+    <tocSize>   -> Size of each partition table
+    <side>         -> Contains information about the side
+        <id>       -> Id of the side (A or B)
+        <arrangement>   -> Tag that specifies the arrangement of the side
+            (A-B-D or A-D-B)
+        <golden/> -> Indicates that the side of the PNOR is golden
+</metadata>
 <section> -> Contains information about a PNOR Partition
     <description> -> Text description of the partition.
                      Does not have to be machine readable.
@@ -56,19 +61,22 @@ Layout Description
     <metadata>
         <imageSize>0x2000000</imageSize>
         <blockSize>0x1000</blockSize>
-        <sideAOffset>0x0</sideAOffset>
-        <sideBOffset>0x8000</sideBOffset>
+        <tocSize>0x8000</tocSize>
+        <arrangement>A-D-B</arrangement>
+        <side>
+            <id>A</id>
+        </side>
     </metadata>
-    <section> <!-- WGH Verified -->
+    <section>
         <description>Hostboot Extended image (5.625MB)</description>
         <eyeCatch>HBI</eyeCatch>
         <physicalOffset>0x10000</physicalOffset>
         <physicalRegionSize>0x5A0000</physicalRegionSize>
-        <side>A</side>  <!-- Choices: A, B -->
+        <side>A</side>
         <sha512Version/>
         <ecc/>
     </section>
-    <section> <!-- WGH Verified -->
+    <section>
         <description>Module VPD (576K)</description>
         <eyeCatch>MVPD</eyeCatch>
         <physicalOffset>0x5B0000</physicalOffset>
@@ -76,7 +84,7 @@ Layout Description
         <side>A</side>
         <ecc/>
     </section>
-    <section> <!-- WGH Verified -->
+    <section>
         <description>Centaur VPD (288K)</description>
         <eyeCatch>CVPD</eyeCatch>
         <physicalOffset>0x640000</physicalOffset>
@@ -84,7 +92,7 @@ Layout Description
         <side>A</side>
         <ecc/>
     </section>
-    <section> <!-- WGH Verified -->
+    <section>
         <description>DIMM JEDEC (288K)</description>
         <eyeCatch>DJVPD</eyeCatch>
         <physicalOffset>0x688000</physicalOffset>
@@ -92,93 +100,93 @@ Layout Description
         <side>A</side>
         <ecc/>
     </section>
-    <section> <!-- WGH NEED TO ADD ECC in update_image_palmetto.pl & use updated image in create_pnor_image -->
-        <description>Hostboot Data (1.125M)</description>
+    <section>
+        <description>Hostboot Data (0.375M)</description>
         <eyeCatch>HBD</eyeCatch>
         <physicalOffset>0x6D0000</physicalOffset>
-        <physicalRegionSize>0x120000</physicalRegionSize>
-        <side>A</side>  <!-- Choices: A, B -->
+        <physicalRegionSize>0x60000</physicalRegionSize>
+        <side>A</side>
         <ecc/>
     </section>
     <section>
         <description>Centaur SBE (576K)</description>
         <eyeCatch>SBEC</eyeCatch>
-        <physicalOffset>0x7F0000</physicalOffset>
+        <physicalOffset>0x730000</physicalOffset>
         <physicalRegionSize>0x90000</physicalRegionSize>
-        <side>A</side>  <!-- Choices: A, B -->
+        <side>A</side>
         <sha512perEC/>
         <ecc/>
     </section>
     <section>
         <description>SBE-IPL (Staging Area) (288K)</description>
         <eyeCatch>SBE</eyeCatch>
-        <physicalOffset>0x880000</physicalOffset>
+        <physicalOffset>0x7C0000</physicalOffset>
         <physicalRegionSize>0x48000</physicalRegionSize>
-        <side>A</side>  <!-- Choices: A, B -->
+        <side>A</side>
         <sha512perEC/>
         <ecc/>
     </section>
     <section>
         <description>Temporary Attribute Override (32K)</description>
         <eyeCatch>ATTR_TMP</eyeCatch>
-        <physicalOffset>0x8c8000</physicalOffset>
+        <physicalOffset>0x808000</physicalOffset>
         <physicalRegionSize>0x8000</physicalRegionSize>
-        <side>A</side> <!-- Choices: A, B -->
+        <side>A</side>
         <ecc/>
     </section>
     <section>
         <description>Permanent Attribute Override (32K)</description>
         <eyeCatch>ATTR_PERM</eyeCatch>
-        <physicalOffset>0x8D0000</physicalOffset>
+        <physicalOffset>0x810000</physicalOffset>
         <physicalRegionSize>0x8000</physicalRegionSize>
-        <side>A</side> <!-- Choices: A, B -->
+        <side>A</side>
         <ecc/>
     </section>
     <section>
         <description>Sleep Winkle Ref Image (1.125MB)</description>
         <eyeCatch>WINK</eyeCatch>
-        <physicalOffset>0x910000</physicalOffset>
+        <physicalOffset>0x818000</physicalOffset>
         <physicalRegionSize>0x120000</physicalRegionSize>
-        <side>A</side>  <!-- Choices: A, B -->
+        <side>A</side>
         <sha512Version/>
         <ecc/>
     </section>
     <section>
         <description>Guard Data (20K)</description>
         <eyeCatch>GUARD</eyeCatch>
-        <physicalOffset>0xA30000</physicalOffset>
+        <physicalOffset>0x938000</physicalOffset>
         <physicalRegionSize>0x5000</physicalRegionSize>
-        <side>A</side>  <!-- Choices: A, B -->
+        <side>A</side>
         <ecc/>
     </section>
     <section>
         <description>Hostboot Error Logs (144K)</description>
         <eyeCatch>HBEL</eyeCatch>
-        <physicalOffset>0xA35000</physicalOffset>
+        <physicalOffset>0x93D000</physicalOffset>
         <physicalRegionSize>0x24000</physicalRegionSize>
-        <side>A</side>  <!-- Choices: A, B -->
+        <side>A</side>
         <ecc/>
     </section>
-    <section> <!-- WGH DISCUSSION NEEDED ABOUT SHA512 + ECC, for now - neither -->
+    <section>
         <description>Payload (16MB)</description>
         <eyeCatch>PAYLOAD</eyeCatch>
-        <physicalOffset>0xA59000</physicalOffset>
+        <physicalOffset>0x961000</physicalOffset>
         <physicalRegionSize>0x1000000</physicalRegionSize>
-        <side>A</side>  <!-- Choices: A, B -->
+        <side>A</side>
     </section>
     <section>
         <description>Nvram (576K)</description>
         <eyeCatch>NVRAM</eyeCatch>
-        <physicalOffset>0x1A59000</physicalOffset>
+        <physicalOffset>0x1961000</physicalOffset>
         <physicalRegionSize>0x90000</physicalRegionSize>
         <side>A</side>
         <ecc/>
     </section>
     <section>
-        <description>Hostboot Runtime Services for Sapphire (2.25MB)</description>
+        <description>Hostboot Runtime Services for Sapphire (3MB)</description>
         <eyeCatch>HBRT</eyeCatch>
-        <physicalOffset>0x1AE9000</physicalOffset>
-        <physicalRegionSize>0x240000</physicalRegionSize>
+        <physicalOffset>0x19F1000</physicalOffset>
+        <physicalRegionSize>0x300000</physicalRegionSize>
         <side>A</side>
         <sha512Version/>
         <ecc/>
@@ -192,18 +200,18 @@ Layout Description
         <ecc/>
     </section>
     <section>
-        <description>FIRDATA (12K)</description>
-        <eyeCatch>FIRDATA</eyeCatch>
+        <description>CAPP Lid (38K)</description>
+        <eyeCatch>CAPP</eyeCatch>
         <physicalOffset>0x1E49000</physicalOffset>
-        <physicalRegionSize>0x3000</physicalRegionSize>
+        <physicalRegionSize>0xB000</physicalRegionSize>
         <side>A</side>
         <ecc/>
     </section>
     <section>
-        <description>CAPP Lid (38K)</description>
-        <eyeCatch>CAPP</eyeCatch>
-        <physicalOffset>0x1E4C000</physicalOffset>
-        <physicalRegionSize>0xB000</physicalRegionSize>
+        <description>FIRDATA (12K)</description>
+        <eyeCatch>FIRDATA</eyeCatch>
+        <physicalOffset>0x1E54000</physicalOffset>
+        <physicalRegionSize>0x3000</physicalRegionSize>
         <side>A</side>
         <ecc/>
     </section>
@@ -212,21 +220,8 @@ Layout Description
         <eyeCatch>HBB</eyeCatch>
         <physicalOffset>0x1F67000</physicalOffset>
         <physicalRegionSize>0x90000</physicalRegionSize>
-        <side>A</side>  <!-- Choices: A, B -->
+        <side>A</side>
         <sha512Version/>
         <ecc/>
     </section>
 </pnor>
-
-
-
-<!--     <section> -->
-<!--        <description>SBE-IPL (Staging Area) (576K)</description> -->
-<!--        <eyeCatch>SBE</eyeCatch> -->
-<!--        <physicalOffset>0x880000</physicalOffset> -->
-<!--        <physicalRegionSize>0x90000</physicalRegionSize> -->
-<!--        <side>A</side> -->
-<!--        <sha512perEC/> -->
-<!--        <ecc/> -->
-<!--    </section> -->
-

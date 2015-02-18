@@ -16,6 +16,7 @@ my $targeting_binary_filename = "";
 my $sbec_binary_filename = "";
 my $sbe_binary_filename = "";
 my $occ_binary_filename = "";
+my $openpower_version_filename = "";
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -74,6 +75,10 @@ while (@ARGV > 0){
         $occ_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting an occ binary filename.\n";
         shift;
     }
+    elsif (/^-openpower_version_filename/i){
+        $openpower_version_filename = $ARGV[1] or die "Bad command line arg given: expecting openpower version filename.\n";
+        shift;
+    }
     else {
         print "Unrecognized command line arg: $_ \n";
         print "To view all the options and help text run \'$program_name -h\' \n";
@@ -111,6 +116,7 @@ $build_pnor_command .= " --binFile_ATTR_PERM $scratch_dir/attr_perm.bin.ecc";
 $build_pnor_command .= " --binFile_OCC $occ_binary_filename.ecc";
 $build_pnor_command .= " --binFile_FIRDATA $scratch_dir/firdata.bin.ecc";
 $build_pnor_command .= " --binFile_CAPP $scratch_dir/cappucode.bin.ecc";
+$build_pnor_command .= " --binFile_VERSION $openpower_version_filename";
 $build_pnor_command .= " --fpartCmd \"fpart\"";
 $build_pnor_command .= " --fcpCmd \"fcp\"";
 print "###############################";

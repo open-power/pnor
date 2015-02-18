@@ -234,14 +234,6 @@ Layout Description
         <ecc/>
     </section>
     <section>
-        <description>Global Data (36K)</description>
-        <eyeCatch>GLOBAL</eyeCatch>
-        <physicalOffset>0x1E75000</physicalOffset>
-        <physicalRegionSize>0x9000</physicalRegionSize>
-        <side>sideless</side>
-        <ecc/>
-    </section>
-    <section>
         <description>CAPP Lid (144K)</description>
         <eyeCatch>CAPP</eyeCatch>
         <physicalOffset>0x1E7E000</physicalOffset>

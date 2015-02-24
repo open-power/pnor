@@ -183,10 +183,10 @@ Layout Description
         <ecc/>
     </section>
     <section>
-        <description>Hostboot Runtime Services for Sapphire (3MB)</description>
+        <description>Hostboot Runtime Services for Sapphire (3.375MB)</description>
         <eyeCatch>HBRT</eyeCatch>
         <physicalOffset>0x19F1000</physicalOffset>
-        <physicalRegionSize>0x300000</physicalRegionSize>
+        <physicalRegionSize>0x360000</physicalRegionSize>
         <side>A</side>
         <sha512Version/>
         <ecc/>
@@ -194,24 +194,24 @@ Layout Description
     <section>
         <description>OCC Lid (1.125M)</description>
         <eyeCatch>OCC</eyeCatch>
-        <physicalOffset>0x1D29000</physicalOffset>
+        <physicalOffset>0x1D51000</physicalOffset>
         <physicalRegionSize>0x120000</physicalRegionSize>
-        <side>A</side>
-        <ecc/>
-    </section>
-    <section>
-        <description>CAPP Lid (38K)</description>
-        <eyeCatch>CAPP</eyeCatch>
-        <physicalOffset>0x1E49000</physicalOffset>
-        <physicalRegionSize>0xB000</physicalRegionSize>
         <side>A</side>
         <ecc/>
     </section>
     <section>
         <description>FIRDATA (12K)</description>
         <eyeCatch>FIRDATA</eyeCatch>
-        <physicalOffset>0x1E54000</physicalOffset>
+        <physicalOffset>0x1E71000</physicalOffset>
         <physicalRegionSize>0x3000</physicalRegionSize>
+        <side>A</side>
+        <ecc/>
+    </section>
+    <section>
+        <description>CAPP Lid (38K)</description>
+        <eyeCatch>CAPP</eyeCatch>
+        <physicalOffset>0x1E74000</physicalOffset>
+        <physicalRegionSize>0xB000</physicalRegionSize>
         <side>A</side>
         <ecc/>
     </section>

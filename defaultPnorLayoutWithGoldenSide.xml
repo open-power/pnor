@@ -105,7 +105,7 @@ Layout Description
         <!--NOTE: MUST update standalone.simics if offset changes -->
          <physicalOffset>0x91000</physicalOffset>
         <physicalRegionSize>0x48000</physicalRegionSize>
-        <side>A</side>
+        <side>sideless</side>
         <ecc/>
     </section>
     <section>
@@ -114,7 +114,7 @@ Layout Description
         <!--NOTE: MUST update standalone.simics if offset changes -->
         <physicalOffset>0xD9000</physicalOffset>
         <physicalRegionSize>0x90000</physicalRegionSize>
-        <side>A</side>
+        <side>sideless</side>
         <ecc/>
     </section>
     <section>
@@ -123,7 +123,7 @@ Layout Description
         <!--NOTE: MUST update standalone.simics if offset changes -->
         <physicalOffset>0x169000</physicalOffset>
         <physicalRegionSize>0x48000</physicalRegionSize>
-        <side>A</side>
+        <side>sideless</side>
         <ecc/>
     </section>
     <section>
@@ -263,33 +263,6 @@ Layout Description
         <physicalRegionSize>0x60000</physicalRegionSize>
         <side>B</side>
         <readOnly/>
-        <ecc/>
-    </section>
-    <section>
-        <description>DIMM JEDEC (288K)</description>
-        <eyeCatch>DJVPD</eyeCatch>
-        <!--NOTE: MUST update standalone.simics if offset changes -->
-         <physicalOffset>0x2068000</physicalOffset>
-        <physicalRegionSize>0x48000</physicalRegionSize>
-        <side>B</side>
-        <ecc/>
-    </section>
-    <section>
-        <description>Module VPD (576K)</description>
-        <eyeCatch>MVPD</eyeCatch>
-        <!--NOTE: MUST update standalone.simics if offset changes -->
-        <physicalOffset>0x20B0000</physicalOffset>
-        <physicalRegionSize>0x90000</physicalRegionSize>
-        <side>B</side>
-        <ecc/>
-    </section>
-    <section>
-        <description>Centaur VPD (288K)</description>
-        <eyeCatch>CVPD</eyeCatch>
-        <!--NOTE: MUST update standalone.simics if offset changes -->
-        <physicalOffset>0x2140000</physicalOffset>
-        <physicalRegionSize>0x48000</physicalRegionSize>
-        <side>B</side>
         <ecc/>
     </section>
     <section>

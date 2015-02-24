@@ -248,7 +248,7 @@ Layout Description
         <!--NOTE: HBB Address must be at pnorSize - 0x99000 for a new
                   proc part to be bootable -->
         <eyeCatch>HBB</eyeCatch>
-        <physicalOffset>0x1F67000</physicalOffset>
+        <physicalOffset>0x1F60000</physicalOffset>
         <physicalRegionSize>0x90000</physicalRegionSize>
         <sha512Version/>
         <side>A</side>

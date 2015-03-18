@@ -15,6 +15,7 @@ my $xml_layout_file = "";
 my $targeting_binary_filename = "";
 my $sbec_binary_filename = "";
 my $sbe_binary_filename = "";
+my $wink_binary_filename = "";
 my $occ_binary_filename = "";
 my $openpower_version_filename = "";
 
@@ -71,6 +72,10 @@ while (@ARGV > 0){
         $sbec_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting an sbec binary filename.\n";
         shift;
     }
+    elsif (/^-wink_binary_filename/i){
+        $wink_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting an wink binary filename.\n";
+        shift;
+    }
     elsif (/^-occ_binary_filename/i){
         $occ_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting an occ binary filename.\n";
         shift;
@@ -99,7 +104,7 @@ $build_pnor_command .= " --pnorOutBin $pnor_filename --pnorLayout $xml_layout_fi
 $build_pnor_command .= " --binFile_HBD $scratch_dir/$targeting_binary_filename";
 $build_pnor_command .= " --binFile_SBE $scratch_dir/$sbe_binary_filename";
 $build_pnor_command .= " --binFile_SBEC $scratch_dir/$sbec_binary_filename";
-$build_pnor_command .= " --binFile_WINK $scratch_dir/p8.ref_image.hdr.bin.ecc";
+$build_pnor_command .= " --binFile_WINK $scratch_dir/$wink_binary_filename";
 $build_pnor_command .= " --binFile_HBB $scratch_dir/hostboot.header.bin.ecc";
 $build_pnor_command .= " --binFile_HBI $scratch_dir/hostboot_extended.header.bin.ecc";
 $build_pnor_command .= " --binFile_HBRT $scratch_dir/hostboot_runtime.header.bin.ecc";

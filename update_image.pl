@@ -85,7 +85,7 @@ run_command("dd if=$op_target_dir/$targeting_binary_source of=$scratch_dir/$targ
 run_command("ecc --inject $scratch_dir/$targeting_binary_source --output $scratch_dir/$targeting_binary_filename --p8");
 
 run_command("echo \"00000000001800000000000008000000000000000007EF80\" | xxd -r -ps - $scratch_dir/sbe.header");
-run_command("echo -en VERSION\\\\0 > $scratch_dir/hostboot.sha.bin");
+run_command("env echo -en VERSION\\\\0 > $scratch_dir/hostboot.sha.bin");
 run_command("sha512sum $hb_image_dir/img/hostboot.bin | awk \'{print \$1}\' | xxd -pr -r >> $scratch_dir/hostboot.sha.bin");
 run_command("dd if=$scratch_dir/hostboot.sha.bin of=$scratch_dir/secureboot.header ibs=4k conv=sync");
 run_command("dd if=/dev/zero of=$scratch_dir/hbb.footer count=1 bs=128K");
@@ -97,14 +97,14 @@ run_command("ecc --inject $scratch_dir/hostboot.header.bin --output $scratch_dir
 run_command("dd if=$hb_image_dir/img/hostboot_extended.bin of=$scratch_dir/hostboot_extended.bin.pad ibs=4k count=1280 conv=sync");
 run_command("ecc --inject $scratch_dir/hostboot_extended.bin.pad --output $scratch_dir/hostboot_extended.bin.ecc --p8");
 
-run_command("echo -en VERSION\\\\0 > $scratch_dir/hostboot_runtime.sha.bin");
+run_command("env echo -en VERSION\\\\0 > $scratch_dir/hostboot_runtime.sha.bin");
 run_command("sha512sum $hb_image_dir/img/hostboot_runtime.bin | awk \'{print \$1}\' | xxd -pr -r >> $scratch_dir/hostboot_runtime.sha.bin");
 run_command("dd if=$scratch_dir/hostboot_runtime.sha.bin of=$scratch_dir/hostboot.temp.bin ibs=4k conv=sync");
 run_command("cat $hb_image_dir/img/hostboot_runtime.bin >> $scratch_dir/hostboot.temp.bin");
 run_command("dd if=$scratch_dir/hostboot.temp.bin of=$scratch_dir/hostboot_runtime.header.bin ibs=3072K conv=sync");
 run_command("ecc --inject $scratch_dir/hostboot_runtime.header.bin --output $scratch_dir/hostboot_runtime.header.bin.ecc --p8");
 
-run_command("echo -en VERSION\\\\0 > $scratch_dir/hostboot_extended.sha.bin");
+run_command("env echo -en VERSION\\\\0 > $scratch_dir/hostboot_extended.sha.bin");
 run_command("sha512sum $hb_image_dir/img/hostboot_extended.bin | awk \'{print \$1}\' | xxd -pr -r >> $scratch_dir/hostboot_extended.sha.bin");
 run_command("dd if=$scratch_dir/hostboot_extended.sha.bin of=$scratch_dir/hostboot.temp.bin ibs=4k conv=sync");
 run_command("cat $hb_image_dir/img/hostboot_extended.bin >> $scratch_dir/hostboot.temp.bin");

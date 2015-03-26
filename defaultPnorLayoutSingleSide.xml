@@ -231,4 +231,11 @@ Layout Description
         <sha512Version/>
         <ecc/>
     </section>
+    <section>
+        <description>PNOR Version (4K)</description>
+        <eyeCatch>VERSION</eyeCatch>
+        <physicalOffset>0x1FF7000</physicalOffset>
+        <physicalRegionSize>0x1000</physicalRegionSize>
+        <side>A</side>
+    </section>
 </pnor>

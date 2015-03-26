@@ -235,14 +235,6 @@ Layout Description
         <ecc/>
     </section>
     <section>
-        <description>Global Data (36K)</description>
-        <eyeCatch>GLOBAL</eyeCatch>
-        <physicalOffset>0x1E75000</physicalOffset>
-        <physicalRegionSize>0x9000</physicalRegionSize>
-        <side>sideless</side>
-        <ecc/>
-    </section>
-    <section>
         <description>CAPP Lid (144K)</description>
         <eyeCatch>CAPP</eyeCatch>
         <physicalOffset>0x1E7E000</physicalOffset>
@@ -261,6 +253,13 @@ Layout Description
         <sha512Version/>
         <side>A</side>
         <ecc/>
+    </section>
+    <section>
+        <description>PNOR Version (4K)</description>
+        <eyeCatch>VERSION</eyeCatch>
+        <physicalOffset>0x1FF7000</physicalOffset>
+        <physicalRegionSize>0x1000</physicalRegionSize>
+        <side>A</side>
     </section>
     <!-- Golden Side (Side B) -->
     <section>
@@ -368,5 +367,12 @@ Layout Description
         <side>B</side>
         <readOnly/>
         <ecc/>
+    </section>
+    <section>
+        <description>PNOR Version (4K)</description>
+        <eyeCatch>VERSION</eyeCatch>
+        <physicalOffset>0x3FF7000</physicalOffset>
+        <physicalRegionSize>0x1000</physicalRegionSize>
+        <side>B</side>
     </section>
 </pnor>

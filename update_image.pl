@@ -15,6 +15,7 @@ my $sbe_binary_filename = "";
 my $sbec_binary_filename = "";
 my $occ_binary_filename = "";
 my $capp_binary_filename = "";
+my $openpower_version_filename = "";
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -63,7 +64,12 @@ while (@ARGV > 0){
     elsif (/^-capp_binary_filename/i){
         $capp_binary_filename = $ARGV[1] or die "Bad command line arg given: execting a config type.\n";
         shift;
-    }    else {
+    }
+    elsif (/^-openpower_version_filename/i){
+        $openpower_version_filename = $ARGV[1] or die "Bad command line arg given: expecting a config type.\n";
+        shift;
+    }
+    else {
         print "Unrecognized command line arg: $_ \n";
         #print "To view all the options and help text run \'$program_name -h\' \n";
         exit 1;
@@ -149,9 +155,9 @@ run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/c
 run_command("dd if=/dev/zero bs=8K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");
 run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/firdata.bin.ecc --p8");
 
-#Create blank binary file for CAPP Partition
-run_command("dd if=/dev/zero bs=144K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");
-run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/capp.bin.ecc --p8");
+#Add openpower version file
+run_command("dd if=$openpower_version_filename of=$scratch_dir/openpower_version.temp ibs=4K conv=sync");
+run_command("cp $scratch_dir/openpower_version.temp $openpower_version_filename");
 
 #Copy Binary Data files for consistency
 run_command("cp $hb_binary_dir/$sbec_binary_filename $scratch_dir/");

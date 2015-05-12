@@ -158,6 +158,7 @@ Layout Description
         <physicalRegionSize>0x5000</physicalRegionSize>
         <side>A</side>
         <ecc/>
+        <preserved/>
     </section>
     <section>
         <description>Hostboot Error Logs (144K)</description>
@@ -188,6 +189,7 @@ Layout Description
         <physicalRegionSize>0x90000</physicalRegionSize>
         <side>A</side>
         <ecc/>
+        <preserved/>
     </section>
     <section>
         <description>Hostboot Runtime Services for Sapphire (3.375MB)</description>

@@ -225,6 +225,7 @@ Layout Description
         <physicalRegionSize>0x90000</physicalRegionSize>
         <side>sideless</side>
         <ecc/>
+        <preserved/>
     </section>
     <section>
         <description>FIRDATA (12K)</description>

@@ -223,6 +223,7 @@ Layout Description
         <physicalOffset>0x1DE2000</physicalOffset>
         <physicalRegionSize>0x90000</physicalRegionSize>
         <side>sideless</side>
+        <preserved/>
         <ecc/>
     </section>
     <section>

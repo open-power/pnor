@@ -13,6 +13,7 @@ my $targeting_binary_filename = "";
 my $targeting_binary_source = "";
 my $sbe_binary_filename = "";
 my $sbec_binary_filename = "";
+my $wink_binary_filename = "";
 my $occ_binary_filename = "";
 my $capp_binary_filename = "";
 my $openpower_version_filename = "";
@@ -55,6 +56,10 @@ while (@ARGV > 0){
     }
     elsif (/^-sbec_binary_filename/i){
         $sbec_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting a config type.\n";
+        shift;
+    }
+    elsif (/^-wink_binary_filename/i){
+        $wink_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting a config type.\n";
         shift;
     }
     elsif (/^-occ_binary_filename/i){
@@ -162,7 +167,7 @@ run_command("cp $scratch_dir/openpower_version.temp $openpower_version_filename"
 #Copy Binary Data files for consistency
 run_command("cp $hb_binary_dir/$sbec_binary_filename $scratch_dir/");
 run_command("cp $hb_binary_dir/$sbe_binary_filename $scratch_dir/");
-run_command("cp $hb_binary_dir/p8.ref_image.hdr.bin.ecc $scratch_dir/");
+run_command("cp $hb_binary_dir/$wink_binary_filename $scratch_dir/");
 
 #END MAIN
 #-------------------------------------------------------------------------

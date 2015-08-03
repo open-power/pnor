@@ -17,6 +17,7 @@ my $wink_binary_filename = "";
 my $occ_binary_filename = "";
 my $capp_binary_filename = "";
 my $openpower_version_filename = "";
+my $payload = "";
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -74,6 +75,10 @@ while (@ARGV > 0){
         $openpower_version_filename = $ARGV[1] or die "Bad command line arg given: expecting a config type.\n";
         shift;
     }
+    elsif (/^-payload/i){
+        $payload = $ARGV[1] or die "Bad command line arg given: expecting a filepath to payload binary file.\n";
+        shift;
+    }
     else {
         print "Unrecognized command line arg: $_ \n";
         #print "To view all the options and help text run \'$program_name -h\' \n";
@@ -81,6 +86,9 @@ while (@ARGV > 0){
     }
     shift;
 }
+
+# Compress the skiboot lid image with lzma
+run_command("xz -fk --check=crc32 $payload");
 
 # Pad Targeting binary to 4k page size, then add ECC data
 ###

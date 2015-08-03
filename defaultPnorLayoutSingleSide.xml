@@ -174,6 +174,7 @@ Layout Description
         <physicalOffset>0x961000</physicalOffset>
         <physicalRegionSize>0x100000</physicalRegionSize>
         <side>A</side>
+        <xz/>
     </section>
     <section>
         <description>Bootloader Kernel (15MB)</description>

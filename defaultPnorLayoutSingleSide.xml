@@ -132,7 +132,6 @@ Layout Description
         <physicalOffset>0x808000</physicalOffset>
         <physicalRegionSize>0x8000</physicalRegionSize>
         <side>A</side>
-        <ecc/>
     </section>
     <section>
         <description>Permanent Attribute Override (32K)</description>

@@ -191,7 +191,6 @@ Layout Description
         <physicalOffset>0x1CA9000</physicalOffset>
         <physicalRegionSize>0x8000</physicalRegionSize>
         <side>sideless</side>
-        <ecc/>
     </section>
     <section>
         <description>Permanent Attribute Override (32K)</description>

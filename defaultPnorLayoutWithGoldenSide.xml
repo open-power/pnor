@@ -134,20 +134,11 @@ Layout Description
         <reprovision/>
     </section>
     <section>
-        <description>Hostboot Extended image (5.625MB)</description>
+        <description>Hostboot Extended image (6.18MB)</description>
         <eyeCatch>HBI</eyeCatch>
         <physicalOffset>0x1B1000</physicalOffset>
-        <physicalRegionSize>0x5A0000</physicalRegionSize>
+        <physicalRegionSize>0x630000</physicalRegionSize>
         <sha512Version/>
-        <side>A</side>
-        <ecc/>
-    </section>
-    <section>
-        <description>Centaur SBE (576K)</description>
-        <eyeCatch>SBEC</eyeCatch>
-        <physicalOffset>0x751000</physicalOffset>
-        <physicalRegionSize>0x90000</physicalRegionSize>
-        <sha512perEC/>
         <side>A</side>
         <ecc/>
     </section>
@@ -210,9 +201,18 @@ Layout Description
         <reprovision/>
     </section>
     <section>
+        <description>Centaur SBE (576K)</description>
+        <eyeCatch>SBEC</eyeCatch>
+        <physicalOffset>0x1CF0000</physicalOffset>
+        <physicalRegionSize>0x90000</physicalRegionSize>
+        <sha512perEC/>
+        <side>A</side>
+        <ecc/>
+    </section>
+    <section>
         <description>OCC Lid (1.125M)</description>
         <eyeCatch>OCC</eyeCatch>
-        <physicalOffset>0x1CB9000</physicalOffset>
+        <physicalOffset>0x1D80000</physicalOffset>
         <physicalRegionSize>0x120000</physicalRegionSize>
         <side>A</side>
         <ecc/>
@@ -220,7 +220,7 @@ Layout Description
     <section>
         <description>Special PNOR Test Space (36K)</description>
         <eyeCatch>TEST</eyeCatch>
-        <physicalOffset>0x1DD9000</physicalOffset>
+        <physicalOffset>0x1EA0000</physicalOffset>
         <physicalRegionSize>0x9000</physicalRegionSize>
         <testonly/>
         <side>A</side>
@@ -229,7 +229,7 @@ Layout Description
     <section>
         <description>Nvram (576K)</description>
         <eyeCatch>NVRAM</eyeCatch>
-        <physicalOffset>0x1DE2000</physicalOffset>
+        <physicalOffset>0x1EA9000</physicalOffset>
         <physicalRegionSize>0x90000</physicalRegionSize>
         <side>sideless</side>
         <ecc/>
@@ -239,7 +239,7 @@ Layout Description
     <section>
         <description>FIRDATA (12K)</description>
         <eyeCatch>FIRDATA</eyeCatch>
-        <physicalOffset>0x1E72000</physicalOffset>
+        <physicalOffset>0x1F39000</physicalOffset>
         <physicalRegionSize>0x3000</physicalRegionSize>
         <side>sideless</side>
         <ecc/>
@@ -248,7 +248,7 @@ Layout Description
     <section>
         <description>CAPP Lid (144K)</description>
         <eyeCatch>CAPP</eyeCatch>
-        <physicalOffset>0x1E7E000</physicalOffset>
+        <physicalOffset>0x1F3C000</physicalOffset>
         <physicalRegionSize>0x24000</physicalRegionSize>
         <side>A</side>
         <ecc/>
@@ -283,10 +283,10 @@ Layout Description
         <ecc/>
     </section>
     <section>
-        <description>Hostboot Extended image (5.625MB)</description>
+        <description>Hostboot Extended image (6.18MB)</description>
         <eyeCatch>HBI</eyeCatch>
         <physicalOffset>0x2188000</physicalOffset>
-        <physicalRegionSize>0x5A0000</physicalRegionSize>
+        <physicalRegionSize>0x630000</physicalRegionSize>
         <sha512Version/>
         <side>B</side>
         <readOnly/>
@@ -295,7 +295,7 @@ Layout Description
     <section>
         <description>Centaur SBE (576K)</description>
         <eyeCatch>SBEC</eyeCatch>
-        <physicalOffset>0x2728000</physicalOffset>
+        <physicalOffset>0x28CB000</physicalOffset>
         <physicalRegionSize>0x90000</physicalRegionSize>
         <sha512perEC/>
         <side>B</side>
@@ -305,7 +305,7 @@ Layout Description
     <section>
         <description>SBE-IPL (Staging Area) (288K)</description>
         <eyeCatch>SBE</eyeCatch>
-        <physicalOffset>0x27B8000</physicalOffset>
+        <physicalOffset>0x295B000</physicalOffset>
         <physicalRegionSize>0x48000</physicalRegionSize>
         <sha512perEC/>
         <side>B</side>
@@ -315,7 +315,7 @@ Layout Description
     <section>
         <description>Sleep Winkle Ref Image (1.125MB)</description>
         <eyeCatch>WINK</eyeCatch>
-        <physicalOffset>0x2800000</physicalOffset>
+        <physicalOffset>0x29A3000</physicalOffset>
         <physicalRegionSize>0x120000</physicalRegionSize>
         <sha512Version/>
         <side>B</side>
@@ -325,7 +325,7 @@ Layout Description
     <section>
         <description>Hostboot Runtime Services for Sapphire (3.375MB)</description>
         <eyeCatch>HBRT</eyeCatch>
-        <physicalOffset>0x2920000</physicalOffset>
+        <physicalOffset>0x2AC3000</physicalOffset>
         <physicalRegionSize>0x360000</physicalRegionSize>
         <sha512Version/>
         <side>B</side>
@@ -335,7 +335,7 @@ Layout Description
     <section>
         <description>Payload (1MB)</description>
         <eyeCatch>PAYLOAD</eyeCatch>
-        <physicalOffset>0x2C80000</physicalOffset>
+        <physicalOffset>0x2E23000</physicalOffset>
         <physicalRegionSize>0x100000</physicalRegionSize>
         <side>B</side>
         <readOnly/>
@@ -343,7 +343,7 @@ Layout Description
     <section>
         <description>Bootloader Kernel (15MB)</description>
         <eyeCatch>BOOTKERNEL</eyeCatch>
-        <physicalOffset>0x2D80000</physicalOffset>
+        <physicalOffset>0x2F23000</physicalOffset>
         <physicalRegionSize>0xF00000</physicalRegionSize>
         <side>B</side>
         <readOnly/>
@@ -351,7 +351,7 @@ Layout Description
     <section>
         <description>OCC Lid (1.125M)</description>
         <eyeCatch>OCC</eyeCatch>
-        <physicalOffset>0x3C80000</physicalOffset>
+        <physicalOffset>0x3E23000</physicalOffset>
         <physicalRegionSize>0x120000</physicalRegionSize>
         <side>B</side>
         <readOnly/>
@@ -360,7 +360,7 @@ Layout Description
     <section>
         <description>CAPP Lid (144K)</description>
         <eyeCatch>CAPP</eyeCatch>
-        <physicalOffset>0x3DA0000</physicalOffset>
+        <physicalOffset>0x3F43000</physicalOffset>
         <physicalRegionSize>0x24000</physicalRegionSize>
         <side>B</side>
         <readOnly/>

@@ -105,7 +105,8 @@ print "scratch_dir = $scratch_dir\n";
 print "pnor_data_dir = $pnor_data_dir\n";
 
 if($xz_compression eq "false") {
-    run_command("sed -i '/<xz/d'  $xml_layout_file\n");
+    run_command("sed -i '/compressed/d'  $xml_layout_file\n");
+    run_command("sed -i '/algorithm/d' $xml_layout_file\n");
 }
 
 my $build_pnor_command = "$hb_image_dir/buildpnor.pl";

@@ -86,7 +86,7 @@ while (@ARGV > 0){
         shift;
     }
     elsif (/^-xz_compression/i){
-        $xz_compression = $ARGV[1] or die "Badd command line arg given: expection xz compression flag.\n";
+        $xz_compression = $ARGV[1] or die "Bad command line arg given: expecting xz compression flag.\n";
         shift;
     }
     else {

@@ -55,6 +55,8 @@ Layout Description
                    within the Partition.
     <preserved/>   Indicates Partition is preserved
                    across code updates.
+    <reprovision/> Indicates Partition should be erased
+                   during a system reprovision.
 -->
 
 <pnor>
@@ -158,6 +160,7 @@ Layout Description
         <side>A</side>
         <ecc/>
         <preserved/>
+        <reprovision/>
     </section>
     <section>
         <description>Hostboot Error Logs (144K)</description>
@@ -166,6 +169,7 @@ Layout Description
         <physicalRegionSize>0x24000</physicalRegionSize>
         <side>A</side>
         <ecc/>
+        <reprovision/>
     </section>
     <section>
         <description>Payload (1MB)</description>
@@ -189,6 +193,7 @@ Layout Description
         <side>A</side>
         <ecc/>
         <preserved/>
+        <reprovision/>
     </section>
     <section>
         <description>Hostboot Runtime Services for Sapphire (3.375MB)</description>
@@ -214,6 +219,7 @@ Layout Description
         <physicalRegionSize>0x3000</physicalRegionSize>
         <side>A</side>
         <ecc/>
+        <reprovision/>
     </section>
     <section>
         <description>CAPP Lid (144K)</description>

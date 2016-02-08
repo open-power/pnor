@@ -55,6 +55,8 @@ Layout Description
     <sha512perEC/>  -> Indicates SHA512 is used to indicate version for each
                        EC-specific image within the Partition.
     <preserved/>    -> Indicates Partition is preserved across code updates.
+    <reprovision/>  -> Indicates Partition should be erased during a system 
+                       reprovision.
 </section>
 -->
 
@@ -81,6 +83,7 @@ Layout Description
         <physicalRegionSize>0x24000</physicalRegionSize>
         <side>sideless</side>
         <ecc/>
+        <reprovision/>
     </section>
     <section>
         <description>Guard Data (20K)</description>
@@ -90,6 +93,7 @@ Layout Description
         <side>A</side>
         <preserved/>
         <ecc/>
+        <reprovision/>
     </section>
     <section>
         <description>Hostboot Data (.375M)</description>
@@ -225,6 +229,7 @@ Layout Description
         <side>sideless</side>
         <ecc/>
         <preserved/>
+        <reprovision/>
     </section>
     <section>
         <description>FIRDATA (12K)</description>
@@ -233,6 +238,7 @@ Layout Description
         <physicalRegionSize>0x3000</physicalRegionSize>
         <side>sideless</side>
         <ecc/>
+        <reprovision/>
     </section>
     <section>
         <description>CAPP Lid (144K)</description>

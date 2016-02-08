@@ -85,6 +85,7 @@ Layout Description
         <physicalRegionSize>0x90000</physicalRegionSize>
         <side>A</side>
         <ecc/>
+        <reprovision/>
     </section>
     <section>
         <description>Centaur VPD (288K)</description>
@@ -93,6 +94,7 @@ Layout Description
         <physicalRegionSize>0x48000</physicalRegionSize>
         <side>A</side>
         <ecc/>
+        <reprovision/>
     </section>
     <section>
         <description>DIMM JEDEC (288K)</description>
@@ -101,6 +103,7 @@ Layout Description
         <physicalRegionSize>0x48000</physicalRegionSize>
         <side>A</side>
         <ecc/>
+        <reprovision/>
     </section>
     <section>
         <description>Hostboot Data (0.375M)</description>
@@ -134,6 +137,7 @@ Layout Description
         <physicalOffset>0x808000</physicalOffset>
         <physicalRegionSize>0x8000</physicalRegionSize>
         <side>A</side>
+        <reprovision/>
     </section>
     <section>
         <description>Permanent Attribute Override (32K)</description>
@@ -142,6 +146,7 @@ Layout Description
         <physicalRegionSize>0x8000</physicalRegionSize>
         <side>A</side>
         <ecc/>
+        <reprovision/>
     </section>
     <section>
         <description>Sleep Winkle Ref Image (1.125MB)</description>

@@ -55,6 +55,8 @@ Layout Description
     <sha512perEC/>  -> Indicates SHA512 is used to indicate version for each
                        EC-specific image within the Partition.
     <preserved/>    -> Indicates Partition is preserved across code updates.
+    <reprovision/>  -> Indicates Partition should be erased during a system 
+                       reprovision.
 </section>
 -->
 
@@ -80,6 +82,7 @@ Layout Description
         <physicalRegionSize>0x24000</physicalRegionSize>
         <side>sideless</side>
         <ecc/>
+        <reprovision/>
     </section>
     <section>
         <description>Guard Data (20K)</description>
@@ -89,6 +92,7 @@ Layout Description
         <side>A</side>
         <preserved/>
         <ecc/>
+        <reprovision/>
     </section>
     <section>
         <description>Hostboot Data (.375M)</description>
@@ -106,6 +110,7 @@ Layout Description
         <physicalRegionSize>0x48000</physicalRegionSize>
         <side>sideless</side>
         <ecc/>
+        <reprovision/>
     </section>
     <section>
         <description>Module VPD (576K)</description>
@@ -115,6 +120,7 @@ Layout Description
         <physicalRegionSize>0x90000</physicalRegionSize>
         <side>sideless</side>
         <ecc/>
+        <reprovision/>
     </section>
     <section>
         <description>Centaur VPD (288K)</description>
@@ -124,6 +130,7 @@ Layout Description
         <physicalRegionSize>0x48000</physicalRegionSize>
         <side>sideless</side>
         <ecc/>
+        <reprovision/>
     </section>
     <section>
         <description>Hostboot Extended image (5.625MB)</description>
@@ -190,6 +197,7 @@ Layout Description
         <physicalOffset>0x1CA9000</physicalOffset>
         <physicalRegionSize>0x8000</physicalRegionSize>
         <side>sideless</side>
+        <reprovision/>
     </section>
     <section>
         <description>Permanent Attribute Override (32K)</description>
@@ -198,6 +206,7 @@ Layout Description
         <physicalRegionSize>0x8000</physicalRegionSize>
         <side>sideless</side>
         <ecc/>
+        <reprovision/>
     </section>
     <section>
         <description>OCC Lid (1.125M)</description>
@@ -224,6 +233,7 @@ Layout Description
         <side>sideless</side>
         <preserved/>
         <ecc/>
+        <reprovision/>
     </section>
     <section>
         <description>FIRDATA (12K)</description>
@@ -232,6 +242,7 @@ Layout Description
         <physicalRegionSize>0x3000</physicalRegionSize>
         <side>sideless</side>
         <ecc/>
+        <reprovision/>
     </section>
     <section>
         <description>CAPP Lid (144K)</description>

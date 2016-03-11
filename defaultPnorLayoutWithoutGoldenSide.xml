@@ -209,6 +209,15 @@ Layout Description
         <ecc/>
     </section>
     <section>
+        <description>Centaur SBE (576K)</description>
+        <eyeCatch>SBEC</eyeCatch>
+        <physicalOffset>0x1CF0000</physicalOffset>
+        <physicalRegionSize>0x90000</physicalRegionSize>
+        <sha512perEC/>
+        <side>A</side>
+        <ecc/>
+    </section>
+    <section>
         <description>OCC Lid (1.125M)</description>
         <eyeCatch>OCC</eyeCatch>
         <physicalOffset>0x1D80000</physicalOffset>

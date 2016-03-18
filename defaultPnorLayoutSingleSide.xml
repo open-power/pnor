@@ -196,7 +196,6 @@ Layout Description
         <physicalOffset>0x1961000</physicalOffset>
         <physicalRegionSize>0x90000</physicalRegionSize>
         <side>A</side>
-        <ecc/>
         <preserved/>
         <reprovision/>
     </section>

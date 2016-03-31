@@ -18,6 +18,7 @@ my $occ_binary_filename = "";
 my $capp_binary_filename = "";
 my $openpower_version_filename = "";
 my $payload = "";
+my $xz_compression = "false";
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -79,6 +80,10 @@ while (@ARGV > 0){
         $payload = $ARGV[1] or die "Bad command line arg given: expecting a filepath to payload binary file.\n";
         shift;
     }
+    elsif (/^-xz_compression/i){
+        $xz_compression = $ARGV[1] or die "Bad command line arg given: expecting xz compression flag.\n";
+        shift;
+    }
     else {
         print "Unrecognized command line arg: $_ \n";
         #print "To view all the options and help text run \'$program_name -h\' \n";
@@ -88,7 +93,10 @@ while (@ARGV > 0){
 }
 
 # Compress the skiboot lid image with lzma
-run_command("xz -fk --check=crc32 $payload");
+if (($payload ne "") and ($xz_compression ne "false"))
+{
+    run_command("xz -fk --check=crc32 $payload");
+}
 
 # Pad Targeting binary to 4k page size, then add ECC data
 ###

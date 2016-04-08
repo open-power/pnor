@@ -105,12 +105,26 @@ if (($payload ne "") and ($xz_compression ne "false"))
 run_command("dd if=$op_target_dir/$targeting_binary_source of=$scratch_dir/$targeting_binary_source ibs=4k conv=sync");
 run_command("ecc --inject $scratch_dir/$targeting_binary_source --output $scratch_dir/$targeting_binary_filename --p8");
 
+# Sign HBB partition
+my $SIGNING_DIR = "/esw/san2/hostboot/secure-boot/secure-boot-scripts/rom_new_header/sign/obj";
+my $DEV_KEY_DIR = "/esw/san2/hostboot/secure-boot/dev_keys";
+my $SIGN_PREFIX_PARAMS = "-flag 0x80000000 -hka $DEV_KEY_DIR/hw_key_a -hkb $DEV_KEY_DIR/hw_key_b -hkc $DEV_KEY_DIR/hw_key_c -skp $DEV_KEY_DIR/sw_key_a";
+my $SIGN_BUILD_PARAMS = "-skp $DEV_KEY_DIR/sw_key_a";
 run_command("echo \"00000000001800000000000008000000000000000007EF80\" | xxd -r -ps - $scratch_dir/sbe.header");
-run_command("env echo -en VERSION\\\\0 > $scratch_dir/hostboot.sha.bin");
-run_command("sha512sum $hb_image_dir/img/hostboot.bin | awk \'{print \$1}\' | xxd -pr -r >> $scratch_dir/hostboot.sha.bin");
-run_command("dd if=$scratch_dir/hostboot.sha.bin of=$scratch_dir/secureboot.header ibs=4k conv=sync");
+if(1)
+{
+    run_command("$SIGNING_DIR/prefix -good -of $scratch_dir/hostboot.sha.bin $SIGN_PREFIX_PARAMS");
+    run_command("$SIGNING_DIR/build -good -if $scratch_dir/hostboot.sha.bin -of $scratch_dir/hostboot.temp.bin -bin $hb_image_dir/img/hostboot.bin $SIGN_BUILD_PARAMS");
+}
+else
+{
+    run_command("env echo -en VERSION\\\\0 > $scratch_dir/hostboot.sha.bin");
+    run_command("sha512sum $hb_image_dir/img/hostboot.bin | awk \'{print \$1}\' | xxd -pr -r >> $scratch_dir/hostboot.sha.bin");
+    run_command("dd if=$scratch_dir/hostboot.sha.bin of=$scratch_dir/hostboot.temp.bin ibs=4k conv=sync");
+    run_command("cat $hb_image_dir/img/hostboot.bin  >> $scratch_dir/hostboot.temp.bin");
+}
 run_command("dd if=/dev/zero of=$scratch_dir/hbb.footer count=1 bs=128K");
-run_command("cat $scratch_dir/sbe.header $scratch_dir/secureboot.header $hb_image_dir/img/hostboot.bin $scratch_dir/hbb.footer > $scratch_dir/hostboot.stage.bin");
+run_command("cat $scratch_dir/sbe.header $scratch_dir/hostboot.temp.bin $scratch_dir/hbb.footer > $scratch_dir/hostboot.stage.bin");
 run_command("head -c 524288 $scratch_dir/hostboot.stage.bin > $scratch_dir/hostboot.header.bin");
 
 run_command("ecc --inject $hb_image_dir/img/hostboot.bin --output $scratch_dir/hostboot.bin.ecc --p8");

@@ -258,6 +258,15 @@ Layout Description
         <ecc/>
     </section>
     <section>
+        <description>Secure Boot (144K)</description>
+        <eyeCatch>SECBOOT</eyeCatch>
+        <physicalOffset>0x1E98000</physicalOffset>
+        <physicalRegionSize>0x24000</physicalRegionSize>
+        <side>sideless</side>
+        <ecc/>
+        <preserved/>
+    </section>
+    <section>
         <description>Hostboot Base (576K)</description>
         <!--NOTE: MUST update standalone.simics if offset changes -->
         <!--NOTE: HBB Address must be at pnorSize - 0x99000 for a new

@@ -176,6 +176,10 @@ run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/c
 run_command("dd if=/dev/zero bs=8K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");
 run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/firdata.bin.ecc --p8");
 
+#Create blank binary file for SECBOOT Partition
+run_command("dd if=/dev/zero bs=128K count=1 > $scratch_dir/hostboot.temp.bin");
+run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/secboot.bin.ecc --p8");
+
 #Add openpower version file
 run_command("dd if=$openpower_version_filename of=$scratch_dir/openpower_version.temp ibs=4K conv=sync");
 run_command("cp $scratch_dir/openpower_version.temp $openpower_version_filename");

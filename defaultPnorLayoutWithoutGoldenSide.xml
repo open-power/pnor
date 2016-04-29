@@ -249,6 +249,14 @@ Layout Description
         <reprovision/>
     </section>
     <section>
+        <description>BMC_INV (36K)</description>
+        <eyeCatch>BMC_INV</eyeCatch>
+        <physicalOffset>0x1E75000</physicalOffset>
+        <physicalRegionSize>0x9000</physicalRegionSize>
+        <side>sideless</side>
+        <reprovision/>
+    </section>
+    <section>
         <description>CAPP Lid (144K)</description>
         <eyeCatch>CAPP</eyeCatch>
         <physicalOffset>0x1E7E000</physicalOffset>

@@ -259,7 +259,7 @@ Layout Description
     <section>
         <description>Secure Boot (144K)</description>
         <eyeCatch>SECBOOT</eyeCatch>
-        <physicalOffset>0x1E98000</physicalOffset>
+        <physicalOffset>0x1EA2000</physicalOffset>
         <physicalRegionSize>0x24000</physicalRegionSize>
         <side>sideless</side>
         <ecc/>

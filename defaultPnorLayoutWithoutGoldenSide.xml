@@ -236,7 +236,6 @@ Layout Description
         <physicalRegionSize>0x90000</physicalRegionSize>
         <side>sideless</side>
         <preserved/>
-        <ecc/>
         <reprovision/>
     </section>
     <section>

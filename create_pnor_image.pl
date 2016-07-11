@@ -18,7 +18,6 @@ my $sbe_binary_filename = "";
 my $wink_binary_filename = "";
 my $occ_binary_filename = "";
 my $openpower_version_filename = "";
-my $xz_compression = "false";
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -85,10 +84,6 @@ while (@ARGV > 0){
         $openpower_version_filename = $ARGV[1] or die "Bad command line arg given: expecting openpower version filename.\n";
         shift;
     }
-    elsif (/^-xz_compression/i){
-        $xz_compression = $ARGV[1] or die "Bad command line arg given: expecting xz compression flag.\n";
-        shift;
-    }
     else {
         print "Unrecognized command line arg: $_ \n";
         print "To view all the options and help text run \'$program_name -h\' \n";
@@ -103,11 +98,6 @@ if ($outdir eq "") {
 
 print "scratch_dir = $scratch_dir\n";
 print "pnor_data_dir = $pnor_data_dir\n";
-
-if($xz_compression eq "false") {
-    run_command("sed -i '/compressed/d'  $xml_layout_file\n");
-    run_command("sed -i '/algorithm/d' $xml_layout_file\n");
-}
 
 my $build_pnor_command = "$hb_image_dir/buildpnor.pl";
 $build_pnor_command .= " --pnorOutBin $pnor_filename --pnorLayout $xml_layout_file";

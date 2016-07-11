@@ -183,10 +183,6 @@ Layout Description
         <physicalOffset>0xCA9000</physicalOffset>
         <physicalRegionSize>0x100000</physicalRegionSize>
         <side>A</side>
-        <compressed>
-            <algorithm>xz</algorithm>
-            <uncompressedSize>0x100000</uncompressedSize>
-        </compressed>
     </section>
     <section>
         <description>Bootloader Kernel (15MB)</description>

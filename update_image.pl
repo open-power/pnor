@@ -141,8 +141,7 @@ run_command("dd if=/dev/zero bs=16K count=1 | tr \"\\000\" \"\\377\" > $scratch_
 run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/guard.bin.ecc --p8");
 
 #Create blank binary file for NVRAM Data (NVRAM) Partition
-run_command("dd if=/dev/zero bs=512K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");
-run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/nvram.bin.ecc --p8");
+run_command("dd if=/dev/zero bs=512K count=1 of=$scratch_dir/nvram.bin");
 
 #Create blank binary file for MVPD Partition
 run_command("dd if=/dev/zero bs=512K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");

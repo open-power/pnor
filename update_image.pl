@@ -18,7 +18,7 @@ my $occ_binary_filename = "";
 my $capp_binary_filename = "";
 my $openpower_version_filename = "";
 my $payload = "";
-my $xz_compression = "false";
+my $xz_compression = 0;
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -81,8 +81,7 @@ while (@ARGV > 0){
         shift;
     }
     elsif (/^-xz_compression/i){
-        $xz_compression = $ARGV[1] or die "Bad command line arg given: expecting xz compression flag.\n";
-        shift;
+        $xz_compression = 1;
     }
     else {
         print "Unrecognized command line arg: $_ \n";
@@ -93,7 +92,7 @@ while (@ARGV > 0){
 }
 
 # Compress the skiboot lid image with lzma
-if (($payload ne "") and ($xz_compression ne "false"))
+if (($payload ne "") and ($xz_compression))
 {
     run_command("xz -fk --check=crc32 $payload");
 }

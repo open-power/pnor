@@ -16,6 +16,7 @@ my $sbec_binary_filename = "";
 my $wink_binary_filename = "";
 my $occ_binary_filename = "";
 my $capp_binary_filename = "";
+my $ima_catalog_filename = "";
 my $openpower_version_filename = "";
 my $payload = "";
 my $xz_compression = 0;
@@ -70,6 +71,10 @@ while (@ARGV > 0){
     }
     elsif (/^-capp_binary_filename/i){
         $capp_binary_filename = $ARGV[1] or die "Bad command line arg given: execting a config type.\n";
+        shift;
+    }
+    elsif (/^-ima_catalog_filename/i){
+        $ima_catalog_filename = $ARGV[1] or die "Bad command line arg given: execting a config type.\n";
         shift;
     }
     elsif (/^-openpower_version_filename/i){
@@ -186,6 +191,11 @@ run_command("cp $scratch_dir/openpower_version.temp $openpower_version_filename"
 run_command("cp $hb_binary_dir/$sbec_binary_filename $scratch_dir/");
 run_command("cp $hb_binary_dir/$sbe_binary_filename $scratch_dir/");
 run_command("cp $hb_binary_dir/$wink_binary_filename $scratch_dir/");
+run_command("cp $hb_binary_dir/$ima_catalog_filename $scratch_dir/");
+
+#Encode Ecc into IMA_CATALOG Partition
+run_command("dd if=$scratch_dir/$ima_catalog_filename of=$scratch_dir/hostboot.temp.bin ibs=4k conv=sync");
+run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/ima_catalog.bin.ecc --p8");
 
 #END MAIN
 #-------------------------------------------------------------------------

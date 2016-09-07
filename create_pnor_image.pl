@@ -17,6 +17,7 @@ my $sbec_binary_filename = "";
 my $sbe_binary_filename = "";
 my $wink_binary_filename = "";
 my $occ_binary_filename = "";
+my $ima_catalog_filename = "";
 my $openpower_version_filename = "";
 
 while (@ARGV > 0){
@@ -80,6 +81,10 @@ while (@ARGV > 0){
         $occ_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting an occ binary filename.\n";
         shift;
     }
+    elsif (/^-ima_catalog_filename/i){
+        $ima_catalog_filename = $ARGV[1] or die "Bad command line arg given: expecting ima catalog filename.\n";
+        shift;
+    }
     elsif (/^-openpower_version_filename/i){
         $openpower_version_filename = $ARGV[1] or die "Bad command line arg given: expecting openpower version filename.\n";
         shift;
@@ -122,6 +127,7 @@ $build_pnor_command .= " --binFile_OCC $occ_binary_filename.ecc";
 $build_pnor_command .= " --binFile_FIRDATA $scratch_dir/firdata.bin.ecc";
 $build_pnor_command .= " --binFile_CAPP $scratch_dir/cappucode.bin.ecc";
 $build_pnor_command .= " --binFile_SECBOOT $scratch_dir/secboot.bin.ecc";
+$build_pnor_command .= " --binFile_IMA_CATALOG $scratch_dir/$ima_catalog_filename";
 $build_pnor_command .= " --binFile_VERSION $openpower_version_filename";
 $build_pnor_command .= " --fpartCmd \"fpart\"";
 $build_pnor_command .= " --fcpCmd \"fcp\"";

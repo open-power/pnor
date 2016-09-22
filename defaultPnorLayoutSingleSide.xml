@@ -251,6 +251,15 @@ Layout Description
         <reprovision/>
     </section>
     <section>
+        <description>IMA Catalog (36K)</description>
+        <eyeCatch>IMA_CATALOG</eyeCatch>
+        <physicalOffset>0x1EC5000</physicalOffset>
+        <physicalRegionSize>0x9000</physicalRegionSize>
+        <side>A</side>
+        <ecc/>
+        <reprovision/>
+    </section>
+    <section>
         <description>Hostboot Base (576K)</description>
         <eyeCatch>HBB</eyeCatch>
         <physicalOffset>0x1F67000</physicalOffset>

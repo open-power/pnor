@@ -1,0 +1,275 @@
+<!-- IBM_PROLOG_BEGIN_TAG                                                   -->
+<!-- This is an automatically generated prolog.                             -->
+<!--                                                                        -->
+<!-- $Source: pnor/p9Layouts/defaultPnorLayout_128.xml $                    -->
+<!--                                                                        -->
+<!-- OpenPOWER HostBoot Project                                             -->
+<!--                                                                        -->
+<!-- COPYRIGHT International Business Machines Corp. 2013,2014              -->
+<!--                                                                        -->
+<!-- Licensed under the Apache License, Version 2.0 (the "License");        -->
+<!-- you may not use this file except in compliance with the License.       -->
+<!-- You may obtain a copy of the License at                                -->
+<!--                                                                        -->
+<!--     http://www.apache.org/licenses/LICENSE-2.0                         -->
+<!--                                                                        -->
+<!-- Unless required by applicable law or agreed to in writing, software    -->
+<!-- distributed under the License is distributed on an "AS IS" BASIS,      -->
+<!-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or        -->
+<!-- implied. See the License for the specific language governing           -->
+<!-- permissions and limitations under the License.                         -->
+<!--                                                                        -->
+<!-- IBM_PROLOG_END_TAG                                                     -->
+<!--
+Layout Description
+<metadata> Element -> Contains high-level information about the PNOR layout.
+    <chipSize>     -> Size of the chip that the pnor image will reside on
+    <imageSize>    -> Size of PNOR image in bytes.
+    <blockSize>    -> size of erase blocks in bytes.
+    <tocSize>      -> size of each partition table
+    <!- TODO:RTC:123734 - remove side offsets once hwsv implements new layout ->
+    <sideAOffset>  -> Location of Side A Partition Table
+    <sideBOffset>  -> Location of Side B Partition Table
+    <side>         -> Contains information about the side
+        <id>            -> Id of the side (A or B)
+        <arrangement>   -> Tag that specifies the arrangement of the side
+                           (A-B-D or A-D-B)
+                           A-B-D: Primary TOC (A),Backup TOC (B), and Section Information (Data - D)
+                           A-D-B: Primary TOC (A), Section Information (Data - D), Backup TOC (B)
+        <golden/> -> Indicates that the side of the PNOR is golden
+</metadata>
+<section> Element -> Contains information about a PNOR Partition
+    <description>   -> Text description of the partition.
+                       Does not have to be machine readable.
+    <eyeCatch>      -> Name of the Partition
+    <physicalOffset>-> Offset of the Partition in PNOR
+                       in bytes.
+    <physicalSize>  -> Size of the Partition in bytes.
+    <side>          -> Side that this section is associated with.
+                       could be (A, B, or sideless)
+                       A - Section is associated with side A
+                       B - Section is associated with side B
+                       sideless - Indicates partition will be in both TOCs but
+                                  only one copy of the partition should be created
+    <testonly/>     -> Indicates partition is used for internal testing only.
+                       Partition should be skipped in production environments.
+    <ecc/>          -> Indicates Partition should be ECC protected
+    <sha512Version/>-> Indicates Partition uses SHA512 for version information.
+    <sha512perEC/>  -> Indicates SHA512 is used to indicate version for each
+                       EC-specific image within the Partition.
+    <preserved/>    -> Indicates Partition is preserved across code updates.
+</section>
+-->
+
+<pnor>
+    <metadata>
+        <imageSize>0x8000000</imageSize>
+        <chipSize>0x8000000</chipSize>
+        <blockSize>0x1000</blockSize>
+        <tocSize>0x8000</tocSize>
+        <arrangement>A-D-B</arrangement>
+        <side>
+            <id>A</id>
+        </side>
+    </metadata>
+    <section>
+        <description>Hostboot Base (576K)</description>
+        <eyeCatch>HBB</eyeCatch>
+        <physicalOffset>0x8000</physicalOffset>
+        <physicalRegionSize>0x90000</physicalRegionSize>
+        <side>A</side>
+        <sha512Version/>
+        <ecc/>
+    </section>
+    <section>
+        <description>Hostboot Error Logs (144K)</description>
+        <eyeCatch>HBEL</eyeCatch>
+        <physicalOffset>0x98000</physicalOffset>
+        <physicalRegionSize>0x24000</physicalRegionSize>
+        <side>A</side>
+        <ecc/>
+        <reprovision/>
+    </section>
+    <section>
+        <description>Guard Data (20K)</description>
+        <eyeCatch>GUARD</eyeCatch>
+        <physicalOffset>0xBC000</physicalOffset>
+        <physicalRegionSize>0x5000</physicalRegionSize>
+        <side>A</side>
+        <ecc/>
+        <preserved/>
+        <reprovision/>
+    </section>
+    <section>
+        <description>Hostboot Data (1.125M)</description>
+        <eyeCatch>HBD</eyeCatch>
+        <physicalOffset>0xC1000</physicalOffset>
+        <physicalRegionSize>0x120000</physicalRegionSize>
+        <sha512Version/>
+        <side>A</side>
+        <ecc/>
+    </section>
+    <section>
+        <description>DIMM JEDEC (288K)</description>
+        <eyeCatch>DJVPD</eyeCatch>
+        <!--NOTE: MUST update standalone.simics if offset changes -->
+         <physicalOffset>0x1E1000</physicalOffset>
+        <physicalRegionSize>0x48000</physicalRegionSize>
+        <side>A</side>
+        <ecc/>
+        <reprovision/>
+    </section>
+    <section>
+        <description>Module VPD (576K)</description>
+        <eyeCatch>MVPD</eyeCatch>
+        <!--NOTE: MUST update standalone.simics if offset changes -->
+        <physicalOffset>0x229000</physicalOffset>
+        <physicalRegionSize>0x90000</physicalRegionSize>
+        <side>A</side>
+        <ecc/>
+        <reprovision/>
+    </section>
+    <section>
+        <description>Centaur VPD (288K)</description>
+        <eyeCatch>CVPD</eyeCatch>
+        <!--NOTE: MUST update standalone.simics if offset changes -->
+        <physicalOffset>0x2B9000</physicalOffset>
+        <physicalRegionSize>0x48000</physicalRegionSize>
+        <side>A</side>
+        <ecc/>
+        <reprovision/>
+    </section>
+    <section>
+        <description>Hostboot Extended image (11MB w/o ECC)</description>
+        <eyeCatch>HBI</eyeCatch>
+        <physicalOffset>0x301000</physicalOffset>
+        <physicalRegionSize>0xC60000</physicalRegionSize>
+        <sha512Version/>
+        <side>A</side>
+        <ecc/>
+    </section>
+    <section>
+        <description>SBE-IPL (Staging Area) (288K)</description>
+        <eyeCatch>SBE</eyeCatch>
+        <physicalOffset>0xF61000</physicalOffset>
+        <physicalRegionSize>0x48000</physicalRegionSize>
+        <sha512perEC/>
+        <side>A</side>
+        <ecc/>
+    </section>
+    <section>
+        <description>HCODE Ref Image (1.125MB)</description>
+        <eyeCatch>HCODE</eyeCatch>
+        <physicalOffset>0xFA9000</physicalOffset>
+        <physicalRegionSize>0x120000</physicalRegionSize>
+        <side>A</side>
+        <sha512Version/>
+        <ecc/>
+    </section>
+    <section>
+        <description>Hostboot Runtime Services for Sapphire (4.5MB)</description>
+        <eyeCatch>HBRT</eyeCatch>
+        <physicalOffset>0x10C9000</physicalOffset>
+        <physicalRegionSize>0x480000</physicalRegionSize>
+        <sha512Version/>
+        <side>A</side>
+        <ecc/>
+    </section>
+    <section>
+        <description>Payload (1MB)</description>
+        <eyeCatch>PAYLOAD</eyeCatch>
+        <physicalOffset>0x1549000</physicalOffset>
+        <physicalRegionSize>0x100000</physicalRegionSize>
+        <side>A</side>
+    </section>
+    <section>
+        <description>Bootloader Kernel (15MB)</description>
+        <eyeCatch>BOOTKERNEL</eyeCatch>
+        <physicalOffset>0x1649000</physicalOffset>
+        <physicalRegionSize>0xF00000</physicalRegionSize>
+        <side>A</side>
+    </section>
+    <section>
+        <description>Nvram (576K)</description>
+        <eyeCatch>NVRAM</eyeCatch>
+        <physicalOffset>0x2549000</physicalOffset>
+        <physicalRegionSize>0x90000</physicalRegionSize>
+        <side>A</side>
+        <preserved/>
+        <reprovision/>
+    </section>
+    <section>
+        <description>OCC Lid (1.125M)</description>
+        <eyeCatch>OCC</eyeCatch>
+        <physicalOffset>0x25D9000</physicalOffset>
+        <physicalRegionSize>0x120000</physicalRegionSize>
+        <side>A</side>
+        <ecc/>
+    </section>
+    <section>
+        <description>FIRDATA (12K)</description>
+        <eyeCatch>FIRDATA</eyeCatch>
+        <physicalOffset>0x26F9000</physicalOffset>
+        <physicalRegionSize>0x3000</physicalRegionSize>
+        <side>A</side>
+        <ecc/>
+        <reprovision/>
+    </section>
+    <section>
+        <description>CAPP Lid (144K)</description>
+        <eyeCatch>CAPP</eyeCatch>
+        <physicalOffset>0x26FC000</physicalOffset>
+        <physicalRegionSize>0x24000</physicalRegionSize>
+        <side>A</side>
+        <ecc/>
+    </section>
+    <section>
+        <description>Secure Boot (144K)</description>
+        <eyeCatch>SECBOOT</eyeCatch>
+        <physicalOffset>0x2720000</physicalOffset>
+        <physicalRegionSize>0x24000</physicalRegionSize>
+        <side>sideless</side>
+        <ecc/>
+        <preserved/>
+    </section>
+    <section>
+        <description>BMC_INV (36K)</description>
+        <eyeCatch>BMC_INV</eyeCatch>
+        <physicalOffset>0x2744000</physicalOffset>
+        <physicalRegionSize>0x9000</physicalRegionSize>
+        <side>sideless</side>
+        <reprovision/>
+    </section>
+    <section>
+        <description>Hostboot Bootloader (22.5K)</description>
+        <eyeCatch>HBBL</eyeCatch>
+        <physicalOffset>0x274D000</physicalOffset>
+        <physicalRegionSize>0x6000</physicalRegionSize>
+        <side>sideless</side>
+        <ecc/>
+    </section>
+    <section>
+        <description>Temporary Attribute Override (32K)</description>
+        <eyeCatch>ATTR_TMP</eyeCatch>
+        <physicalOffset>0x2753000</physicalOffset>
+        <physicalRegionSize>0x8000</physicalRegionSize>
+        <side>A</side>
+        <reprovision/>
+    </section>
+    <section>
+        <description>Permanent Attribute Override (32K)</description>
+        <eyeCatch>ATTR_PERM</eyeCatch>
+        <physicalOffset>0x275B000</physicalOffset>
+        <physicalRegionSize>0x8000</physicalRegionSize>
+        <side>A</side>
+        <ecc/>
+        <reprovision/>
+    </section>
+    <section>
+        <description>PNOR Version (4K)</description>
+        <eyeCatch>VERSION</eyeCatch>
+        <physicalOffset>0x2763000</physicalOffset>
+        <physicalRegionSize>0x1000</physicalRegionSize>
+        <side>A</side>
+    </section>
+</pnor>

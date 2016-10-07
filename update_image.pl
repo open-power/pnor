@@ -5,6 +5,7 @@ use File::Basename;
 
 #my $ecc_tool_dir = "/opt/mcp/shared/fr_FLD8-1-20140528/opt/fsp/usr/bin"; #wh_todo
 
+my $release = "";
 my $op_target_dir = "";
 my $hb_image_dir = "";
 my $scratch_dir = "";
@@ -28,6 +29,10 @@ while (@ARGV > 0){
     if (/^-h$/i || /^-help$/i || /^--help$/i){
         usage(); #print help content
         exit 0;
+    }
+    elsif (/^-release/i){
+        $release = $ARGV[1] or die "Bad command line arg given: expecting a release (p8 or p9).\n";
+        shift;
     }
     elsif (/^-op_target_dir/i){
         $op_target_dir = $ARGV[1] or die "Bad command line arg given: expecting a config type.\n";
@@ -106,15 +111,29 @@ if (($payload ne "") and ($xz_compression))
 ###
 ### To calculate the pad, ibs=(<partition size>/9)*8
 ###
-run_command("dd if=$op_target_dir/$targeting_binary_source of=$scratch_dir/$targeting_binary_source ibs=4k conv=sync");
+if ($release eq "p8") {
+    run_command("dd if=$op_target_dir/$targeting_binary_source of=$scratch_dir/$targeting_binary_source ibs=4k conv=sync");
+} else {
+    run_command("env echo -en VERSION\\\\0 > $scratch_dir/hostboot_data.sha.bin");
+    run_command("sha512sum $op_target_dir/$targeting_binary_source | awk \'{print \$1}\' | xxd -pr -r >> $scratch_dir/hostboot_data.sha.bin");
+    run_command("dd if=$scratch_dir/hostboot_data.sha.bin of=$scratch_dir/hostboot.temp.bin ibs=4k conv=sync");
+    run_command("cat $op_target_dir/$targeting_binary_source >> $scratch_dir/hostboot.temp.bin");
+    run_command("dd if=$scratch_dir/hostboot.temp.bin of=$scratch_dir/$targeting_binary_source ibs=4k conv=sync");
+}
 run_command("ecc --inject $scratch_dir/$targeting_binary_source --output $scratch_dir/$targeting_binary_filename --p8");
 
-run_command("echo \"00000000001800000000000008000000000000000007EF80\" | xxd -r -ps - $scratch_dir/sbe.header");
+if ($release eq "p8") {
+    run_command("echo \"00000000001800000000000008000000000000000007EF80\" | xxd -r -ps - $scratch_dir/sbe.header");
+}
 run_command("env echo -en VERSION\\\\0 > $scratch_dir/hostboot.sha.bin");
 run_command("sha512sum $hb_image_dir/img/hostboot.bin | awk \'{print \$1}\' | xxd -pr -r >> $scratch_dir/hostboot.sha.bin");
 run_command("dd if=$scratch_dir/hostboot.sha.bin of=$scratch_dir/secureboot.header ibs=4k conv=sync");
 run_command("dd if=/dev/zero of=$scratch_dir/hbb.footer count=1 bs=128K");
-run_command("cat $scratch_dir/sbe.header $scratch_dir/secureboot.header $hb_image_dir/img/hostboot.bin $scratch_dir/hbb.footer > $scratch_dir/hostboot.stage.bin");
+if ($release eq "p8") {
+    run_command("cat $scratch_dir/sbe.header $scratch_dir/secureboot.header $hb_image_dir/img/hostboot.bin $scratch_dir/hbb.footer > $scratch_dir/hostboot.stage.bin");
+} else {
+    run_command("cat $scratch_dir/secureboot.header $hb_image_dir/img/hostboot.bin $scratch_dir/hbb.footer > $scratch_dir/hostboot.stage.bin");
+}
 run_command("head -c 524288 $scratch_dir/hostboot.stage.bin > $scratch_dir/hostboot.header.bin");
 
 run_command("ecc --inject $hb_image_dir/img/hostboot.bin --output $scratch_dir/hostboot.bin.ecc --p8");

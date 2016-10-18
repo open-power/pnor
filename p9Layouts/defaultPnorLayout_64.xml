@@ -272,4 +272,13 @@ Layout Description
         <physicalRegionSize>0x1000</physicalRegionSize>
         <side>A</side>
     </section>
+    <section>
+        <description>IMA Catalog (256K)</description>
+        <eyeCatch>IMA_CATALOG</eyeCatch>
+        <physicalOffset>0x2764000</physicalOffset>
+        <physicalRegionSize>0x40000</physicalRegionSize>
+        <side>A</side>
+        <ecc/>
+        <reprovision/>
+    </section> 
 </pnor>

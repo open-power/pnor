@@ -210,10 +210,9 @@ run_command("cp $scratch_dir/openpower_version.temp $openpower_version_filename"
 run_command("cp $hb_binary_dir/$sbec_binary_filename $scratch_dir/");
 run_command("cp $hb_binary_dir/$sbe_binary_filename $scratch_dir/");
 run_command("cp $hb_binary_dir/$wink_binary_filename $scratch_dir/");
-run_command("cp $hb_binary_dir/$ima_catalog_filename $scratch_dir/");
 
 #Encode Ecc into IMA_CATALOG Partition
-run_command("dd if=$scratch_dir/$ima_catalog_filename of=$scratch_dir/hostboot.temp.bin ibs=4k conv=sync");
+run_command("dd if=$ima_catalog_filename bs=36K count=1 > $scratch_dir/hostboot.temp.bin");
 run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/ima_catalog.bin.ecc --p8");
 
 #END MAIN

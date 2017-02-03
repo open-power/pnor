@@ -155,6 +155,15 @@ run_command("cat $hb_image_dir/img/hostboot_extended.bin >> $scratch_dir/hostboo
 run_command("dd if=$scratch_dir/hostboot.temp.bin of=$scratch_dir/hostboot_extended.header.bin ibs=5120k conv=sync");
 run_command("ecc --inject $scratch_dir/hostboot_extended.header.bin --output $scratch_dir/hostboot_extended.header.bin.ecc --p8");
 
+#Create HBBL section
+if ($release eq "p9") {
+    # remove first 12K from bin, then extend.  No secure header yet for HBBL section
+    run_command("tail -c +12289 $hb_image_dir/img/hostboot_bootloader.bin > $scratch_dir/hbbl.bin");
+    run_command("dd if=$scratch_dir/hbbl.bin of=$scratch_dir/hbbl.bin.pad ibs=20K conv=sync");
+    run_command("ecc --inject $scratch_dir/hbbl.bin.pad --output $scratch_dir/hbbl.bin.tmp.ecc --p8");
+    run_command("dd if=$scratch_dir/hbbl.bin.tmp.ecc of=$scratch_dir/hbbl.bin.ecc ibs=24K conv=sync");  #0s is good ECC
+}
+
 #Create blank binary file for HB Errorlogs (HBEL) Partition
 run_command("dd if=/dev/zero bs=128K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");
 run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/hbel.bin.ecc --p8");\

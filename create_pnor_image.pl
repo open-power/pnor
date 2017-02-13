@@ -131,6 +131,7 @@ $build_pnor_command .= " --binFile_CAPP $scratch_dir/cappucode.bin.ecc";
 $build_pnor_command .= " --binFile_SECBOOT $scratch_dir/secboot.bin.ecc";
 $build_pnor_command .= " --binFile_VERSION $openpower_version_filename";
 $build_pnor_command .= " --binFile_IMA_CATALOG $scratch_dir/ima_catalog.bin.ecc";
+$build_pnor_command .= " --binFile_WOFDATA $scratch_dir/wofdata.bin.ecc";
 if ($release eq "p8"){
     $build_pnor_command .= " --binFile_SBEC $scratch_dir/$sbec_binary_filename";
     $build_pnor_command .= " --binFile_WINK $scratch_dir/$wink_binary_filename";

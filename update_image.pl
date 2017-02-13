@@ -234,6 +234,13 @@ else
 
 run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/ima_catalog.bin.ecc --p8");
 
+#Create blank binary file for WOF/VFRT (WOFDATA) Partition  (for now)
+if ($release eq "p9") {
+    run_command("dd if=/dev/zero bs=2730K count=1 | tr \"\\000\" \"\\377\" >    $scratch_dir/hostboot.temp.bin");
+    run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/wofdata.bin.ecc --p8");
+}
+
+
 #END MAIN
 #-------------------------------------------------------------------------
 

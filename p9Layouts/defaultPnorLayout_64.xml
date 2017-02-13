@@ -287,5 +287,15 @@ Layout Description
         <physicalOffset>0x2830000</physicalOffset>
         <physicalRegionSize>0x20000</physicalRegionSize>
         <side>A</side>
+    </section> 
+    <section>
+        <description>VFRT data for WOF (3MB)</description>
+        <!-- We need 266KB per module sort, going to support
+             10 sorts by default, plus ECC  -->
+        <eyeCatch>WOFDATA</eyeCatch>
+        <physicalOffset>0x2850000</physicalOffset>
+        <physicalRegionSize>0x300000</physicalRegionSize>
+        <side>A</side>
+        <ecc/>
     </section>
 </pnor>

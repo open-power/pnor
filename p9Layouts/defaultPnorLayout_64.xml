@@ -280,5 +280,12 @@ Layout Description
         <side>A</side>
         <ecc/>
         <reprovision/>
-    </section> 
+    </section>
+    <section>
+        <description>Ref Image Ring Overrides (128K)</description>
+        <eyeCatch>RINGOVD</eyeCatch>
+        <physicalOffset>0x2830000</physicalOffset>
+        <physicalRegionSize>0x20000</physicalRegionSize>
+        <side>A</side>
+    </section>
 </pnor>

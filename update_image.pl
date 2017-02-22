@@ -221,11 +221,17 @@ run_command("cp $hb_binary_dir/$sbe_binary_filename $scratch_dir/");
 run_command("cp $hb_binary_dir/$wink_binary_filename $scratch_dir/");
 
 #Encode Ecc into IMA_CATALOG Partition
-if ($release eq "p8") {
+if ($release eq "p8")
+{
      run_command("dd if=$ima_catalog_binary_filename bs=36K count=1 > $scratch_dir/hostboot.temp.bin");
-} else {
-     run_command("dd if=$ima_catalog_binary_filename bs=256K count=1 > $scratch_dir/hostboot.temp.bin");
 }
+else
+{
+    run_command("dd if=$ima_catalog_binary_filename bs=256K count=1 > $scratch_dir/hostboot.temp.bin");
+    #Create blank binary file for RINGOVD Partition
+    run_command("dd if=/dev/zero bs=64K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/ringOvd.bin");
+}
+
 run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/ima_catalog.bin.ecc --p8");
 
 #END MAIN

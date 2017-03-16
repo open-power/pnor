@@ -218,7 +218,25 @@ run_command("cp $scratch_dir/openpower_version.temp $openpower_version_filename"
 #Copy Binary Data files for consistency
 run_command("cp $hb_binary_dir/$sbec_binary_filename $scratch_dir/");
 run_command("cp $hb_binary_dir/$sbe_binary_filename $scratch_dir/");
-run_command("cp $hb_binary_dir/$wink_binary_filename $scratch_dir/");
+if ($release eq "p8")
+{
+    run_command("cp $hb_binary_dir/$wink_binary_filename $scratch_dir/");
+}
+else
+{
+    #WINK (STOP) image name is passed in in final form.  Find the pre header/ecc version
+    my $stop_basename = $wink_binary_filename;
+    $stop_basename =~ s/.hdr.bin.ecc//;
+    run_command("env echo -en VERSION\\\\0 > $scratch_dir/${stop_basename}.sha.bin");
+    run_command("sha512sum $hb_binary_dir/$stop_basename.bin | awk \'{print \$1}\' | xxd -pr -r >> $scratch_dir/${stop_basename}.sha.bin");
+    run_command("dd if=$scratch_dir/${stop_basename}.sha.bin of=$scratch_dir/${stop_basename}.temp.bin ibs=4k conv=sync");
+    run_command("cat $hb_binary_dir/${stop_basename}.bin >> $scratch_dir/${stop_basename}.temp.bin");
+    run_command("dd if=$scratch_dir/${stop_basename}.temp.bin of=$scratch_dir/${stop_basename}.hdr.bin ibs=1M conv=sync");
+    run_command("ecc --inject $scratch_dir/${stop_basename}.hdr.bin --output $scratch_dir/${stop_basename}.hdr.bin.ecc --p8");
+}
+
+
+
 
 #Encode Ecc into IMA_CATALOG Partition
 if ($release eq "p8")

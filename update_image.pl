@@ -10,6 +10,7 @@ my $op_target_dir = "";
 my $hb_image_dir = "";
 my $scratch_dir = "";
 my $hb_binary_dir = "";
+my $sbe_binary_dir = "";
 my $targeting_binary_filename = "";
 my $targeting_binary_source = "";
 my $sbe_binary_filename = "";
@@ -48,6 +49,10 @@ while (@ARGV > 0){
     }
     elsif (/^-hb_binary_dir/i){
         $hb_binary_dir = $ARGV[1] or die "Bad command line arg given: expecting a config type.\n";
+        shift;
+    }
+    elsif (/^-sbe_binary_dir/i){
+        $sbe_binary_dir = $ARGV[1] or die "Bad command line arg given: expecting a config type.\n";
         shift;
     }
     elsif (/^-targeting_binary_filename/i){
@@ -164,6 +169,14 @@ if ($release eq "p9") {
     run_command("dd if=$scratch_dir/hbbl.bin.tmp.ecc of=$scratch_dir/hbbl.bin.ecc ibs=24K conv=sync");  #0s is good ECC
 }
 
+#SBE image prep
+if ($release eq "p9") {
+    run_command("python $sbe_binary_dir/sbeOpDistribute.py --install --buildSbePart $hb_image_dir/buildSbePart.pl --hw_ref_image $hb_binary_dir/p9n.ref_image.bin --sbe_binary_filename $sbe_binary_filename --scratch_dir $scratch_dir --sbe_binary_dir $sbe_binary_dir");
+}
+else {
+    run_command("cp $hb_binary_dir/$sbe_binary_filename $scratch_dir/");
+}
+
 #Create blank binary file for HB Errorlogs (HBEL) Partition
 run_command("dd if=/dev/zero bs=128K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");
 run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/hbel.bin.ecc --p8");\
@@ -217,7 +230,6 @@ run_command("cp $scratch_dir/openpower_version.temp $openpower_version_filename"
 
 #Copy Binary Data files for consistency
 run_command("cp $hb_binary_dir/$sbec_binary_filename $scratch_dir/");
-run_command("cp $hb_binary_dir/$sbe_binary_filename $scratch_dir/");
 if ($release eq "p8")
 {
     run_command("cp $hb_binary_dir/$wink_binary_filename $scratch_dir/");

@@ -22,6 +22,7 @@ my $ima_catalog_binary_filename = "";
 my $openpower_version_filename = "";
 my $payload = "";
 my $xz_compression = 0;
+my $wof_binary_filename = "";
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -97,6 +98,10 @@ while (@ARGV > 0){
     }
     elsif (/^-xz_compression/i){
         $xz_compression = 1;
+    }
+    elsif (/^-wof_binary_filename/i){
+        $wof_binary_filename = $ARGV[1] or die "Bad command line arg give: expecting a config type.\n";
+        shift;
     }
     else {
         print "Unrecognized command line arg: $_ \n";
@@ -264,10 +269,10 @@ else
 
 run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/ima_catalog.bin.ecc --p8");
 
-#Create blank binary file for WOF/VFRT (WOFDATA) Partition  (for now)
-if ($release eq "p9") {
-    run_command("dd if=/dev/zero bs=2730K count=1 | tr \"\\000\" \"\\377\" >    $scratch_dir/hostboot.temp.bin");
-    run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/wofdata.bin.ecc --p8");
+#Encode ECC into WOF/VFRT (WOFDATA) Partition
+if ($release eq "p9" && -e $wof_binary_filename) {
+    run_command("dd if=$wof_binary_filename > $scratch_dir/hostboot.temp.bin");
+    run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/wofdata.bin.ecc");
 }
 
 

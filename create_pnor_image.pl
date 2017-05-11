@@ -19,6 +19,7 @@ my $sbe_binary_filename = "";
 my $wink_binary_filename = "";
 my $occ_binary_filename = "";
 my $openpower_version_filename = "";
+my $wofdata_binary_filename = "";
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -89,6 +90,10 @@ while (@ARGV > 0){
         $openpower_version_filename = $ARGV[1] or die "Bad command line arg given: expecting openpower version filename.\n";
         shift;
     }
+    elsif (/^-wofdata_binary_filename/i){
+        $wofdata_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting a wofdata binary filename.\n";
+        shift;
+    }
     else {
         print "Unrecognized command line arg: $_ \n";
         print "To view all the options and help text run \'$program_name -h\' \n";
@@ -132,7 +137,7 @@ $build_pnor_command .= " --binFile_SECBOOT $scratch_dir/secboot.bin.ecc";
 $build_pnor_command .= " --binFile_VERSION $openpower_version_filename";
 $build_pnor_command .= " --binFile_IMA_CATALOG $scratch_dir/ima_catalog.bin.ecc";
 if ($release eq "p9"){
-    $build_pnor_command .= " --binFile_WOFDATA $scratch_dir/wofdata.bin.ecc";
+    $build_pnor_command .= " --binFile_WOFDATA $wofdata_binary_filename.ecc" if -e $wofdata_binary_filename.".ecc";
 }
 if ($release eq "p8"){
     $build_pnor_command .= " --binFile_SBEC $scratch_dir/$sbec_binary_filename";

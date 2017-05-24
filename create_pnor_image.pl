@@ -137,7 +137,7 @@ $build_pnor_command .= " --binFile_SECBOOT $scratch_dir/secboot.bin.ecc";
 $build_pnor_command .= " --binFile_VERSION $openpower_version_filename";
 $build_pnor_command .= " --binFile_IMA_CATALOG $scratch_dir/ima_catalog.bin.ecc";
 if ($release eq "p9"){
-    $build_pnor_command .= " --binFile_WOFDATA $wofdata_binary_filename.ecc" if -e $wofdata_binary_filename.".ecc";
+    $build_pnor_command .= " --binFile_WOFDATA $wofdata_binary_filename" if -e $wofdata_binary_filename;
 }
 if ($release eq "p8"){
     $build_pnor_command .= " --binFile_SBEC $scratch_dir/$sbec_binary_filename";

@@ -310,4 +310,12 @@ Layout Description
         <ecc/>
         <volatile/>
     </section>
+    <section>
+        <description>MEMD extra data (24K)</description>
+        <eyeCatch>MEMD</eyeCatch>
+        <physicalOffset>0x2B73000</physicalOffset>
+        <physicalRegionSize>0x6000</physicalRegionSize>
+        <side>A</side>
+        <ecc/>
+    </section>
 </pnor>

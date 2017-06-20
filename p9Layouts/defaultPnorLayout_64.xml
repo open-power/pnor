@@ -298,4 +298,12 @@ Layout Description
         <side>A</side>
         <ecc/>
     </section>
+    <section>
+        <description>Hostboot deconfig area (64KB)</description>
+        <eyeCatch>HB_VOLATILE</eyeCatch>
+        <physicalOffset>0x2B50000</physicalOffset>
+        <physicalRegionSize>0x5000</physicalRegionSize>
+        <side>A</side>
+        <ecc/>
+    </section>
 </pnor>

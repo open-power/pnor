@@ -149,10 +149,10 @@ Layout Description
         <ecc/>
     </section>
     <section>
-        <description>SBE-IPL (Staging Area) (288K)</description>
+        <description>SBE-IPL (Staging Area) (520K)</description>
         <eyeCatch>SBE</eyeCatch>
         <physicalOffset>0xF90000</physicalOffset>
-        <physicalRegionSize>0x48000</physicalRegionSize>
+        <physicalRegionSize>0x82000</physicalRegionSize>
         <sha512perEC/>
         <side>A</side>
         <ecc/>
@@ -160,7 +160,7 @@ Layout Description
     <section>
         <description>HCODE Ref Image (1.125MB)</description>
         <eyeCatch>HCODE</eyeCatch>
-        <physicalOffset>0xFE0000</physicalOffset>
+        <physicalOffset>0x101A000</physicalOffset>
         <physicalRegionSize>0x120000</physicalRegionSize>
         <side>A</side>
         <sha512Version/>
@@ -169,7 +169,7 @@ Layout Description
     <section>
         <description>Hostboot Runtime Services for Sapphire (4.5MB)</description>
         <eyeCatch>HBRT</eyeCatch>
-        <physicalOffset>0x1100000</physicalOffset>
+        <physicalOffset>0x113A000</physicalOffset>
         <physicalRegionSize>0x480000</physicalRegionSize>
         <sha512Version/>
         <side>A</side>
@@ -178,21 +178,21 @@ Layout Description
     <section>
         <description>Payload (1MB)</description>
         <eyeCatch>PAYLOAD</eyeCatch>
-        <physicalOffset>0x1580000</physicalOffset>
+        <physicalOffset>0x15BA000</physicalOffset>
         <physicalRegionSize>0x100000</physicalRegionSize>
         <side>A</side>
     </section>
     <section>
         <description>Bootloader Kernel (15MB)</description>
         <eyeCatch>BOOTKERNEL</eyeCatch>
-        <physicalOffset>0x1680000</physicalOffset>
+        <physicalOffset>0x16BA000</physicalOffset>
         <physicalRegionSize>0xF00000</physicalRegionSize>
         <side>A</side>
     </section>
     <section>
         <description>Nvram (576K)</description>
         <eyeCatch>NVRAM</eyeCatch>
-        <physicalOffset>0x2580000</physicalOffset>
+        <physicalOffset>0x25BA000</physicalOffset>
         <physicalRegionSize>0x90000</physicalRegionSize>
         <side>A</side>
         <preserved/>
@@ -201,7 +201,7 @@ Layout Description
     <section>
         <description>OCC Lid (1.125M)</description>
         <eyeCatch>OCC</eyeCatch>
-        <physicalOffset>0x2610000</physicalOffset>
+        <physicalOffset>0x264A000</physicalOffset>
         <physicalRegionSize>0x120000</physicalRegionSize>
         <side>A</side>
         <ecc/>
@@ -209,7 +209,7 @@ Layout Description
     <section>
         <description>FIRDATA (12K)</description>
         <eyeCatch>FIRDATA</eyeCatch>
-        <physicalOffset>0x2730000</physicalOffset>
+        <physicalOffset>0x276A000</physicalOffset>
         <physicalRegionSize>0x3000</physicalRegionSize>
         <side>A</side>
         <ecc/>
@@ -218,7 +218,7 @@ Layout Description
     <section>
         <description>CAPP Lid (144K)</description>
         <eyeCatch>CAPP</eyeCatch>
-        <physicalOffset>0x2740000</physicalOffset>
+        <physicalOffset>0x277A000</physicalOffset>
         <physicalRegionSize>0x24000</physicalRegionSize>
         <side>A</side>
         <ecc/>
@@ -226,7 +226,7 @@ Layout Description
     <section>
         <description>Secure Boot (144K)</description>
         <eyeCatch>SECBOOT</eyeCatch>
-        <physicalOffset>0x2770000</physicalOffset>
+        <physicalOffset>0x27AA000</physicalOffset>
         <physicalRegionSize>0x24000</physicalRegionSize>
         <side>sideless</side>
         <ecc/>
@@ -235,7 +235,7 @@ Layout Description
     <section>
         <description>BMC_INV (36K)</description>
         <eyeCatch>BMC_INV</eyeCatch>
-        <physicalOffset>0x27A0000</physicalOffset>
+        <physicalOffset>0x27DA000</physicalOffset>
         <physicalRegionSize>0x9000</physicalRegionSize>
         <side>sideless</side>
         <reprovision/>
@@ -243,7 +243,7 @@ Layout Description
     <section>
         <description>Hostboot Bootloader (22.5K)</description>
         <eyeCatch>HBBL</eyeCatch>
-        <physicalOffset>0x27B0000</physicalOffset>
+        <physicalOffset>0x27EA000</physicalOffset>
         <physicalRegionSize>0x6000</physicalRegionSize>
         <side>sideless</side>
         <ecc/>
@@ -251,7 +251,7 @@ Layout Description
     <section>
         <description>Temporary Attribute Override (32K)</description>
         <eyeCatch>ATTR_TMP</eyeCatch>
-        <physicalOffset>0x27C0000</physicalOffset>
+        <physicalOffset>0x27FA000</physicalOffset>
         <physicalRegionSize>0x8000</physicalRegionSize>
         <side>A</side>
         <reprovision/>
@@ -259,7 +259,7 @@ Layout Description
     <section>
         <description>Permanent Attribute Override (32K)</description>
         <eyeCatch>ATTR_PERM</eyeCatch>
-        <physicalOffset>0x27D0000</physicalOffset>
+        <physicalOffset>0x280A000</physicalOffset>
         <physicalRegionSize>0x8000</physicalRegionSize>
         <side>A</side>
         <ecc/>
@@ -268,14 +268,14 @@ Layout Description
     <section>
         <description>PNOR Version (4K)</description>
         <eyeCatch>VERSION</eyeCatch>
-        <physicalOffset>0x27E0000</physicalOffset>
+        <physicalOffset>0x281A000</physicalOffset>
         <physicalRegionSize>0x1000</physicalRegionSize>
         <side>A</side>
     </section>
     <section>
         <description>IMA Catalog (256K)</description>
         <eyeCatch>IMA_CATALOG</eyeCatch>
-        <physicalOffset>0x27F0000</physicalOffset>
+        <physicalOffset>0x282A000</physicalOffset>
         <physicalRegionSize>0x40000</physicalRegionSize>
         <side>A</side>
         <ecc/>
@@ -284,7 +284,7 @@ Layout Description
     <section>
         <description>Ref Image Ring Overrides (128K)</description>
         <eyeCatch>RINGOVD</eyeCatch>
-        <physicalOffset>0x2830000</physicalOffset>
+        <physicalOffset>0x286A000</physicalOffset>
         <physicalRegionSize>0x20000</physicalRegionSize>
         <side>A</side>
     </section> 
@@ -293,7 +293,7 @@ Layout Description
         <!-- We need 266KB per module sort, going to support
              10 sorts by default, plus ECC  -->
         <eyeCatch>WOFDATA</eyeCatch>
-        <physicalOffset>0x2850000</physicalOffset>
+        <physicalOffset>0x288A000</physicalOffset>
         <physicalRegionSize>0x300000</physicalRegionSize>
         <side>A</side>
         <ecc/>
@@ -301,7 +301,7 @@ Layout Description
     <section>
         <description>Hostboot deconfig area (64KB)</description>
         <eyeCatch>HB_VOLATILE</eyeCatch>
-        <physicalOffset>0x2B50000</physicalOffset>
+        <physicalOffset>0x2B8A000</physicalOffset>
         <physicalRegionSize>0x5000</physicalRegionSize>
         <side>A</side>
         <ecc/>

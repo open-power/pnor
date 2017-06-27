@@ -178,6 +178,9 @@ if ($release eq "p9") {
 #SBE image prep
 if ($release eq "p9") {
     run_command("python $sbe_binary_dir/sbeOpDistribute.py --install --buildSbePart $hb_image_dir/buildSbePart.pl --hw_ref_image $hb_binary_dir/p9n.ref_image.bin --sbe_binary_filename $sbe_binary_filename --scratch_dir $scratch_dir --sbe_binary_dir $sbe_binary_dir");
+    run_command("cp -f $scratch_dir/$sbe_binary_filename $scratch_dir/tmp_$sbe_binary_filename ");
+    run_command("dd if=$scratch_dir/tmp_$sbe_binary_filename of=$scratch_dir/$sbe_binary_filename bs=520K count=1 conv=sync");  #0s is good ECC
+
 }
 else {
     run_command("cp $hb_binary_dir/$sbe_binary_filename $scratch_dir/");

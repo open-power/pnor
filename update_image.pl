@@ -276,7 +276,7 @@ run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/i
 #Encode ECC into WOF/VFRT (WOFDATA) Partition
 if ($release eq "p9" && -e $wof_binary_filename) {
     run_command("dd if=$wof_binary_filename > $scratch_dir/hostboot.temp.bin");
-    run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/wofdata.bin.ecc");
+    run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/wofdata.bin.ecc --p8");
 }
 #Print error and blank binary if wof file does not exist
 elsif ($release eq "p9")

@@ -139,13 +139,13 @@ if ($release eq "p8") {
 run_command("env echo -en VERSION\\\\0 > $scratch_dir/hostboot.sha.bin");
 run_command("sha512sum $hb_image_dir/img/hostboot.bin | awk \'{print \$1}\' | xxd -pr -r >> $scratch_dir/hostboot.sha.bin");
 run_command("dd if=$scratch_dir/hostboot.sha.bin of=$scratch_dir/secureboot.header ibs=4k conv=sync");
-run_command("dd if=/dev/zero of=$scratch_dir/hbb.footer count=1 bs=128K");
 if ($release eq "p8") {
-    run_command("cat $scratch_dir/sbe.header $scratch_dir/secureboot.header $hb_image_dir/img/hostboot.bin $scratch_dir/hbb.footer > $scratch_dir/hostboot.stage.bin");
+    run_command("cat $scratch_dir/sbe.header $scratch_dir/secureboot.header $hb_image_dir/img/hostboot.bin > $scratch_dir/hostboot.stage.bin");
+    run_command("dd if=$scratch_dir/hostboot.stage.bin of=$scratch_dir/hostboot.header.bin ibs=512k conv=sync");
 } else {
-    run_command("cat $scratch_dir/secureboot.header $hb_image_dir/img/hostboot.bin $scratch_dir/hbb.footer > $scratch_dir/hostboot.stage.bin");
+    run_command("cat $scratch_dir/secureboot.header $hb_image_dir/img/hostboot.bin > $scratch_dir/hostboot.stage.bin");
+    run_command("dd if=$scratch_dir/hostboot.stage.bin of=$scratch_dir/hostboot.header.bin ibs=908k conv=sync");
 }
-run_command("head -c 524288 $scratch_dir/hostboot.stage.bin > $scratch_dir/hostboot.header.bin");
 
 run_command("ecc --inject $hb_image_dir/img/hostboot.bin --output $scratch_dir/hostboot.bin.ecc --p8");
 run_command("ecc --inject $scratch_dir/hostboot.header.bin --output $scratch_dir/hostboot.header.bin.ecc --p8");

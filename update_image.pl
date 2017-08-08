@@ -23,6 +23,7 @@ my $openpower_version_filename = "";
 my $payload = "";
 my $xz_compression = 0;
 my $wof_binary_filename = "";
+my $memd_binary_filename = "";
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -102,6 +103,11 @@ while (@ARGV > 0){
     elsif (/^-wof_binary_filename/i){
         #This filename is necessary if the file exists, but if it's not given, we add a blank partition
         $wof_binary_filename = $ARGV[1];
+        shift;
+    }
+    elsif (/^-memd_binary_filename/i){
+        #This filename is necessary if the file exists, but if it's not given, we add in a blank partition
+        $memd_binary_filename = $ARGV[1];
         shift;
     }
     else {
@@ -278,12 +284,26 @@ if ($release eq "p9" && -e $wof_binary_filename) {
     run_command("dd if=$wof_binary_filename ibs=2728K conv=sync > $scratch_dir/hostboot.temp.bin");
     run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/wofdata.bin.ecc --p8");
 }
+
 #Print error and blank binary if wof file does not exist
 elsif ($release eq "p9")
 {
     print "ERROR: WOFDATA partition is not found, including blank binary instead\n";
     run_command("dd if=/dev/zero bs=2730K count=1 | tr \"\\000\" \"\\377\" >    $scratch_dir/hostboot.temp.bin");
     run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/wofdata.bin.ecc --p8");
+}
+
+#Encode ECC into the MEMD Partition
+if ($release eq "p9" && -e $memd_binary_filename) {
+    run_command("dd if=$memd_binary_filename > $scratch_dir/hostboot.temp.bin");
+    run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/memd_extra.bin.ecc --p8");
+}
+
+#Create blank binary file for MEMD Partition (for now)
+elsif ($release eq "p9") {
+    print "ERROR: MEMD partition is not found, including blank binary instead\n";
+    run_command("dd if=/dev/zero bs=20K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");
+    run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/memd_extra_data.bin.ecc --p8");
 }
 
 

@@ -235,7 +235,6 @@ sub processConvergedSections {
     $sections{SBE}{out}         = "$scratch_dir/$sbe_binary_filename";
     $sections{PAYLOAD}{in}      = "$payload.bin";
     $sections{PAYLOAD}{out}     = "$scratch_dir/$payload_filename";
-    $sections{SBKT}{out}        = "$scratch_dir/SBKT.bin";
     $sections{HCODE}{in}        = "$hb_binary_dir/${stop_basename}.bin";
     $sections{HCODE}{out}       = "$scratch_dir/${stop_basename}.hdr.bin.ecc";
     $sections{HBRT}{in}         = "$hb_image_dir/img/hostboot_runtime.bin";
@@ -252,6 +251,9 @@ sub processConvergedSections {
     $sections{VERSION}{out}     = "$openpower_version_filename";
     $sections{IMA_CATALOG}{in}  = "$ima_catalog_binary_filename";
     $sections{IMA_CATALOG}{out} = "$scratch_dir/ima_catalog.bin.ecc";
+
+    # No input file, but special processing to emit optional content
+    $sections{SBKT}{out}        = "$scratch_dir/SBKT.bin";
 
     # Blank partitions
     $sections{HBEL}{out}        = "$scratch_dir/hbel.bin.ecc";
@@ -372,7 +374,8 @@ sub processConvergedSections {
         # Copy each output file to its final destination
         foreach my $section (keys %sections)
         {
-            next if(!exists $sections{$section}{in});
+            # Don't copy if output file path is same as generated file
+            next if("$sections{$section}{out}" eq "$scratch_dir/$section.bin");
             run_command("cp $scratch_dir/$section.bin "
                 . "$sections{$section}{out}");
         }

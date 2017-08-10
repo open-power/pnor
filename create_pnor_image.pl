@@ -150,6 +150,7 @@ if ($release eq "p8"){
     $build_pnor_command .= " --binFile_SBEC $scratch_dir/$sbec_binary_filename";
     $build_pnor_command .= " --binFile_WINK $scratch_dir/$wink_binary_filename";
 } else {
+    $build_pnor_command .= " --binFile_SBKT $scratch_dir/SBKT.bin";
     $build_pnor_command .= " --binFile_HCODE $scratch_dir/$wink_binary_filename";
     $build_pnor_command .= " --binFile_HBBL $scratch_dir/hbbl.bin.ecc";
     $build_pnor_command .= " --binFile_RINGOVD $scratch_dir/ringOvd.bin";

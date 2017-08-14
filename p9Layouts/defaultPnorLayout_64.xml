@@ -288,6 +288,7 @@ Layout Description
         <physicalOffset>0x280F000</physicalOffset>
         <physicalRegionSize>0x40000</physicalRegionSize>
         <side>A</side>
+        <sha512Version/>
         <ecc/>
     </section>
     <section>

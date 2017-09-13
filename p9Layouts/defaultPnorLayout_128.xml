@@ -322,7 +322,7 @@ Layout Description
         <description>MEMD extra data (28K)</description>
         <eyeCatch>MEMD</eyeCatch>
         <physicalOffset>0x2BAE000</physicalOffset>
-        <physicalRegionSize>0x7000</physicalRegionSize>
+        <physicalRegionSize>0xE000</physicalRegionSize>
         <side>A</side>
         <sha512Version/>
         <ecc/>
@@ -330,7 +330,7 @@ Layout Description
     <section>
         <description>SecureBoot Key Transition Partition (16K)</description>
         <eyeCatch>SBKT</eyeCatch>
-        <physicalOffset>0x2BB5000</physicalOffset>
+        <physicalOffset>0x2BC2000</physicalOffset>
         <physicalRegionSize>0x4000</physicalRegionSize>
         <side>A</side>
         <sha512Version/>

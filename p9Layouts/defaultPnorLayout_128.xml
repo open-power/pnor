@@ -60,6 +60,8 @@ Layout Description
     <preserved/>    -> Indicates Partition is preserved across code updates.
     <volatile/>     -> Indicates Partition is not preserved across power offs, 
                        but is across reboots. BMC will clear on power off/on
+    <clearOnEccErr/>-> Indication that if an ECC error is comsumed on this partition,
+                       clear (write 0xFF with good ECC) to the partition to recover
 </section>
 -->
 
@@ -82,6 +84,7 @@ Layout Description
         <side>A</side>
         <ecc/>
         <reprovision/>
+        <clearOnEccErr/>
     </section>
     <section>
         <description>Guard Data (20K)</description>
@@ -92,6 +95,7 @@ Layout Description
         <ecc/>
         <preserved/>
         <reprovision/>
+        <clearOnEccErr/>
     </section>
     <section>
         <description>Nvram (576K)</description>
@@ -120,6 +124,7 @@ Layout Description
         <side>A</side>
         <ecc/>
         <reprovision/>
+        <clearOnEccErr/>
     </section>
     <section>
         <description>Module VPD (576K)</description>
@@ -130,6 +135,7 @@ Layout Description
         <side>A</side>
         <ecc/>
         <reprovision/>
+        <clearOnEccErr/>
     </section>
     <section>
         <description>Centaur VPD (288K)</description>
@@ -140,6 +146,7 @@ Layout Description
         <side>A</side>
         <ecc/>
         <reprovision/>
+        <clearOnEccErr/>
     </section>
     <section>
         <description>Hostboot Base (1M)</description>
@@ -229,6 +236,7 @@ Layout Description
         <side>A</side>
         <ecc/>
         <reprovision/>
+        <clearOnEccErr/>
     </section>
     <section>
         <description>CAPP Lid (144K)</description>
@@ -274,6 +282,7 @@ Layout Description
         <side>A</side>
         <ecc/>
         <reprovision/>
+        <clearOnEccErr/>
     </section>
     <section>
         <description>PNOR Version (4K)</description>
@@ -317,6 +326,7 @@ Layout Description
         <side>A</side>
         <ecc/>
         <volatile/>
+        <clearOnEccErr/>
     </section>
     <section>
         <description>MEMD extra data (28K)</description>

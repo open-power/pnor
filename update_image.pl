@@ -32,6 +32,7 @@ my $key_transition = "";
 my $pnor_layout = "";
 my $debug = 0;
 my $sign_mode = "";
+my $hdat_binary_filename = "";
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -140,6 +141,11 @@ while (@ARGV > 0){
     elsif (/^-memd_binary_filename/i){
         #This filename is necessary if the file exists, but if it's not given, we add in a blank partition
         $memd_binary_filename = $ARGV[1];
+        shift;
+    }
+    elsif(/^-hdat_binary_filename/i){
+        # This filename is necessary if the file exists, but if its not given, we add blank partition
+        $hdat_binary_filename = $ARGV[1];
         shift;
     }
     else {
@@ -286,6 +292,17 @@ sub processConvergedSections {
         print "WARNING: MEMD partition is not found, including blank binary instead\n";
     }
     $sections{MEMD}{out}       = "$scratch_dir/memd_extra_data.bin.ecc";
+   
+    # SMC COPY SAME ideas for hdat 
+    if(-e "$hb_image_dir/$hdat_binary_filename")
+    {
+        $sections{HDAT}{in}    = "$hb_image_dir/$hdat_binary_filename";
+    }
+    else
+    {
+        print "WARNING: HDAT partition is not found, including blank binary instead\n";
+    }
+    $sections{HDAT}{out}       = "$scratch_dir/hdat.bin.ecc";
 
     # Build up the system bin files specification
     my $system_bin_files;

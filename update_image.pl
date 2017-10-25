@@ -10,6 +10,7 @@ my $op_target_dir = "";
 my $hb_image_dir = "";
 my $scratch_dir = "";
 my $hb_binary_dir = "";
+my $hcode_dir = "";
 my $sbe_binary_dir = "";
 my $targeting_binary_filename = "";
 my $targeting_binary_source = "";
@@ -60,6 +61,10 @@ while (@ARGV > 0){
     }
     elsif (/^-hb_binary_dir/i){
         $hb_binary_dir = $ARGV[1] or die "Bad command line arg given: expecting a config type.\n";
+        shift;
+    }
+    elsif (/^-hcode_dir/i){
+        $hcode_dir = $ARGV[1] or die "Bad command line arg given: expecting a config type.\n";
         shift;
     }
     elsif (/^-sbe_binary_dir/i){
@@ -211,7 +216,7 @@ if ($release eq "p9") {
 
 # SBE image prep
 if ($release eq "p9") {
-    run_command("python $sbe_binary_dir/sbeOpDistribute.py --install --buildSbePart $hb_image_dir/buildSbePart.pl --hw_ref_image $hb_binary_dir/p9n.ref_image.bin --sbe_binary_filename $sbe_binary_filename --scratch_dir $scratch_dir --sbe_binary_dir $sbe_binary_dir");
+    run_command("python $sbe_binary_dir/sbeOpDistribute.py --install --buildSbePart $hb_image_dir/buildSbePart.pl --hw_ref_image $hcode_dir/p9n.ref_image.bin --sbe_binary_filename $sbe_binary_filename --scratch_dir $scratch_dir --sbe_binary_dir $sbe_binary_dir");
 }
 else {
     run_command("cp $hb_binary_dir/$sbe_binary_filename $scratch_dir/");
@@ -227,6 +232,7 @@ sub processConvergedSections {
     my $sbePreEcc = "$scratch_dir/$sbe_binary_filename";
     $sbePreEcc =~ s/.ecc//;
 
+
     # Source and destination file for each supported section
     my %sections=();
     $sections{HBBL}{in}         = "$scratch_dir/hbbl.bin";
@@ -241,7 +247,7 @@ sub processConvergedSections {
     $sections{SBE}{out}         = "$scratch_dir/$sbe_binary_filename";
     $sections{PAYLOAD}{in}      = "$payload.bin";
     $sections{PAYLOAD}{out}     = "$scratch_dir/$payload_filename";
-    $sections{HCODE}{in}        = "$hb_binary_dir/${stop_basename}.bin";
+    $sections{HCODE}{in}        = "$hcode_dir/${stop_basename}.bin";
     $sections{HCODE}{out}       = "$scratch_dir/${stop_basename}.hdr.bin.ecc";
     $sections{HBRT}{in}         = "$hb_image_dir/img/hostboot_runtime.bin";
     $sections{HBRT}{out}        = "$scratch_dir/hostboot_runtime.header.bin.ecc";

@@ -183,6 +183,7 @@ Layout Description
         <side>A</side>
         <sha512Version/>
         <sha512perEC/>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -192,6 +193,7 @@ Layout Description
         <physicalRegionSize>0x120000</physicalRegionSize>
         <side>A</side>
         <sha512Version/>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -201,6 +203,7 @@ Layout Description
         <physicalRegionSize>0x480000</physicalRegionSize>
         <side>A</side>
         <sha512Version/>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -210,6 +213,7 @@ Layout Description
         <physicalRegionSize>0x100000</physicalRegionSize>
         <side>A</side>
         <sha512Version/>
+        <readOnly/>
     </section>
     <section>
         <description>Bootloader Kernel (15MB)</description>
@@ -218,6 +222,7 @@ Layout Description
         <physicalRegionSize>0xF00000</physicalRegionSize>
         <side>A</side>
         <sha512Version/>
+        <readOnly/>
     </section>
     <section>
         <description>OCC Lid (1.125M)</description>
@@ -226,6 +231,7 @@ Layout Description
         <physicalRegionSize>0x120000</physicalRegionSize>
         <side>A</side>
         <sha512Version/>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -245,6 +251,7 @@ Layout Description
         <physicalRegionSize>0x24000</physicalRegionSize>
         <side>A</side>
         <sha512Version/>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -264,6 +271,7 @@ Layout Description
         <physicalRegionSize>0x7000</physicalRegionSize>
         <side>sideless</side>
         <sha512Version/>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -290,6 +298,7 @@ Layout Description
         <physicalOffset>0x2848000</physicalOffset>
         <physicalRegionSize>0x1000</physicalRegionSize>
         <side>A</side>
+        <readOnly/>
     </section>
     <section>
         <description>IMA Catalog (256K)</description>
@@ -298,6 +307,7 @@ Layout Description
         <physicalRegionSize>0x40000</physicalRegionSize>
         <side>A</side>
         <sha512Version/>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -316,6 +326,7 @@ Layout Description
         <physicalRegionSize>0x300000</physicalRegionSize>
         <side>A</side>
         <sha512Version/>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -336,6 +347,7 @@ Layout Description
         <physicalRegionSize>0xE000</physicalRegionSize>
         <side>A</side>
         <sha512Version/>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -345,6 +357,7 @@ Layout Description
         <physicalRegionSize>0x4000</physicalRegionSize>
         <side>A</side>
         <sha512Version/>
+        <readOnly/>
         <ecc/>
     </section>
 </pnor>

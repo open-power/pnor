@@ -282,6 +282,11 @@ Layout Description
         <side>A</side>
         <reprovision/>
     </section>
+<!-- Commenting this temporarily as a workaround for accomadating 
+     new partition. Due to incorrect Toc size assumption, currently
+     we are unable to create more than 31 partitions. Until the 
+     proper fix comes in, commenting this out based on internal 
+     discussion.
     <section>
         <description>Permanent Attribute Override (32K)</description>
         <eyeCatch>ATTR_PERM</eyeCatch>
@@ -292,6 +297,7 @@ Layout Description
         <reprovision/>
         <clearOnEccErr/>
     </section>
+-->
     <section>
         <description>PNOR Version (4K)</description>
         <eyeCatch>VERSION</eyeCatch>
@@ -358,6 +364,15 @@ Layout Description
         <side>A</side>
         <sha512Version/>
         <readOnly/>
+        <ecc/>
+    </section>
+    <section>
+        <description>HDAT binary data (16KB)</description>
+        <eyeCatch>HDAT</eyeCatch>
+        <physicalOffset>0x2BC6000</physicalOffset>
+        <physicalRegionSize>0x4000</physicalRegionSize>
+        <side>sideless</side>
+        <sha512Version/>
         <ecc/>
     </section>
 </pnor>

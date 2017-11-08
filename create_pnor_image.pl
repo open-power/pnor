@@ -21,6 +21,7 @@ my $occ_binary_filename = "";
 my $openpower_version_filename = "";
 my $wofdata_binary_filename = "";
 my $memddata_binary_filename = "";
+my $hdat_binary_filename = "";
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -99,6 +100,10 @@ while (@ARGV > 0){
         $memddata_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting a memddata binary filename.\n";
         shift;
     }
+    elsif (/^-hdat_binary_filename/i){
+        $hdat_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting a hdat binary filename.\n";
+        shift;
+    }
     else {
         print "Unrecognized command line arg: $_ \n";
         print "To view all the options and help text run \'$program_name -h\' \n";
@@ -145,6 +150,7 @@ $build_pnor_command .= " --binFile_IMA_CATALOG $scratch_dir/ima_catalog.bin.ecc"
 if ($release eq "p9"){
     $build_pnor_command .= " --binFile_WOFDATA $wofdata_binary_filename" if -e $wofdata_binary_filename;
     $build_pnor_command .= " --binFile_MEMD $memddata_binary_filename" if -e $memddata_binary_filename;
+    $build_pnor_command .= " --binFile_HDAT $hdat_binary_filename" if -e $hdat_binary_filename;
 }
 if ($release eq "p8"){
     $build_pnor_command .= " --binFile_SBEC $scratch_dir/$sbec_binary_filename";

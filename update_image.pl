@@ -32,7 +32,6 @@ my $key_transition = "";
 my $pnor_layout = "";
 my $debug = 0;
 my $sign_mode = "";
-my $hdat_binary_filename = "";
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -141,11 +140,6 @@ while (@ARGV > 0){
     elsif (/^-memd_binary_filename/i){
         #This filename is necessary if the file exists, but if it's not given, we add in a blank partition
         $memd_binary_filename = $ARGV[1];
-        shift;
-    }
-    elsif(/^-hdat_binary_filename/i){
-        # This filename is necessary if the file exists, but if its not given, we add blank partition
-        $hdat_binary_filename = $ARGV[1];
         shift;
     }
     else {
@@ -268,6 +262,7 @@ sub processConvergedSections {
     $sections{MVPD}{out}        = "$scratch_dir/mvpd_fill.bin.ecc";
     $sections{DJVPD}{out}       = "$scratch_dir/djvpd_fill.bin.ecc";
     $sections{ATTR_TMP}{out}    = "$scratch_dir/attr_tmp.bin.ecc";
+    $sections{ATTR_PERM}{out}   = "$scratch_dir/attr_perm.bin.ecc";
     $sections{FIRDATA}{out}     = "$scratch_dir/firdata.bin.ecc";
     $sections{SECBOOT}{out}     = "$scratch_dir/secboot.bin.ecc";
     $sections{RINGOVD}{out}     = "$scratch_dir/ringOvd.bin";
@@ -291,17 +286,6 @@ sub processConvergedSections {
         print "WARNING: MEMD partition is not found, including blank binary instead\n";
     }
     $sections{MEMD}{out}       = "$scratch_dir/memd_extra_data.bin.ecc";
-   
-    # SMC COPY SAME ideas for hdat 
-    if(-e $hdat_binary_filename)
-    {
-        $sections{HDAT}{in}    = "$hdat_binary_filename";
-    }
-    else
-    {
-        print "WARNING: HDAT partition is not found, including blank binary instead\n";
-    }
-    $sections{HDAT}{out}       = "$scratch_dir/hdat.bin.ecc";
 
     # Build up the system bin files specification
     my $system_bin_files;
@@ -488,6 +472,10 @@ else
     # Create blank binary file for ATTR_TMP partition
     run_command("dd if=/dev/zero bs=28K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");
     run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/attr_tmp.bin.ecc --p8");
+
+    # Create blank binary file for ATTR_PERM partition
+    run_command("dd if=/dev/zero bs=28K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");
+    run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/attr_perm.bin.ecc --p8");
 
     # Create blank binary file for FIRDATA partition
     run_command("dd if=/dev/zero bs=8K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");

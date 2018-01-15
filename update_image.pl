@@ -272,6 +272,11 @@ sub processConvergedSections {
     $sections{SECBOOT}{out}     = "$scratch_dir/secboot.bin.ecc";
     $sections{RINGOVD}{out}     = "$scratch_dir/ringOvd.bin";
 
+    if($release eq "p8")
+    {
+        $sections{ATTR_PERM}{out}   = "$scratch_dir/attr_perm.bin.ecc";
+    }
+
     if(-e $wof_binary_filename)
     {
         $sections{WOFDATA}{in} = "$wof_binary_filename";
@@ -488,6 +493,13 @@ else
     # Create blank binary file for ATTR_TMP partition
     run_command("dd if=/dev/zero bs=28K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");
     run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/attr_tmp.bin.ecc --p8");
+    
+    # Create blank binary file for ATTR_PERM partition
+    if($release eq "p8")
+    {
+        run_command("dd if=/dev/zero bs=28K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");
+        run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/attr_perm.bin.ecc --p8");
+    }
 
     # Create blank binary file for FIRDATA partition
     run_command("dd if=/dev/zero bs=8K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");

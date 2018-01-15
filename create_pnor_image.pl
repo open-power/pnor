@@ -154,6 +154,7 @@ if ($release eq "p9"){
 if ($release eq "p8"){
     $build_pnor_command .= " --binFile_SBEC $scratch_dir/$sbec_binary_filename";
     $build_pnor_command .= " --binFile_WINK $scratch_dir/$wink_binary_filename";
+    $build_pnor_command .= " --binFile_ATTR_PERM $scratch_dir/attr_perm.bin.ecc";
 } else {
     $build_pnor_command .= " --binFile_SBKT $scratch_dir/SBKT.bin";
     $build_pnor_command .= " --binFile_HCODE $scratch_dir/$wink_binary_filename";

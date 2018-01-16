@@ -282,11 +282,6 @@ Layout Description
         <side>A</side>
         <reprovision/>
     </section>
-<!-- Commenting this temporarily as a workaround for accomadating 
-     new partition. Due to incorrect Toc size assumption, currently
-     we are unable to create more than 31 partitions. Until the 
-     proper fix comes in, commenting this out based on internal 
-     discussion.
     <section>
         <description>Permanent Attribute Override (32K)</description>
         <eyeCatch>ATTR_PERM</eyeCatch>
@@ -297,7 +292,6 @@ Layout Description
         <reprovision/>
         <clearOnEccErr/>
     </section>
--->
     <section>
         <description>PNOR Version (4K)</description>
         <eyeCatch>VERSION</eyeCatch>

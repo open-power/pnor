@@ -360,14 +360,4 @@ Layout Description
         <readOnly/>
         <ecc/>
     </section>
-    <section>
-        <description>HDAT binary data (16KB)</description>
-        <eyeCatch>HDAT</eyeCatch>
-        <physicalOffset>0x2BC6000</physicalOffset>
-        <physicalRegionSize>0x8000</physicalRegionSize>
-        <side>sideless</side>
-        <sha512Version/>
-        <readOnly/>
-        <ecc/>
-    </section>
 </pnor>

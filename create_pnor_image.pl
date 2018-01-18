@@ -140,6 +140,7 @@ $build_pnor_command .= " --binFile_DJVPD $scratch_dir/djvpd_fill.bin.ecc";
 $build_pnor_command .= " --binFile_CVPD $scratch_dir/cvpd.bin.ecc";
 $build_pnor_command .= " --binFile_ATTR_TMP $scratch_dir/attr_tmp.bin.ecc";
 $build_pnor_command .= " --binFile_OCC $occ_binary_filename.ecc";
+$build_pnor_command .= " --binFile_ATTR_PERM $scratch_dir/attr_perm.bin.ecc";
 $build_pnor_command .= " --binFile_FIRDATA $scratch_dir/firdata.bin.ecc";
 $build_pnor_command .= " --binFile_CAPP $scratch_dir/cappucode.bin.ecc";
 $build_pnor_command .= " --binFile_SECBOOT $scratch_dir/secboot.bin.ecc";
@@ -154,7 +155,6 @@ if ($release eq "p9"){
 if ($release eq "p8"){
     $build_pnor_command .= " --binFile_SBEC $scratch_dir/$sbec_binary_filename";
     $build_pnor_command .= " --binFile_WINK $scratch_dir/$wink_binary_filename";
-    $build_pnor_command .= " --binFile_ATTR_PERM $scratch_dir/attr_perm.bin.ecc";
 } else {
     $build_pnor_command .= " --binFile_SBKT $scratch_dir/SBKT.bin";
     $build_pnor_command .= " --binFile_HCODE $scratch_dir/$wink_binary_filename";

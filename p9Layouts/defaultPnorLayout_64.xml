@@ -199,7 +199,7 @@ Layout Description
     <section>
         <description>Hostboot Runtime Services for Sapphire (4.5MB)</description>
         <eyeCatch>HBRT</eyeCatch>
-        <physicalOffset>0x1381000</physicalOffset>
+        <physicalOffset>0x14A1000</physicalOffset>
         <physicalRegionSize>0x480000</physicalRegionSize>
         <side>A</side>
         <sha512Version/>
@@ -303,7 +303,7 @@ Layout Description
     <section>
         <description>IMA Catalog (256K)</description>
         <eyeCatch>IMA_CATALOG</eyeCatch>
-        <physicalOffset>0x2A88000</physicalOffset>
+        <physicalOffset>0x2A89000</physicalOffset>
         <physicalRegionSize>0x40000</physicalRegionSize>
         <side>A</side>
         <sha512Version/>

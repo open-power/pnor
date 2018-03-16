@@ -292,8 +292,8 @@ sub processConvergedSections {
         print "WARNING: MEMD partition is not found, including blank binary instead\n";
     }
     $sections{MEMD}{out}       = "$scratch_dir/memd_extra_data.bin.ecc";
-   
-    # SMC COPY SAME ideas for hdat 
+
+    # SMC COPY SAME ideas for hdat
     if(-e $hdat_binary_filename)
     {
         $sections{HDAT}{in}    = "$hdat_binary_filename";
@@ -358,7 +358,6 @@ sub processConvergedSections {
         # Point to the location of the signing tools
         $ENV{'DEV_KEY_DIR'}="$ENV{'HOST_DIR'}/etc/keys/";
         $ENV{'SIGNING_DIR'} = "$ENV{'HOST_DIR'}/usr/bin/";
-        $ENV{'SIGNING_TOOL_EDITION'} = "community";
 
         # Determine whether to securely sign the images
         my $securebootArg = $secureboot ? "--secureboot" : "";
@@ -382,8 +381,6 @@ sub processConvergedSections {
         {
             print STDOUT "SIGNING_DIR: " . $ENV{'SIGNING_DIR'} . "\n";
             print STDOUT "DEV_KEY_DIR: " . $ENV{'DEV_KEY_DIR'} . "\n";
-            print STDOUT "SIGNING_TOOL_EDITION: "
-                . $ENV{'SIGNING_TOOL_EDITION'} . "\n";
         }
 
         run_command($cmd);
@@ -489,7 +486,7 @@ else
     # Create blank binary file for ATTR_TMP partition
     run_command("dd if=/dev/zero bs=28K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");
     run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/attr_tmp.bin.ecc --p8");
-    
+
     # Create blank binary file for ATTR_PERM partition
     run_command("dd if=/dev/zero bs=28K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");
     run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/attr_perm.bin.ecc --p8");

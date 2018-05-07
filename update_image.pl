@@ -267,7 +267,7 @@ sub processConvergedSections {
     $sections{CVPD}{in}         = "$hb_binary_dir/cvpd.bin";
     $sections{CVPD}{out}        = "$scratch_dir/cvpd.bin.ecc";
     $sections{VERSION}{in}      = "$openpower_version_filename";
-    $sections{VERSION}{out}     = "$openpower_version_filename";
+    $sections{VERSION}{out}     = "$scratch_dir/openpower_pnor_version.bin";
     $sections{IMA_CATALOG}{in}  = "$ima_catalog_binary_filename";
     $sections{IMA_CATALOG}{out} = "$scratch_dir/ima_catalog.bin.ecc";
 
@@ -470,8 +470,7 @@ else
     run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/cvpd.bin.ecc --p8");
 
     # Stage VERSION partition
-    run_command("dd if=$openpower_version_filename of=$scratch_dir/openpower_version.temp ibs=4K conv=sync");
-    run_command("cp $scratch_dir/openpower_version.temp $openpower_version_filename");
+    run_command("dd if=$openpower_version_filename of=$scratch_dir/openpower_pnor_version.bin ibs=4K conv=sync");
 
     # Inject ECC into IMA_CATALOG partition binary
     run_command("dd if=$ima_catalog_binary_filename bs=36K count=1 > $scratch_dir/hostboot.temp.bin");

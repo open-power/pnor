@@ -338,6 +338,7 @@ Layout Description
         <physicalOffset>0x2F69000</physicalOffset>
         <physicalRegionSize>0x5000</physicalRegionSize>
         <side>A</side>
+        <reprovision/>
         <ecc/>
         <volatile/>
         <clearOnEccErr/>
@@ -358,6 +359,16 @@ Layout Description
         <physicalOffset>0x2F82000</physicalOffset>
         <physicalRegionSize>0x4000</physicalRegionSize>
         <side>A</side>
+        <sha512Version/>
+        <readOnly/>
+        <ecc/>
+    </section>
+    <section>
+        <description>HDAT binary data (16KB)</description>
+        <eyeCatch>HDAT</eyeCatch>
+        <physicalOffset>0x2F86000</physicalOffset>
+        <physicalRegionSize>0x8000</physicalRegionSize>
+        <side>sideless</side>
         <sha512Version/>
         <readOnly/>
         <ecc/>

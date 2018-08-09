@@ -170,7 +170,7 @@ Layout Description
         <ecc/>
     </section>
     <section>
-        <description>Hostboot Extended image (11MB w/o ECC)</description>
+        <description>Hostboot Extended image (13MB w/o ECC)</description>
         <eyeCatch>HBI</eyeCatch>
         <physicalOffset>0x425000</physicalOffset>
         <physicalRegionSize>0xEA0000</physicalRegionSize>

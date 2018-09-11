@@ -62,6 +62,7 @@ Layout Description
                        but is across reboots. BMC will clear on power off/on
     <clearOnEccErr/>-> Indication that if an ECC error is comsumed on this partition,
                        clear (write 0xFF with good ECC) to the partition to recover
+    <readOnly/>     -> Indicates that the partition will be marked read only.
 </section>
 -->
 
@@ -158,6 +159,7 @@ Layout Description
         <physicalRegionSize>0x100000</physicalRegionSize>
         <side>A</side>
         <sha512Version/>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -176,6 +178,7 @@ Layout Description
         <physicalRegionSize>0xEA0000</physicalRegionSize>
         <side>A</side>
         <sha512Version/>
+        <readOnly/>
         <ecc/>
     </section>
     <section>

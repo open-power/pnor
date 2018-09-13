@@ -376,4 +376,13 @@ Layout Description
         <readOnly/>
         <ecc/>
     </section>
+    <section>
+        <description>Ultravisor binary image (1MB)</description>
+        <eyeCatch>ULTRA</eyeCatch>
+        <physicalOffset>0x2F8E000</physicalOffset>
+        <physicalRegionSize>0x100000</physicalRegionSize>
+        <side>sideless</side>
+        <sha512Version/>
+        <ecc/>
+    </section>
 </pnor>

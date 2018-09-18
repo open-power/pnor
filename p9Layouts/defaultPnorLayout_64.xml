@@ -368,7 +368,7 @@ Layout Description
         <ecc/>
     </section>
     <section>
-        <description>HDAT binary data (16KB)</description>
+        <description>HDAT binary data (32KB)</description>
         <eyeCatch>HDAT</eyeCatch>
         <physicalOffset>0x2F81000</physicalOffset>
         <physicalRegionSize>0x8000</physicalRegionSize>
@@ -380,10 +380,10 @@ Layout Description
     <section>
         <description>Ultravisor binary image (1MB)</description>
         <eyeCatch>UVISOR</eyeCatch>
-        <physicalOffset>0x2F8E000</physicalOffset>
+        <physicalOffset>0x2F89000</physicalOffset>
         <physicalRegionSize>0x100000</physicalRegionSize>
         <side>sideless</side>
         <sha512Version/>
-        <ecc/>
+        <readOnly/>
     </section>
 </pnor>

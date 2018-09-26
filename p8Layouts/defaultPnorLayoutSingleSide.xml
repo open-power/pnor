@@ -57,6 +57,8 @@ Layout Description
                    across code updates.
     <reprovision/> Indicates Partition should be erased
                    during a system reprovision.
+    <readOnly/>    Indicates that the parition will be
+                   marked read only.
 -->
 
 <pnor>
@@ -76,6 +78,7 @@ Layout Description
         <physicalRegionSize>0x5A0000</physicalRegionSize>
         <side>A</side>
         <sha512Version/>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -120,6 +123,7 @@ Layout Description
         <physicalRegionSize>0x90000</physicalRegionSize>
         <side>A</side>
         <sha512perEC/>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -129,6 +133,7 @@ Layout Description
         <physicalRegionSize>0x48000</physicalRegionSize>
         <side>A</side>
         <sha512perEC/>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -155,6 +160,7 @@ Layout Description
         <physicalRegionSize>0x120000</physicalRegionSize>
         <side>A</side>
         <sha512Version/>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -182,6 +188,7 @@ Layout Description
         <physicalOffset>0x961000</physicalOffset>
         <physicalRegionSize>0x100000</physicalRegionSize>
         <side>A</side>
+        <readOnly/>
     </section>
     <section>
         <description>Bootloader Kernel (15MB)</description>
@@ -189,6 +196,7 @@ Layout Description
         <physicalOffset>0xA61000</physicalOffset>
         <physicalRegionSize>0xF00000</physicalRegionSize>
         <side>A</side>
+        <readOnly/>
     </section>
     <section>
         <description>Nvram (576K)</description>
@@ -206,6 +214,7 @@ Layout Description
         <physicalRegionSize>0x360000</physicalRegionSize>
         <side>A</side>
         <sha512Version/>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -214,6 +223,7 @@ Layout Description
         <physicalOffset>0x1D51000</physicalOffset>
         <physicalRegionSize>0x120000</physicalRegionSize>
         <side>A</side>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -232,6 +242,7 @@ Layout Description
         <physicalRegionSize>0x24000</physicalRegionSize>
         <side>A</side>
         <ecc/>
+        <readOnly/>
     </section>
     <section>
         <description>Secure Boot (144K)</description>
@@ -256,6 +267,7 @@ Layout Description
         <physicalOffset>0x1EC5000</physicalOffset>
         <physicalRegionSize>0x9000</physicalRegionSize>
         <side>A</side>
+        <readOnly/>
         <ecc/>
         <reprovision/>
     </section>
@@ -266,6 +278,7 @@ Layout Description
         <physicalRegionSize>0x90000</physicalRegionSize>
         <side>A</side>
         <sha512Version/>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -274,5 +287,6 @@ Layout Description
         <physicalOffset>0x1FF7000</physicalOffset>
         <physicalRegionSize>0x1000</physicalRegionSize>
         <side>A</side>
+        <readOnly/>
     </section>
 </pnor>

@@ -55,8 +55,9 @@ Layout Description
     <sha512perEC/>  -> Indicates SHA512 is used to indicate version for each
                        EC-specific image within the Partition.
     <preserved/>    -> Indicates Partition is preserved across code updates.
-    <reprovision/>  -> Indicates Partition should be erased during a system 
+    <reprovision/>  -> Indicates Partition should be erased during a system
                        reprovision.
+    <readOnly/>     -> Indicates that the partition will be marked read only.
 </section>
 -->
 
@@ -138,6 +139,7 @@ Layout Description
         <physicalOffset>0x1B1000</physicalOffset>
         <physicalRegionSize>0x5A0000</physicalRegionSize>
         <sha512Version/>
+        <readOnly/>
         <side>A</side>
         <ecc/>
     </section>
@@ -148,6 +150,7 @@ Layout Description
         <physicalRegionSize>0x90000</physicalRegionSize>
         <sha512perEC/>
         <side>A</side>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -157,6 +160,7 @@ Layout Description
         <physicalRegionSize>0x48000</physicalRegionSize>
         <sha512perEC/>
         <side>A</side>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -166,6 +170,7 @@ Layout Description
         <physicalRegionSize>0x120000</physicalRegionSize>
         <sha512Version/>
         <side>A</side>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -175,6 +180,7 @@ Layout Description
         <physicalRegionSize>0x360000</physicalRegionSize>
         <sha512Version/>
         <side>A</side>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -183,6 +189,7 @@ Layout Description
         <physicalOffset>0xCA9000</physicalOffset>
         <physicalRegionSize>0x100000</physicalRegionSize>
         <side>A</side>
+        <readOnly/>
     </section>
     <section>
         <description>Bootloader Kernel (15MB)</description>
@@ -190,6 +197,7 @@ Layout Description
         <physicalOffset>0xDA9000</physicalOffset>
         <physicalRegionSize>0xF00000</physicalRegionSize>
         <side>A</side>
+        <readOnly/>
     </section>
     <section>
         <description>Temporary Attribute Override (32K)</description>
@@ -214,6 +222,7 @@ Layout Description
         <physicalOffset>0x1CB9000</physicalOffset>
         <physicalRegionSize>0x120000</physicalRegionSize>
         <side>A</side>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -257,6 +266,7 @@ Layout Description
         <physicalOffset>0x1E7E000</physicalOffset>
         <physicalRegionSize>0x24000</physicalRegionSize>
         <side>A</side>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -274,6 +284,7 @@ Layout Description
         <physicalOffset>0x1EC6000</physicalOffset>
         <physicalRegionSize>0x9000</physicalRegionSize>
         <side>A</side>
+        <readOnly/>
         <ecc/>
         <reprovision/>
     </section>
@@ -286,6 +297,7 @@ Layout Description
         <physicalOffset>0x1F60000</physicalOffset>
         <physicalRegionSize>0x90000</physicalRegionSize>
         <sha512Version/>
+        <readOnly/>
         <side>A</side>
         <ecc/>
     </section>
@@ -295,6 +307,7 @@ Layout Description
         <physicalOffset>0x1FF7000</physicalOffset>
         <physicalRegionSize>0x1000</physicalRegionSize>
         <side>A</side>
+        <readOnly/>
     </section>
     <!-- Golden Side (Side B) -->
     <section>
@@ -311,6 +324,7 @@ Layout Description
         <physicalOffset>0x2188000</physicalOffset>
         <physicalRegionSize>0x5A0000</physicalRegionSize>
         <sha512Version/>
+        <readOnly/>
         <side>B</side>
         <ecc/>
     </section>
@@ -321,6 +335,7 @@ Layout Description
         <physicalRegionSize>0x90000</physicalRegionSize>
         <sha512perEC/>
         <side>B</side>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -330,6 +345,7 @@ Layout Description
         <physicalRegionSize>0x48000</physicalRegionSize>
         <sha512perEC/>
         <side>B</side>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -339,6 +355,7 @@ Layout Description
         <physicalRegionSize>0x120000</physicalRegionSize>
         <sha512Version/>
         <side>B</side>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -348,6 +365,7 @@ Layout Description
         <physicalRegionSize>0x360000</physicalRegionSize>
         <sha512Version/>
         <side>B</side>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -356,6 +374,7 @@ Layout Description
         <physicalOffset>0x2C80000</physicalOffset>
         <physicalRegionSize>0x100000</physicalRegionSize>
         <side>B</side>
+        <readOnly/>
         <compressed>
             <algorithm>xz</algorithm>
             <uncompressedSize>0x100000</uncompressedSize>
@@ -367,6 +386,7 @@ Layout Description
         <physicalOffset>0x2D80000</physicalOffset>
         <physicalRegionSize>0xF00000</physicalRegionSize>
         <side>B</side>
+        <readOnly/>
     </section>
     <section>
         <description>OCC Lid (1.125M)</description>
@@ -374,6 +394,7 @@ Layout Description
         <physicalOffset>0x3C80000</physicalOffset>
         <physicalRegionSize>0x120000</physicalRegionSize>
         <side>B</side>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -382,6 +403,7 @@ Layout Description
         <physicalOffset>0x3DA0000</physicalOffset>
         <physicalRegionSize>0x24000</physicalRegionSize>
         <side>B</side>
+        <readOnly/>
         <ecc/>
     </section>
     <section>
@@ -390,6 +412,7 @@ Layout Description
         <physicalOffset>0x3DC4000</physicalOffset>
         <physicalRegionSize>0x9000</physicalRegionSize>
         <side>B</side>
+        <readOnly/>
         <ecc/>
         <reprovision/>
     </section>
@@ -402,6 +425,7 @@ Layout Description
         <physicalOffset>0x3F67000</physicalOffset>
         <physicalRegionSize>0x90000</physicalRegionSize>
         <sha512Version/>
+        <readOnly/>
         <side>B</side>
         <ecc/>
     </section>
@@ -411,5 +435,6 @@ Layout Description
         <physicalOffset>0x3FF7000</physicalOffset>
         <physicalRegionSize>0x1000</physicalRegionSize>
         <side>B</side>
+        <readOnly/>
     </section>
 </pnor>

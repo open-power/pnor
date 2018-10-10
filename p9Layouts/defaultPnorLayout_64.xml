@@ -384,6 +384,5 @@ Layout Description
         <side>sideless</side>
         <sha512Version/>
         <readOnly/>
-        <ecc/>
     </section>
 </pnor>

@@ -144,7 +144,7 @@ $build_pnor_command .= " --binFile_ATTR_PERM $scratch_dir/attr_perm.bin.ecc";
 $build_pnor_command .= " --binFile_FIRDATA $scratch_dir/firdata.bin.ecc";
 $build_pnor_command .= " --binFile_CAPP $scratch_dir/cappucode.bin.ecc";
 $build_pnor_command .= " --binFile_SECBOOT $scratch_dir/secboot.bin.ecc";
-$build_pnor_command .= " --binFile_VERSION $openpower_version_filename";
+$build_pnor_command .= " --binFile_VERSION $scratch_dir/openpower_pnor_version.bin";
 $build_pnor_command .= " --binFile_IMA_CATALOG $scratch_dir/ima_catalog.bin.ecc";
 
 if ($release eq "p9"){

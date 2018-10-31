@@ -97,10 +97,19 @@ Layout Description
         <reprovision/>
     </section>
     <section>
-        <description>Hostboot Data (.375M)</description>
+        <description>Hostboot Data (320K)</description>
         <eyeCatch>HBD</eyeCatch>
         <physicalOffset>0x31000</physicalOffset>
-        <physicalRegionSize>0x60000</physicalRegionSize>
+        <physicalRegionSize>0x50000</physicalRegionSize>
+        <side>A</side>
+        <ecc/>
+        <readOnly/>
+    </section>
+    <section>
+        <description>Hostboot Data : Read-Write (64K)</description>
+        <eyeCatch>HBD_RW</eyeCatch>
+        <physicalOffset>0x81000</physicalOffset>
+        <physicalRegionSize>0x10000</physicalRegionSize>
         <side>A</side>
         <ecc/>
     </section>
@@ -312,10 +321,19 @@ Layout Description
     </section>
     <!-- Golden Side (Side B) -->
     <section>
-        <description>Hostboot Data (0.375M)</description>
+        <description>Hostboot Data (320K)</description>
         <eyeCatch>HBD</eyeCatch>
         <physicalOffset>0x2008000</physicalOffset>
-        <physicalRegionSize>0x60000</physicalRegionSize>
+        <physicalRegionSize>0x50000</physicalRegionSize>
+        <side>B</side>
+        <readOnly/>
+        <ecc/>
+    </section>
+    <section>
+        <description>Hostboot Data : Read-Write (64K)</description>
+        <eyeCatch>HBD_RW</eyeCatch>
+        <physicalOffset>0x2058000</physicalOffset>
+        <physicalRegionSize>0x10000</physicalRegionSize>
         <side>B</side>
         <readOnly/>
         <ecc/>

@@ -2,6 +2,7 @@
 
 use strict;
 use File::Basename;
+use XML::Simple;
 
 my $program_name = File::Basename::basename $0;
 my $release = "";
@@ -14,6 +15,8 @@ my $bootkernel = "";
 my $hb_image_dir = "";
 my $xml_layout_file = "";
 my $targeting_binary_filename = "";
+my $targeting_RO_binary_filename = "";
+my $targeting_RW_binary_filename = "";
 my $sbec_binary_filename = "";
 my $sbe_binary_filename = "";
 my $wink_binary_filename = "";
@@ -72,6 +75,14 @@ while (@ARGV > 0){
         $targeting_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting a targeting binary filename.\n";
         shift;
     }
+    elsif (/^-targeting_RO_binary_filename/i){
+        $targeting_RO_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting a targeting RW binary filename.\n";
+        shift;
+    }
+    elsif (/^-targeting_RW_binary_filename/i){
+        $targeting_RW_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting a targeting RW binary filename.\n";
+        shift;
+    }
     elsif (/^-sbe_binary_filename/i){
         $sbe_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting an sbe binary filename.\n";
         shift;
@@ -125,7 +136,19 @@ print "pnor_data_dir = $pnor_data_dir\n";
 
 my $build_pnor_command = "$hb_image_dir/buildpnor.pl";
 $build_pnor_command .= " --pnorOutBin $pnor_filename --pnorLayout $xml_layout_file";
-$build_pnor_command .= " --binFile_HBD $scratch_dir/$targeting_binary_filename";
+
+# Process HBD section and possibly HBD_RW section
+my $does_HBD_RW_exist = checkFor_HBD_RW();
+if ($does_HBD_RW_exist eq 0)
+{
+    $build_pnor_command .= " --binFile_HBD $scratch_dir/$targeting_binary_filename";
+}
+else
+{
+    $build_pnor_command .= " --binFile_HBD $scratch_dir/$targeting_RO_binary_filename";
+    $build_pnor_command .= " --binFile_HBD_RW $scratch_dir/$targeting_RW_binary_filename";
+}
+
 $build_pnor_command .= " --binFile_SBE $scratch_dir/$sbe_binary_filename";
 $build_pnor_command .= " --binFile_HBB $scratch_dir/hostboot.header.bin.ecc";
 $build_pnor_command .= " --binFile_HBI $scratch_dir/hostboot_extended.header.bin.ecc";
@@ -204,3 +227,33 @@ sub run_command {
     }
     return $rc;
 }
+
+# Checks to see if HBD_RW section is in PNOR Layout File
+sub checkFor_HBD_RW {
+    # default the return as 0 (aka 'false') - HBD_RW does NOT exist
+    my $does_HBD_RW_exist = 0;
+
+    if ( ! -e "$xml_layout_file")
+    {
+        die "$xml_layout_file does not exist\n";
+    }
+
+    #parse the input XML file
+    my $xs = new XML::Simple(keyattr=>[], forcearray => 1);
+    my $xml = $xs->XMLin($xml_layout_file);
+
+    #Iterate over the <section> elements.
+    foreach my $sectionEl (@{$xml->{section}})
+    {
+        my $eyeCatch = $sectionEl->{eyeCatch}[0];
+
+        if($eyeCatch eq "HBD_RW")
+        {
+            $does_HBD_RW_exist = 1;
+            last;
+        }
+    }
+
+    return $does_HBD_RW_exist;
+}
+

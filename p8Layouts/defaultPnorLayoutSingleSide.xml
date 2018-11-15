@@ -109,19 +109,19 @@ Layout Description
         <reprovision/>
     </section>
     <section>
-        <description>Hostboot Data (320K)</description>
+        <description>Hostboot Data (360K)</description>
         <eyeCatch>HBD</eyeCatch>
         <physicalOffset>0x6D0000</physicalOffset>
-        <physicalRegionSize>0x50000</physicalRegionSize>
+        <physicalRegionSize>0x5A000</physicalRegionSize>
         <side>A</side>
         <ecc/>
         <readOnly/>
     </section>
     <section>
-        <description>Hostboot Data : Read-Write (64K)</description>
+        <description>Hostboot Data : Read-Write (24K)</description>
         <eyeCatch>HBD_RW</eyeCatch>
-        <physicalOffset>0x720000</physicalOffset>
-        <physicalRegionSize>0x10000</physicalRegionSize>
+        <physicalOffset>0x72A000</physicalOffset>
+        <physicalRegionSize>0x6000</physicalRegionSize>
         <side>A</side>
         <ecc/>
     </section>

@@ -305,6 +305,7 @@ sub processConvergedSections {
     $sections{FIRDATA}{out}     = "$scratch_dir/firdata.bin.ecc";
     $sections{SECBOOT}{out}     = "$scratch_dir/secboot.bin.ecc";
     $sections{RINGOVD}{out}     = "$scratch_dir/ringOvd.bin";
+    $sections{UVBWLIST}{out}    = "$scratch_dir/uvbwlist.bin";
 
     if(-e $wof_binary_filename)
     {

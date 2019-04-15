@@ -2,6 +2,7 @@
 
 use strict;
 use File::Basename;
+use XML::Simple;
 
 #my $ecc_tool_dir = "/opt/mcp/shared/fr_FLD8-1-20140528/opt/fsp/usr/bin"; #wh_todo
 
@@ -187,6 +188,14 @@ if(!$hcode_dir)
     $hcode_dir = $hb_binary_dir;
 }
 
+# Verify that pnor_layout file exists and parse it
+if ( ! -e "$pnor_layout")
+{
+    die "$pnor_layout does not exist\n";
+}
+my $xs = new XML::Simple(keyattr=>[], forcearray => 1);
+my $parsed_pnor_layout = $xs->XMLin($pnor_layout);
+
 
 # If OpenPOWER hostboot is compiled with secureboot, then -always- build with
 # secure signatures (and hash page tables for applicable partitions), otherwise
@@ -284,8 +293,6 @@ sub processConvergedSections {
     $sections{BOOTKERNEL}{out}  = "$scratch_dir/$bootkernel_filename";
     $sections{CAPP}{in}         = "$capp_binary_filename";
     $sections{CAPP}{out}        = "$scratch_dir/cappucode.bin.ecc";
-    $sections{CVPD}{in}         = "$hb_binary_dir/cvpd.bin";
-    $sections{CVPD}{out}        = "$scratch_dir/cvpd.bin.ecc";
     $sections{VERSION}{in}      = "$openpower_version_filename";
     $sections{VERSION}{out}     = "$scratch_dir/openpower_pnor_version.bin";
     $sections{IMA_CATALOG}{in}  = "$ima_catalog_binary_filename";
@@ -298,13 +305,28 @@ sub processConvergedSections {
     $sections{HBEL}{out}        = "$scratch_dir/hbel.bin.ecc";
     $sections{GUARD}{out}       = "$scratch_dir/guard.bin.ecc";
     $sections{NVRAM}{out}       = "$scratch_dir/nvram.bin";
-    $sections{MVPD}{out}        = "$scratch_dir/mvpd_fill.bin.ecc";
-    $sections{DJVPD}{out}       = "$scratch_dir/djvpd_fill.bin.ecc";
     $sections{ATTR_TMP}{out}    = "$scratch_dir/attr_tmp.bin.ecc";
     $sections{ATTR_PERM}{out}   = "$scratch_dir/attr_perm.bin.ecc";
     $sections{FIRDATA}{out}     = "$scratch_dir/firdata.bin.ecc";
     $sections{SECBOOT}{out}     = "$scratch_dir/secboot.bin.ecc";
     $sections{RINGOVD}{out}     = "$scratch_dir/ringOvd.bin";
+
+    # Check if these optional sections exist in the PNOR layout file
+    if (checkForPnorPartition("CVPD", $parsed_pnor_layout))
+    {
+        $sections{CVPD}{in}     = "$hb_binary_dir/cvpd.bin";
+        $sections{CVPD}{out}    = "$scratch_dir/cvpd.bin.ecc";
+    }
+
+    if (checkForPnorPartition("DJVPD", $parsed_pnor_layout))
+    {
+        $sections{DJVPD}{out}   = "$scratch_dir/djvpd_fill.bin.ecc";
+    }
+
+    if (checkForPnorPartition("MVPD", $parsed_pnor_layout))
+    {
+        $sections{MVPD}{out}    = "$scratch_dir/mvpd_fill.bin.ecc";
+    }
 
     if(-e $wof_binary_filename)
     {
@@ -576,4 +598,27 @@ sub trim_string {
     $str =~ s/^\s+//;
     $str =~ s/\s+$//;
     return $str;
+}
+
+# Function to check if a partition exists in the PNOR XML Layout File
+sub checkForPnorPartition {
+    my $section = shift;
+    my $parsed_layout = shift;
+
+    # default the return as 0 (aka 'false') - partition does NOT exist
+    my $does_section_exist = 0;
+
+    #Iterate over the <section> elements.
+    foreach my $sectionEl (@{$parsed_layout->{section}})
+    {
+        my $eyeCatch = $sectionEl->{eyeCatch}[0];
+
+        if($eyeCatch eq $section)
+        {
+            $does_section_exist = 1;
+            last;
+        }
+    }
+
+    return $does_section_exist;
 }

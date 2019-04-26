@@ -130,6 +130,16 @@ if ($release eq "") {
     die "-release <p8 or p9> is a required command line variable. Please run again with this parameter.\n";
 }
 
+
+# Verify that pnor_layout file exists and parse it
+if ( ! -e "$xml_layout_file")
+{
+    die "$xml_layout_file does not exist\n";
+}
+my $xs = new XML::Simple(keyattr=>[], forcearray => 1);
+my $parsed_pnor_layout = $xs->XMLin($xml_layout_file);
+
+
 print "release = $release\n";
 print "scratch_dir = $scratch_dir\n";
 print "pnor_data_dir = $pnor_data_dir\n";
@@ -138,15 +148,14 @@ my $build_pnor_command = "$hb_image_dir/buildpnor.pl";
 $build_pnor_command .= " --pnorOutBin $pnor_filename --pnorLayout $xml_layout_file";
 
 # Process HBD section and possibly HBD_RW section
-my $does_HBD_RW_exist = checkFor_HBD_RW();
-if ($does_HBD_RW_exist eq 0)
-{
-    $build_pnor_command .= " --binFile_HBD $scratch_dir/$targeting_binary_filename";
-}
-else
+if (checkForPnorPartition("HBD_RW", $parsed_pnor_layout))
 {
     $build_pnor_command .= " --binFile_HBD $scratch_dir/$targeting_RO_binary_filename";
     $build_pnor_command .= " --binFile_HBD_RW $scratch_dir/$targeting_RW_binary_filename";
+}
+else
+{
+    $build_pnor_command .= " --binFile_HBD $scratch_dir/$targeting_binary_filename";
 }
 
 $build_pnor_command .= " --binFile_SBE $scratch_dir/$sbe_binary_filename";
@@ -158,9 +167,6 @@ $build_pnor_command .= " --binFile_GUARD $scratch_dir/guard.bin.ecc";
 $build_pnor_command .= " --binFile_PAYLOAD $payload";
 $build_pnor_command .= " --binFile_BOOTKERNEL $bootkernel";
 $build_pnor_command .= " --binFile_NVRAM $scratch_dir/nvram.bin";
-$build_pnor_command .= " --binFile_MVPD $scratch_dir/mvpd_fill.bin.ecc";
-$build_pnor_command .= " --binFile_DJVPD $scratch_dir/djvpd_fill.bin.ecc";
-$build_pnor_command .= " --binFile_CVPD $scratch_dir/cvpd.bin.ecc";
 $build_pnor_command .= " --binFile_ATTR_TMP $scratch_dir/attr_tmp.bin.ecc";
 $build_pnor_command .= " --binFile_OCC $occ_binary_filename.ecc";
 $build_pnor_command .= " --binFile_ATTR_PERM $scratch_dir/attr_perm.bin.ecc";
@@ -170,6 +176,26 @@ $build_pnor_command .= " --binFile_SECBOOT $scratch_dir/secboot.bin.ecc";
 $build_pnor_command .= " --binFile_VERSION $scratch_dir/openpower_pnor_version.bin";
 $build_pnor_command .= " --binFile_IMA_CATALOG $scratch_dir/ima_catalog.bin.ecc";
 
+# These are optional sections not tied to a specific processor family type
+if (checkForPnorPartition("DJVPD", $parsed_pnor_layout))
+{
+    $build_pnor_command .= " --binFile_DJVPD $scratch_dir/djvpd_fill.bin.ecc";
+
+}
+
+if (checkForPnorPartition("CVPD", $parsed_pnor_layout))
+{
+    $build_pnor_command .= " --binFile_CVPD $scratch_dir/cvpd.bin.ecc";
+}
+
+if (checkForPnorPartition("MVPD", $parsed_pnor_layout))
+{
+    $build_pnor_command .= " --binFile_MVPD $scratch_dir/mvpd_fill.bin.ecc";
+}
+
+
+
+# Add sections based on processor family type
 if ($release eq "p9"){
     $build_pnor_command .= " --binFile_WOFDATA $wofdata_binary_filename" if -e $wofdata_binary_filename;
     $build_pnor_command .= " --binFile_MEMD $memddata_binary_filename" if -e $memddata_binary_filename;
@@ -228,32 +254,26 @@ sub run_command {
     return $rc;
 }
 
-# Checks to see if HBD_RW section is in PNOR Layout File
-sub checkFor_HBD_RW {
-    # default the return as 0 (aka 'false') - HBD_RW does NOT exist
-    my $does_HBD_RW_exist = 0;
+# Function to check if a partition exists in the PNOR XML Layout File
+sub checkForPnorPartition {
+    my $section = shift;
+    my $parsed_layout = shift;
 
-    if ( ! -e "$xml_layout_file")
-    {
-        die "$xml_layout_file does not exist\n";
-    }
-
-    #parse the input XML file
-    my $xs = new XML::Simple(keyattr=>[], forcearray => 1);
-    my $xml = $xs->XMLin($xml_layout_file);
+    # default the return as 0 (aka 'false') - partition does NOT exist
+    my $does_section_exist = 0;
 
     #Iterate over the <section> elements.
-    foreach my $sectionEl (@{$xml->{section}})
+    foreach my $sectionEl (@{$parsed_layout->{section}})
     {
         my $eyeCatch = $sectionEl->{eyeCatch}[0];
 
-        if($eyeCatch eq "HBD_RW")
+        if($eyeCatch eq $section)
         {
-            $does_HBD_RW_exist = 1;
+            $does_section_exist = 1;
             last;
         }
     }
 
-    return $does_HBD_RW_exist;
+    return $does_section_exist;
 }
 

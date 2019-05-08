@@ -351,10 +351,10 @@ Layout Description
         <readOnly/>
     </section>
     <section>
-        <description>Open CAPI Memory Buffer (OCMB) Firmware (300K)</description>
+        <description>Open CAPI Memory Buffer (OCMB) Firmware (1164K)</description>
         <eyeCatch>OCMBFW</eyeCatch>
         <physicalOffset>0x3569000</physicalOffset>
-        <physicalRegionSize>0x4B000</physicalRegionSize>
+        <physicalRegionSize>0x123000</physicalRegionSize>
         <side>sideless</side>
         <sha512Version/>
         <readOnly/>
@@ -363,7 +363,7 @@ Layout Description
     <section>
         <description>Eeprom Cache(512K)</description>
         <eyeCatch>EECACHE</eyeCatch>
-        <physicalOffset>0x35B4000</physicalOffset>
+        <physicalOffset>0x368C000</physicalOffset>
         <physicalRegionSize>0x80000</physicalRegionSize>
         <side>sideless</side>
         <ecc/>

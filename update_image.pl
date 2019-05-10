@@ -571,10 +571,10 @@ else
     # Create blank binary file for SECBOOT partition
     run_command("dd if=/dev/zero bs=128K count=1 > $scratch_dir/hostboot.temp.bin");
     run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/secboot.bin.ecc --p8");
-}
 
-#Stage SBEC image
-run_command("cp $hb_binary_dir/$sbec_binary_filename $scratch_dir/");
+    #Stage SBEC image
+    run_command("cp $hb_binary_dir/$sbec_binary_filename $scratch_dir/");
+}
 
 #END MAIN
 #-------------------------------------------------------------------------

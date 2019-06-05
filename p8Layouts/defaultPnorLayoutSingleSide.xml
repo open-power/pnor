@@ -192,18 +192,18 @@ Layout Description
         <reprovision/>
     </section>
     <section>
-        <description>Payload (1MB)</description>
+        <description>Payload (0.5MB)</description>
         <eyeCatch>PAYLOAD</eyeCatch>
         <physicalOffset>0x961000</physicalOffset>
-        <physicalRegionSize>0x100000</physicalRegionSize>
+        <physicalRegionSize>0x80000</physicalRegionSize>
         <side>A</side>
         <readOnly/>
     </section>
     <section>
-        <description>Bootloader Kernel (15MB)</description>
+        <description>Bootloader Kernel (15.5MB)</description>
         <eyeCatch>BOOTKERNEL</eyeCatch>
-        <physicalOffset>0xA61000</physicalOffset>
-        <physicalRegionSize>0xF00000</physicalRegionSize>
+        <physicalOffset>0x9E1000</physicalOffset>
+        <physicalRegionSize>0xF80000</physicalRegionSize>
         <side>A</side>
         <readOnly/>
     </section>

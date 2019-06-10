@@ -39,6 +39,8 @@ my $pnor_layout = "";
 my $debug = 0;
 my $sign_mode = "";
 my $hdat_binary_filename = "";
+my $ocmbfw_original_filename = "";
+my $ocmbfw_binary_filename = "";
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -174,6 +176,16 @@ while (@ARGV > 0){
         $hdat_binary_filename = $ARGV[1];
         shift;
     }
+    elsif(/^-ocmbfw_original_filename/i){
+        # This filename is necessary if the file exists, but if its not given, we add in a blank partition
+        $ocmbfw_original_filename = $ARGV[1];
+        shift;
+    }
+    elsif(/^-ocmbfw_binary_filename/i){
+        # This is teh name of the processed ocmbfw binary filename
+        $ocmbfw_binary_filename = $ARGV[1];
+        shift;
+    }
     else {
         print "Unrecognized command line arg: $_ \n";
         #print "To view all the options and help text run \'$program_name -h\' \n";
@@ -268,7 +280,6 @@ sub processConvergedSections {
     my $sbePreEcc = "$scratch_dir/$sbe_binary_filename";
     $sbePreEcc =~ s/.ecc//;
 
-
     # Source and destination file for each supported section
     my %sections=();
     $sections{HBBL}{in}         = "$scratch_dir/hbbl.bin";
@@ -338,7 +349,7 @@ sub processConvergedSections {
     }
     $sections{WOFDATA}{out}    = "$scratch_dir/wofdata.bin.ecc";
 
-    if(-e $memd_binary_filename)
+    if (-e $memd_binary_filename)
     {
         $sections{MEMD}{in}    = "$memd_binary_filename";
     }
@@ -358,6 +369,34 @@ sub processConvergedSections {
         print "WARNING: HDAT partition is not found, including blank binary instead\n";
     }
     $sections{HDAT}{out}       = "$scratch_dir/hdat.bin.ecc";
+
+    # Populate OCMBFW partition if it exists in the layout
+    if(checkForPnorPartition("OCMBFW", $parsed_pnor_layout))
+    {
+        if(-e $ocmbfw_original_filename)
+        {
+            #Verify image validity
+            run_command("$hb_image_dir/pkgOcmbFw.pl --verify --packagedBin $ocmbfw_original_filename");
+            $sections{OCMBFW}{in}    = "$ocmbfw_original_filename";
+        }
+        else
+        {
+            print "WARNING: OCMBFW binary not found, generating blank binary (w/ valid header) instead\n";
+            #Create blanke 4k image
+            my $ocmbfw_generated_filename = "ocmbfw_generated.bin";
+            run_command("dd if=/dev/zero of=$scratch_dir/$ocmbfw_generated_filename bs=1024 count=4");
+        
+            #Add header to blank image
+            my $date = `date`;
+            run_command("$hb_image_dir/pkgOcmbFw.pl --unpackagedBin $scratch_dir/$ocmbfw_generated_filename --packagedBin $ocmbfw_original_filename --timestamp \"$date\" --vendorVersion \"0.1\" --vendorUrl \"http://www.ibm.com\"");
+
+            # verify header sha512 hash value matches value calculated against image
+            run_command("$hb_image_dir/pkgOcmbFw.pl --verify --packagedBin $ocmbfw_original_filename");
+            $sections{OCMBFW}{in}    = "$ocmbfw_original_filename";
+        }
+        #Final image will be under a new name after ECC protection and any other processing required
+        $sections{OCMBFW}{out}       = "$ocmbfw_binary_filename";
+    }
 
     # Build up the system bin files specification
     my $system_bin_files;

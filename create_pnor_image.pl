@@ -25,6 +25,7 @@ my $openpower_version_filename = "";
 my $wofdata_binary_filename = "";
 my $memddata_binary_filename = "";
 my $hdat_binary_filename = "";
+my $ocmbfw_binary_filename = "";
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -112,7 +113,11 @@ while (@ARGV > 0){
         shift;
     }
     elsif (/^-hdat_binary_filename/i){
-        $hdat_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting a hdat binary filename.\n";
+        $hdat_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting an hdat binary filename.\n";
+        shift;
+    }
+    elsif (/^-ocmbfw_binary_filename/i){
+        $ocmbfw_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting an ocmbfw binary filename.\n";
         shift;
     }
     else {
@@ -193,7 +198,10 @@ if (checkForPnorPartition("MVPD", $parsed_pnor_layout))
     $build_pnor_command .= " --binFile_MVPD $scratch_dir/mvpd_fill.bin.ecc";
 }
 
-
+if (checkForPnorPartition("OCMBFW", $parsed_pnor_layout))
+{
+    $build_pnor_command .= " --binFile_OCMBFW $ocmbfw_binary_filename";
+}
 
 # Add sections based on processor family type
 if ($release eq "p9"){

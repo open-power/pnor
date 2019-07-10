@@ -41,6 +41,8 @@ my $sign_mode = "";
 my $hdat_binary_filename = "";
 my $ocmbfw_original_filename = "";
 my $ocmbfw_binary_filename = "";
+my $ocmbfw_version = "0.1"; #default value if none passed via command line
+my $ocmbfw_url = "http://www.ibm.com"; #default value if none passed via command line
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -182,8 +184,18 @@ while (@ARGV > 0){
         shift;
     }
     elsif(/^-ocmbfw_binary_filename/i){
-        # This is teh name of the processed ocmbfw binary filename
+        # This is the name of the processed ocmbfw binary filename
         $ocmbfw_binary_filename = $ARGV[1];
+        shift;
+    }
+    elsif(/^-ocmbfw_version/i){
+        # This is the version string for the ocmbfw
+        $ocmbfw_version = $ARGV[1];
+        shift;
+    }
+    elsif(/^-ocmbfw_url/i){
+        # This is the url string for the ocmbfw
+        $ocmbfw_url = $ARGV[1];
         shift;
     }
     else {
@@ -375,24 +387,27 @@ sub processConvergedSections {
     {
         if(-e $ocmbfw_original_filename)
         {
-            #Verify image validity
-            run_command("$hb_image_dir/pkgOcmbFw.pl --verify --packagedBin $ocmbfw_original_filename");
-            $sections{OCMBFW}{in}    = "$ocmbfw_original_filename";
+            #Add header to delivered image
+            my $date = `date`;
+            run_command("$hb_image_dir/pkgOcmbFw.pl --unpackagedBin $ocmbfw_original_filename --packagedBin $ocmbfw_original_filename.header --timestamp \"$date\" --vendorVersion \"$ocmbfw_version\" --vendorUrl \"$ocmbfw_url\"");
+
+            #Verify ocmbfw header
+            run_command("$hb_image_dir/pkgOcmbFw.pl --verify --packagedBin $ocmbfw_original_filename.header");
+            $sections{OCMBFW}{in}    = "$ocmbfw_original_filename.header";
         }
         else
         {
             print "WARNING: OCMBFW binary not found, generating blank binary (w/ valid header) instead\n";
-            #Create blanke 4k image
-            my $ocmbfw_generated_filename = "ocmbfw_generated.bin";
-            run_command("dd if=/dev/zero of=$scratch_dir/$ocmbfw_generated_filename bs=1024 count=4");
+            #Create blank 4k image
+            run_command("dd if=/dev/zero of=$ocmbfw_original_filename bs=1024 count=4");
         
             #Add header to blank image
             my $date = `date`;
-            run_command("$hb_image_dir/pkgOcmbFw.pl --unpackagedBin $scratch_dir/$ocmbfw_generated_filename --packagedBin $ocmbfw_original_filename --timestamp \"$date\" --vendorVersion \"0.1\" --vendorUrl \"http://www.ibm.com\"");
+            run_command("$hb_image_dir/pkgOcmbFw.pl --unpackagedBin $ocmbfw_original_filename --packagedBin $ocmbfw_original_filename.header --timestamp \"$date\" --vendorVersion \"$ocmbfw_version\" --vendorUrl \"$ocmbfw_url\"");
 
-            # verify header sha512 hash value matches value calculated against image
-            run_command("$hb_image_dir/pkgOcmbFw.pl --verify --packagedBin $ocmbfw_original_filename");
-            $sections{OCMBFW}{in}    = "$ocmbfw_original_filename";
+            # verify ocmbfw header
+            run_command("$hb_image_dir/pkgOcmbFw.pl --verify --packagedBin $ocmbfw_original_filename.header");
+            $sections{OCMBFW}{in}    = "$ocmbfw_original_filename.header";
         }
         #Final image will be under a new name after ECC protection and any other processing required
         $sections{OCMBFW}{out}       = "$ocmbfw_binary_filename";

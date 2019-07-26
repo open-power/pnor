@@ -198,6 +198,11 @@ if (checkForPnorPartition("MVPD", $parsed_pnor_layout))
     $build_pnor_command .= " --binFile_MVPD $scratch_dir/mvpd_fill.bin.ecc";
 }
 
+if (checkForPnorPartition("EECACHE", $parsed_pnor_layout))
+{
+    $build_pnor_command .= " --binFile_EECACHE $scratch_dir/eecache_fill.bin.ecc";
+}
+
 if (checkForPnorPartition("OCMBFW", $parsed_pnor_layout))
 {
     $build_pnor_command .= " --binFile_OCMBFW $ocmbfw_binary_filename";

@@ -353,6 +353,11 @@ sub processConvergedSections {
         $sections{MVPD}{out}    = "$scratch_dir/mvpd_fill.bin.ecc";
     }
 
+    if (checkForPnorPartition("EECACHE", $parsed_pnor_layout))
+    {
+        $sections{EECACHE}{out}    = "$scratch_dir/eecache_fill.bin.ecc";
+    }
+
     if(-e $wof_binary_filename)
     {
         $sections{WOFDATA}{in} = "$wof_binary_filename";
@@ -603,6 +608,10 @@ else
 
     # Create blank binary file for NVRAM partition
     run_command("dd if=/dev/zero bs=512K count=1 of=$scratch_dir/nvram.bin");
+
+    # Create blank binary file for EECACHE partition
+    run_command("dd if=/dev/zero bs=512K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");
+    run_command("ecc --inject $scratch_dir/hostboot.temp.bin --output $scratch_dir/eecache_fill.bin.ecc --p8");
 
     # Create blank binary file for MVPD partition
     run_command("dd if=/dev/zero bs=512K count=1 | tr \"\\000\" \"\\377\" > $scratch_dir/hostboot.temp.bin");

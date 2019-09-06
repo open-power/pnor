@@ -211,7 +211,10 @@ if (checkForPnorPartition("OCMBFW", $parsed_pnor_layout))
 # Add sections based on processor family type
 if ($release eq "p9"){
     $build_pnor_command .= " --binFile_WOFDATA $wofdata_binary_filename" if -e $wofdata_binary_filename;
-    $build_pnor_command .= " --binFile_MEMD $memddata_binary_filename" if -e $memddata_binary_filename;
+    if (checkForPnorPartition("MEMD", $parsed_pnor_layout))
+    {
+        $build_pnor_command .= " --binFile_MEMD $memddata_binary_filename" if -e $memddata_binary_filename;
+    }
     $build_pnor_command .= " --binFile_HDAT $hdat_binary_filename" if -e $hdat_binary_filename;
 }
 if ($release eq "p8"){

@@ -368,15 +368,18 @@ sub processConvergedSections {
     }
     $sections{WOFDATA}{out}    = "$scratch_dir/wofdata.bin.ecc";
 
-    if (-e $memd_binary_filename)
+    if (checkForPnorPartition("MEMD", $parsed_pnor_layout))
     {
-        $sections{MEMD}{in}    = "$memd_binary_filename";
+        if (-e $memd_binary_filename)
+        {
+             $sections{MEMD}{in}    = "$memd_binary_filename";
+        }
+        else
+        {
+            print "WARNING: MEMD partition is not found, including blank binary instead\n";
+        }
+        $sections{MEMD}{out}       = "$scratch_dir/memd_extra_data.bin.ecc";
     }
-    else
-    {
-        print "WARNING: MEMD partition is not found, including blank binary instead\n";
-    }
-    $sections{MEMD}{out}       = "$scratch_dir/memd_extra_data.bin.ecc";
 
     # SMC COPY SAME ideas for hdat
     if(-e $hdat_binary_filename)

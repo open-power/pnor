@@ -225,7 +225,8 @@ my $parsed_pnor_layout = $xs->XMLin($pnor_layout);
 # secure signatures (and hash page tables for applicable partitions), otherwise
 # use "dummy" secure headers which lack signatures, and don't do any page table
 # processing
-if($release eq "p9")
+if(   ($release eq "p9")
+   || ($release eq "p10"))
 {
     my $hbConfigFile = "$hb_image_dir/config.h";
     open (HB_CONFIG_FILE, "<", "$hbConfigFile")
@@ -256,7 +257,8 @@ if ($payload ne "")
 }
 
 # Finalize HBBL logical content
-if ($release eq "p9") {
+if (   ($release eq "p9")
+    || ($release eq "p10")) {
     # Strip first 12k (reserved for exception vectors) off the bootloader binary
     # Note: ibs=8 conv=sync to ensure bootloader binary ends at an 8-byte
     #     boundary to align the Secure Boot cryptographic algorithms code size
@@ -275,7 +277,8 @@ if ($release eq "p9") {
 }
 
 # SBE image prep
-if ($release eq "p9") {
+if (   ($release eq "p9")
+    || ($release eq "p10")) {
     my $hw_ref_image = $wink_binary_filename;
     $hw_ref_image =~ s/.hdr.bin.ecc//;
     run_command("python $sbe_binary_dir/sbeOpDistribute.py --install --buildSbePart $hb_image_dir/buildSbePart.pl --hw_ref_image $hcode_dir/$hw_ref_image.bin --sbe_binary_filename $sbe_binary_filename --scratch_dir $scratch_dir --sbe_binary_dir $sbe_binary_dir");

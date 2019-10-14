@@ -410,7 +410,7 @@ sub processConvergedSections {
             print "WARNING: OCMBFW binary not found, generating blank binary (w/ valid header) instead\n";
             #Create blank 4k image
             run_command("dd if=/dev/zero of=$ocmbfw_original_filename bs=1024 count=4");
-        
+
             #Add header to blank image
             my $date = `date`;
             run_command("$hb_image_dir/pkgOcmbFw.pl --unpackagedBin $ocmbfw_original_filename --packagedBin $ocmbfw_original_filename.header --timestamp \"$date\" --vendorVersion \"$ocmbfw_version\" --vendorUrl \"$ocmbfw_url\"");
@@ -493,7 +493,8 @@ sub processConvergedSections {
                       . "--systemBinFiles $system_bin_files "
                       . "--pnorLayout $pnor_layout "
                       . "$securebootArg $keyTransitionArg $signModeArg "
-                      . "--hwKeyHashFile $hb_image_dir/imprintHwKeyHash";
+                      . "--hwKeyHashFile $hb_image_dir/imprintHwKeyHash "
+                      . "--editedLayoutLocation $scratch_dir ";
 
         # Print context not visible in the actual command
         if($debug)

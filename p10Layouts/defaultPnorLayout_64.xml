@@ -92,7 +92,7 @@ Layout Description
         <description>Eeprom Cache(512K)</description>
         <eyeCatch>EECACHE</eyeCatch>
         <physicalOffset>0x2C000</physicalOffset>
-        <physicalRegionSize>0x80000</physicalRegionSize>
+        <physicalRegionSize>0x2C0000</physicalRegionSize>
         <side>sideless</side>
         <preserved/>
         <reprovision/>
@@ -332,8 +332,7 @@ Layout Description
     <section>
         <description>Hostboot Extended image (25 MB w/ ECC)</description>
         <eyeCatch>HBI</eyeCatch>
-        <!--0x1AC2000 Is all the space that is left, do a little less than that-->
-        <physicalRegionSize>0x1900000</physicalRegionSize>  
+        <physicalRegionSize>0x1700000</physicalRegionSize>
         <sha512Version/>
         <side>sideless</side>
         <readOnly/>

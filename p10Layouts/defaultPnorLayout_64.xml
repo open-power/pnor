@@ -94,10 +94,14 @@ Layout Description
         <physicalOffset>0x2C000</physicalOffset>
         <physicalRegionSize>0x80000</physicalRegionSize>
         <side>sideless</side>
-        <ecc/>
         <preserved/>
         <reprovision/>
+        <!-- @TODO RTC 246430
+             Restore ECC support for EECACHE when SPI driver
+             is fully vetted
+        <ecc/>
         <clearOnEccErr/>
+        -->
     </section>
     <section>
         <description>Guard Data (20K)</description>

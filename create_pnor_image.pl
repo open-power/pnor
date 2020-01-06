@@ -209,7 +209,7 @@ if (checkForPnorPartition("OCMBFW", $parsed_pnor_layout))
 }
 
 # Add sections based on processor family type
-if ($release eq "p9"){
+if (($release eq "p9") or ($release eq "p10")) {
     $build_pnor_command .= " --binFile_WOFDATA $wofdata_binary_filename" if -e $wofdata_binary_filename;
     if (checkForPnorPartition("MEMD", $parsed_pnor_layout))
     {

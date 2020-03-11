@@ -386,4 +386,14 @@ Layout Description
         <sha512Version/>
         <readOnly/>
     </section>
+    <section>
+        <description>Hostboot Runtime Proxy (32KB)</description>
+        <eyeCatch>HBRT_PROXY</eyeCatch>
+        <physicalOffset>0x36A9000</physicalOffset>
+        <physicalRegionSize>0x8000</physicalRegionSize>
+        <side>A</side>
+        <sha512Version/>
+        <readOnly/>
+        <ecc/>
+    </section>
 </pnor>

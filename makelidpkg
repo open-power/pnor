@@ -1,0 +1,40 @@
+#!/bin/sh
+# $1 = Image output dir, e.g. $(OUTPUT_IMAGES_DIR)
+# $2 = PNOR scratch directory to pull data from, e.g. $(OPENPOWER_PNOR_SCRATCH_DIR)
+
+echo "*** Building ebmc_lids.tar.gz"
+OUTPUT_IMAGES_DIR=$1
+OPENPOWER_PNOR_SCRATCH_DIR=$2
+echo "Output : $OUTPUT_IMAGES_DIR"
+echo "Scratch : $OPENPOWER_PNOR_SCRATCH_DIR"
+
+ELIDS_DIR=$OPENPOWER_PNOR_SCRATCH_DIR/ebmc_lids/
+mkdir $ELIDS_DIR
+
+#Log the files we used
+ELIDS_STATUS=$ELIDS_DIR/ebmc_lids.status
+echo "Data files from $OPENPOWER_PNOR_SCRATCH_DIR" > $ELIDS_STATUS
+
+#Hostboot Runtime Image
+cp -v $OPENPOWER_PNOR_SCRATCH_DIR/HBRT.staged $ELIDS_DIR/HBRT.content | tee -a $ELIDS_STATUS
+cp -v $OPENPOWER_PNOR_SCRATCH_DIR/HBRT.header $ELIDS_DIR/HBRT.header | tee -a $ELIDS_STATUS
+
+#Hardware Reference Image
+cp -v $OPENPOWER_PNOR_SCRATCH_DIR/HCODE.staged $ELIDS_DIR/HCODE.content | tee -a $ELIDS_STATUS
+cp -v $OPENPOWER_PNOR_SCRATCH_DIR/HCODE.header $ELIDS_DIR/HCODE.header | tee -a $ELIDS_STATUS
+
+#Hostboot Data
+cp -v $OPENPOWER_PNOR_SCRATCH_DIR/HBD.staged $ELIDS_DIR/HBD.content | tee -a $ELIDS_STATUS
+cp -v $OPENPOWER_PNOR_SCRATCH_DIR/HBD.header $ELIDS_DIR/HBD.header | tee -a $ELIDS_STATUS
+
+#WOF Tables
+cp -v $OPENPOWER_PNOR_SCRATCH_DIR/WOFDATA.staged $ELIDS_DIR/WOFDATA.content | tee -a $ELIDS_STATUS
+cp -v $OPENPOWER_PNOR_SCRATCH_DIR/WOFDATA.header $ELIDS_DIR/WOFDATA.header | tee -a $ELIDS_STATUS
+
+#OCC Image
+cp -v $OPENPOWER_PNOR_SCRATCH_DIR/OCC.staged $ELIDS_DIR/OCC.content | tee -a $ELIDS_STATUS
+cp -v $OPENPOWER_PNOR_SCRATCH_DIR/OCC.header $ELIDS_DIR/OCC.header | tee -a $ELIDS_STATUS
+
+
+tar -zcvf $OUTPUT_IMAGES_DIR/ebmc_lids.tar.gz -C $ELIDS_DIR  .
+echo "$OUTPUT_IMAGES_DIR/ebmc_lids.tar.gz"

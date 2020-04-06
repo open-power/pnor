@@ -231,7 +231,7 @@ Layout Description
         <!-- Physical Size includes Header rounded to ECC valid size -->
         <!-- Max size of actual HBBL content is 4K secure header + 32K -->
         <!-- logical content + ECC overhead = 44K -->
-        <physicalRegionSize>0xB000</physicalRegionSize>        
+        <physicalRegionSize>0xB000</physicalRegionSize>
         <side>sideless</side>
         <sha512Version/>
         <readOnly/>
@@ -332,12 +332,19 @@ Layout Description
         <ecc/>
     </section>
     <section>
-        <description>Hostboot Extended image (25 MB w/ ECC)</description>
+        <description>Hostboot Extended image (24 MB w/ ECC)</description>
         <eyeCatch>HBI</eyeCatch>
-        <physicalRegionSize>0x1700000</physicalRegionSize>
+        <physicalRegionSize>0x1600000</physicalRegionSize>
         <sha512Version/>
         <side>sideless</side>
         <readOnly/>
         <ecc/>
+    </section>
+    <section>
+        <description>Device tree partition (1 MB)</description>
+        <eyeCatch>DEVTREE</eyeCatch>
+        <physicalRegionSize>0x100000</physicalRegionSize>
+        <sha512Version/>
+        <side>sideless</side>
     </section>
 </pnor>

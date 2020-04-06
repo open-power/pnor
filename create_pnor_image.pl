@@ -26,6 +26,7 @@ my $wofdata_binary_filename = "";
 my $memddata_binary_filename = "";
 my $hdat_binary_filename = "";
 my $ocmbfw_binary_filename = "";
+my $devtree_binary_filename = "";
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -120,6 +121,10 @@ while (@ARGV > 0){
         $ocmbfw_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting an ocmbfw binary filename.\n";
         shift;
     }
+    elsif (/^-devtree_binary_filename/i){
+        $devtree_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting an devtree binary filename.\n";
+        shift;
+    }
     else {
         print "Unrecognized command line arg: $_ \n";
         print "To view all the options and help text run \'$program_name -h\' \n";
@@ -206,6 +211,11 @@ if (checkForPnorPartition("EECACHE", $parsed_pnor_layout))
 if (checkForPnorPartition("OCMBFW", $parsed_pnor_layout))
 {
     $build_pnor_command .= " --binFile_OCMBFW $ocmbfw_binary_filename";
+}
+
+if (checkForPnorPartition("DEVTREE", $parsed_pnor_layout))
+{
+    $build_pnor_command .= " --binFile_DEVTREE $devtree_binary_filename" if -e $devtree_binary_filename;
 }
 
 # Add sections based on processor family type

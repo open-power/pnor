@@ -44,6 +44,7 @@ my $ocmbfw_original_filename = "";
 my $ocmbfw_binary_filename = "";
 my $ocmbfw_version = "0.1"; #default value if none passed via command line
 my $ocmbfw_url = "http://www.ibm.com"; #default value if none passed via command line
+my $devtree_binary_filename = "";
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -201,6 +202,11 @@ while (@ARGV > 0){
     elsif(/^-ocmbfw_url/i){
         # This is the url string for the ocmbfw
         $ocmbfw_url = $ARGV[1];
+        shift;
+    }
+    elsif(/^-devtree_binary_filename/i){
+        # This is the name of the processed devtree binary filename
+        $devtree_binary_filename = $ARGV[1];
         shift;
     }
     else {
@@ -418,7 +424,6 @@ sub processConvergedSections {
             print "WARNING: OCMBFW binary not found, generating blank binary (w/ valid header) instead\n";
             #Create blank 4k image
             run_command("dd if=/dev/zero of=$ocmbfw_original_filename bs=1024 count=4");
-        
             #Add header to blank image
             my $date = `date`;
             run_command("$hb_image_dir/pkgOcmbFw.pl --unpackagedBin $ocmbfw_original_filename --packagedBin $ocmbfw_original_filename.header --timestamp \"$date\" --vendorVersion \"$ocmbfw_version\" --vendorUrl \"$ocmbfw_url\"");
@@ -430,6 +435,17 @@ sub processConvergedSections {
         #Final image will be under a new name after ECC protection and any other processing required
         $sections{OCMBFW}{out}       = "$ocmbfw_binary_filename";
     }
+
+    # Populate DEVTREE partition if it exists in the layout
+    if(-e $devtree_binary_filename)
+    {
+        $sections{DEVTREE}{in}    = "$devtree_binary_filename";
+    }
+    else
+    {
+        print "WARNING: DEVTREE binary not found, generating blank binary (w/ valid header) instead\n";
+    }
+    $sections{DEVTREE}{out}       = "$scratch_dir/DEVTREE.bin";
 
     # Build up the system bin files specification
     my $system_bin_files;

@@ -108,10 +108,12 @@ Layout Description
         <eyeCatch>GUARD</eyeCatch>
         <physicalRegionSize>0x5000</physicalRegionSize>
         <side>sideless</side>
-        <ecc/>
+        <!-- Disabling ECC for testing the new format patches
+        <ecc/> -->
         <preserved/>
         <reprovision/>
-        <clearOnEccErr/>
+        <!-- Disabling ECC for testing the new format patches
+        <clearOnEccErr/> -->
     </section>
     <section>
         <description>Nvram (576K)</description>
@@ -231,7 +233,7 @@ Layout Description
         <!-- Physical Size includes Header rounded to ECC valid size -->
         <!-- Max size of actual HBBL content is 4K secure header + 32K -->
         <!-- logical content + ECC overhead = 44K -->
-        <physicalRegionSize>0xB000</physicalRegionSize>        
+        <physicalRegionSize>0xB000</physicalRegionSize>
         <side>sideless</side>
         <sha512Version/>
         <readOnly/>

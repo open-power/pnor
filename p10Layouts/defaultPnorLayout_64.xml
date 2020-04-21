@@ -108,10 +108,12 @@ Layout Description
         <eyeCatch>GUARD</eyeCatch>
         <physicalRegionSize>0x5000</physicalRegionSize>
         <side>sideless</side>
-        <ecc/>
+        <!-- Disabling ECC for testing the new format patches
+        <ecc/> -->
         <preserved/>
         <reprovision/>
-        <clearOnEccErr/>
+        <!-- Disabling ECC for testing the new format patches
+        <clearOnEccErr/> -->
     </section>
     <section>
         <description>Nvram (576K)</description>

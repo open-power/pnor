@@ -343,6 +343,7 @@ sub processConvergedSections {
     # Blank partitions
     $sections{HBEL}{out}        = "$scratch_dir/hbel.bin.ecc";
     $sections{GUARD}{out}       = "$scratch_dir/guard.bin.ecc";
+    $sections{HB_VOLATILE}{out} = "$scratch_dir/hb_volatile.bin";
     $sections{NVRAM}{out}       = "$scratch_dir/nvram.bin";
     $sections{ATTR_TMP}{out}    = "$scratch_dir/attr_tmp.bin.ecc";
     $sections{ATTR_PERM}{out}   = "$scratch_dir/attr_perm.bin.ecc";

@@ -235,7 +235,7 @@ if ($release eq "p8"){
     $build_pnor_command .= " --binFile_HCODE $scratch_dir/$wink_binary_filename";
     $build_pnor_command .= " --binFile_HBBL $scratch_dir/hbbl.bin.ecc";
     $build_pnor_command .= " --binFile_RINGOVD $scratch_dir/ringOvd.bin";
-    $build_pnor_command .= " --binFile_HB_VOLATILE $scratch_dir/guard.bin.ecc";
+    $build_pnor_command .= " --binFile_HB_VOLATILE $scratch_dir/hb_volatile.bin";
 }
 $build_pnor_command .= " --fpartCmd \"fpart\"";
 $build_pnor_command .= " --fcpCmd \"fcp\"";

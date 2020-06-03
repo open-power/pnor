@@ -202,15 +202,6 @@ Layout Description
         <ecc/>
     </section>
     <section>
-        <description>Checkstop FIR data (12K)</description>
-        <eyeCatch>FIRDATA</eyeCatch>
-        <physicalRegionSize>0x3000</physicalRegionSize>
-        <side>sideless</side>
-        <ecc/>
-        <reprovision/>
-        <clearOnEccErr/>
-    </section>
-    <section>
         <description>CAPP Lid (144K)</description>
         <eyeCatch>CAPP</eyeCatch>
         <physicalRegionSize>0x24000</physicalRegionSize>

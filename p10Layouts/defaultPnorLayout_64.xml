@@ -202,15 +202,6 @@ Layout Description
         <ecc/>
     </section>
     <section>
-        <description>Checkstop FIR data (12K)</description>
-        <eyeCatch>FIRDATA</eyeCatch>
-        <physicalRegionSize>0x3000</physicalRegionSize>
-        <side>sideless</side>
-        <ecc/>
-        <reprovision/>
-        <clearOnEccErr/>
-    </section>
-    <section>
         <description>CAPP Lid (144K)</description>
         <eyeCatch>CAPP</eyeCatch>
         <physicalRegionSize>0x24000</physicalRegionSize>
@@ -332,6 +323,13 @@ Layout Description
         <sha512Version/>
         <readOnly/>
         <ecc/>
+    </section>
+    <section>
+        <description>Chip Data Files for eBMC system checkstop analyzer (256K)</description>
+        <eyeCatch>CHIPDATA</eyeCatch>
+        <physicalRegionSize>0x40000</physicalRegionSize>
+        <side>sideless</side>
+        <readOnly/>
     </section>
     <section>
         <description>Hostboot Extended image (24 MB w/ ECC)</description>

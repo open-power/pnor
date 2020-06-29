@@ -347,7 +347,10 @@ sub processConvergedSections {
     $sections{NVRAM}{out}       = "$scratch_dir/nvram.bin";
     $sections{ATTR_TMP}{out}    = "$scratch_dir/attr_tmp.bin.ecc";
     $sections{ATTR_PERM}{out}   = "$scratch_dir/attr_perm.bin.ecc";
-    $sections{FIRDATA}{out}     = "$scratch_dir/firdata.bin.ecc";
+    if (checkForPnorPartition("FIRDATA", $parsed_pnor_layout))
+    {
+        $sections{FIRDATA}{out}     = "$scratch_dir/firdata.bin.ecc";
+    }
     $sections{SECBOOT}{out}     = "$scratch_dir/secboot.bin.ecc";
     $sections{RINGOVD}{out}     = "$scratch_dir/ringOvd.bin";
 

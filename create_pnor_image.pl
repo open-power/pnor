@@ -20,6 +20,7 @@ my $targeting_RW_binary_filename = "";
 my $sbec_binary_filename = "";
 my $sbe_binary_filename = "";
 my $wink_binary_filename = "";
+my $wink_lid_binary_filename = "";
 my $occ_binary_filename = "";
 my $openpower_version_filename = "";
 my $wofdata_binary_filename = "";
@@ -230,6 +231,15 @@ if (($release eq "p9") or ($release eq "p10")) {
     }
     $build_pnor_command .= " --binFile_HDAT $hdat_binary_filename" if -e $hdat_binary_filename;
 }
+
+if (checkForPnorPartition("HCODE_LID", $parsed_pnor_layout))
+{
+    my $wink_lid_basename = $wink_binary_filename;
+    $wink_lid_basename =~ s/.hdr.bin.ecc//;           
+    $wink_lid_binary_filename = "${wink_lid_basename}_lid.hdr.bin.ecc";
+    $build_pnor_command .= " --binFile_HCODE_LID $scratch_dir/$wink_lid_binary_filename";
+}
+
 if ($release eq "p8"){
     $build_pnor_command .= " --binFile_SBEC $scratch_dir/$sbec_binary_filename";
     $build_pnor_command .= " --binFile_WINK $scratch_dir/$wink_binary_filename";

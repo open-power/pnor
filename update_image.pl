@@ -304,6 +304,7 @@ sub processConvergedSections {
 
     my $stop_basename = $wink_binary_filename;
     $stop_basename =~ s/.hdr.bin.ecc//;
+    my $hcode_lid_basename = "${stop_basename}_lid";
 
     my $sbePreEcc = "$scratch_dir/$sbe_binary_filename";
     $sbePreEcc =~ s/.ecc//;
@@ -324,6 +325,8 @@ sub processConvergedSections {
     $sections{PAYLOAD}{out}     = "$scratch_dir/$payload_filename";
     $sections{HCODE}{in}        = "$hcode_dir/${stop_basename}.bin";
     $sections{HCODE}{out}       = "$scratch_dir/${stop_basename}.hdr.bin.ecc";
+    $sections{HCODE_LID}{in}    = "$hcode_dir/${stop_basename}.bin";
+    $sections{HCODE_LID}{out}   = "$scratch_dir/${hcode_lid_basename}.hdr.bin.ecc";
     $sections{HBRT}{in}         = "$hb_image_dir/img/hostboot_runtime.bin";
     $sections{HBRT}{out}        = "$scratch_dir/hostboot_runtime.header.bin.ecc";
     $sections{OCC}{in}          = "$occ_binary_filename";

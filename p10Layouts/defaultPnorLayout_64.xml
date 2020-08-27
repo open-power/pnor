@@ -332,9 +332,9 @@ Layout Description
         <readOnly/>
     </section>
     <section>
-        <description>Hostboot Extended image (24 MB w/ ECC)</description>
+        <description>Hostboot Extended image (21 MB w/o ECC)</description>
         <eyeCatch>HBI</eyeCatch>
-        <physicalRegionSize>0x1600000</physicalRegionSize>
+        <physicalRegionSize>0x1500000</physicalRegionSize>
         <sha512Version/>
         <side>sideless</side>
         <readOnly/>
@@ -347,5 +347,14 @@ Layout Description
         <!-- Temporarily disabling SHA512 for DEVTREE bringup
         <sha512Version/> -->
         <side>sideless</side>
+    </section>
+    <section>
+        <description>HCODE_LID Ref Image (1.125MB)</description>
+        <eyeCatch>HCODE_LID</eyeCatch>
+        <physicalRegionSize>0x120000</physicalRegionSize>
+        <sha512Version/>
+        <side>sideless</side>
+        <readOnly/>
+        <ecc/>
     </section>
 </pnor>

@@ -551,7 +551,7 @@ if ($release ne "p8") {
 
     #Create simics data for SBE (for P10 only)
     if ($release eq "p10") {
-        run_command("python $sbe_binary_dir/sbeOpDistribute.py --simics --sbe_binary_dir $sbe_binary_dir --img_dir $sbe_img_dir");
+        run_command("python $sbe_binary_dir/sbeOpDistribute.py --simics --sbe_binary_dir $sbe_binary_dir --img_dir $sbe_img_dir --scratch_dir $scratch_dir");
     }
 }
 else

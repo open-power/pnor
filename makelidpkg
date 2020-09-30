@@ -1,11 +1,11 @@
 #!/bin/sh
-# $1 = Image output dir, e.g. $(OUTPUT_IMAGES_DIR)
+# $1 = output file, e.g. $(BINARIES_DIR)/ebmc_lids.tar.gz
 # $2 = PNOR scratch directory to pull data from, e.g. $(OPENPOWER_PNOR_SCRATCH_DIR)
 
 echo "*** Building ebmc_lids.tar.gz"
-OUTPUT_IMAGES_DIR=$1
+OUTPUT_FILE=$1
 OPENPOWER_PNOR_SCRATCH_DIR=$2
-echo "Output : $OUTPUT_IMAGES_DIR"
+echo "Output : $OUTPUT_FILE"
 echo "Scratch : $OPENPOWER_PNOR_SCRATCH_DIR"
 
 ELIDS_DIR=$OPENPOWER_PNOR_SCRATCH_DIR/ebmc_lids/
@@ -36,5 +36,5 @@ cp -v $OPENPOWER_PNOR_SCRATCH_DIR/OCC.staged $ELIDS_DIR/OCC.content | tee -a $EL
 cp -v $OPENPOWER_PNOR_SCRATCH_DIR/OCC.header $ELIDS_DIR/OCC.header | tee -a $ELIDS_STATUS
 
 
-tar -zcvf $OUTPUT_IMAGES_DIR/ebmc_lids.tar.gz -C $ELIDS_DIR  .
-echo "$OUTPUT_IMAGES_DIR/ebmc_lids.tar.gz"
+tar -zcvf $OUTPUT_FILE -C $ELIDS_DIR  .
+echo "$OUTPUT_FILE"

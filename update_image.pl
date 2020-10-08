@@ -34,6 +34,7 @@ my $pnor_layout = "";
 my $debug = 0;
 my $sign_mode = "";
 my $hdat_binary_filename = "";
+my $security_version = "";
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -151,6 +152,10 @@ while (@ARGV > 0){
     elsif(/^-hdat_binary_filename/i){
         # This filename is necessary if the file exists, but if its not given, we add blank partition
         $hdat_binary_filename = $ARGV[1];
+        shift;
+    }
+    elsif (/^-security_version/i){
+        $security_version = $ARGV[1];
         shift;
     }
     else {
@@ -379,6 +384,9 @@ sub processConvergedSections {
         my $keyTransitionArg = $key_transition ne "" ? "--key-transition $key_transition" : "";
         # Determine which type of signing to use
         my $signModeArg = $sign_mode ne "" ? "--sign-mode $sign_mode" : "";
+        # Determine which type of security_version to use
+        my $securityVersionModeArg = $security_version ne "" ? "--secure-version $security_version" : "";
+
 
         # Process each image
         my $cmd =   "cd $scratch_dir && "
@@ -387,6 +395,7 @@ sub processConvergedSections {
                       . "--systemBinFiles $system_bin_files "
                       . "--pnorLayout $pnor_layout "
                       . "$securebootArg $keyTransitionArg $signModeArg "
+                      . "$securityVersionModeArg "
                       . "--hwKeyHashFile $hb_image_dir/imprintHwKeyHash";
 
         # Print context not visible in the actual command

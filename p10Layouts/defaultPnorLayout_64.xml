@@ -325,13 +325,6 @@ Layout Description
         <ecc/>
     </section>
     <section>
-        <description>Chip Data Files for eBMC system checkstop analyzer (256KiB)</description>
-        <eyeCatch>CHIPDATA</eyeCatch>
-        <physicalRegionSize>0x40000</physicalRegionSize>
-        <side>sideless</side>
-        <readOnly/>
-    </section>
-    <section>
         <description>Hostboot Extended image (16 MiB - 4KiB for ECC header)</description>
         <eyeCatch>HBI</eyeCatch>
         <physicalRegionSize>0xFFF000</physicalRegionSize>

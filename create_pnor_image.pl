@@ -156,7 +156,7 @@ print "scratch_dir = $scratch_dir\n";
 print "pnor_data_dir = $pnor_data_dir\n";
 
 my $build_pnor_command = "$hb_image_dir/buildpnor.pl";
-$build_pnor_command .= " --pnorOutBin $pnor_filename --pnorLayout $xml_layout_file";
+$build_pnor_command .= " --pnorOutBin $pnor_filename --pnorLayout $xml_layout_file --editedLayoutLocation $hb_image_dir";
 
 # Process HBD section and possibly HBD_RW section
 if (checkForPnorPartition("HBD_RW", $parsed_pnor_layout))

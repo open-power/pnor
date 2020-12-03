@@ -185,9 +185,9 @@ Layout Description
         <readOnly/>
     </section>
     <section>
-        <description>Bootloader Kernel (16MiB - 4KiB for ECC header)</description>
+        <description>Bootloader Kernel (16.67MiB - 4KiB for ECC header)</description>
         <eyeCatch>BOOTKERNEL</eyeCatch>
-        <physicalRegionSize>0xFFF000</physicalRegionSize>
+        <physicalRegionSize>0x12C0000</physicalRegionSize>
         <side>sideless</side>
         <sha512Version/>
         <readOnly/>

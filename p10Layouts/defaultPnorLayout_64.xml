@@ -202,15 +202,6 @@ Layout Description
         <ecc/>
     </section>
     <section>
-        <description>CAPP Lid (144KiB)</description>
-        <eyeCatch>CAPP</eyeCatch>
-        <physicalRegionSize>0x24000</physicalRegionSize>
-        <side>sideless</side>
-        <sha512Version/>
-        <readOnly/>
-        <ecc/>
-    </section>
-    <section>
         <description>BMC Inventory (36KiB)</description>
         <eyeCatch>BMC_INV</eyeCatch>
         <physicalRegionSize>0x9000</physicalRegionSize>

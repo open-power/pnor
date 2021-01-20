@@ -473,7 +473,8 @@ sub processConvergedSections {
         my $separator = length($system_bin_files) ? "," : "";
 
         # If no input bin file then the pnor script handles creating the content
-        if(!exists $sections{$section}{in})
+        if( (!exists $sections{$section}{in}) 
+	    || ($sections{$section}{in} eq "") )
         {
              # Build up the systemBinFiles argument
              $system_bin_files .= "$separator$section=".EMPTY;

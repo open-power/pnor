@@ -333,8 +333,6 @@ sub processConvergedSections {
     $sections{OCC}{out}         = "$occ_binary_filename.ecc";
     $sections{BOOTKERNEL}{in}   = "$binary_dir/$bootkernel_filename";
     $sections{BOOTKERNEL}{out}  = "$scratch_dir/$bootkernel_filename";
-    $sections{CAPP}{in}         = "$capp_binary_filename";
-    $sections{CAPP}{out}        = "$scratch_dir/cappucode.bin.ecc";
     $sections{VERSION}{in}      = "$openpower_version_filename";
     $sections{VERSION}{out}     = "$scratch_dir/openpower_pnor_version.bin";
     $sections{IMA_CATALOG}{in}  = "$ima_catalog_binary_filename";
@@ -358,6 +356,11 @@ sub processConvergedSections {
     $sections{RINGOVD}{out}     = "$scratch_dir/ringOvd.bin";
 
     # Check if these optional sections exist in the PNOR layout file
+    if (checkForPnorPartition("CAPP", $parsed_pnor_layout))
+    {
+        $sections{CAPP}{in}         = "$capp_binary_filename";
+        $sections{CAPP}{out}        = "$scratch_dir/cappucode.bin.ecc";
+    }
     if (checkForPnorPartition("CVPD", $parsed_pnor_layout))
     {
         $sections{CVPD}{in}     = "$hb_binary_dir/cvpd.bin";
@@ -473,8 +476,7 @@ sub processConvergedSections {
         my $separator = length($system_bin_files) ? "," : "";
 
         # If no input bin file then the pnor script handles creating the content
-        if( (!exists $sections{$section}{in}) 
-	    || ($sections{$section}{in} eq "") )
+        if(!exists $sections{$section}{in})
         {
              # Build up the systemBinFiles argument
              $system_bin_files .= "$separator$section=".EMPTY;

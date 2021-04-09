@@ -14,45 +14,17 @@ mkdir $ELIDS_DIR
 HOST_FW_LIDS_DIR=$ELIDS_DIR/host_fw_lids/
 mkdir $HOST_FW_LIDS_DIR
 
-HOST_FW_LID_STATUS=$HOST_FW_LIDS_DIR/host_fw_lids.status
-echo "These lids will be consumed by Hostboot during IPL time and read over PLDM" > $HOST_FW_LID_STATUS
-
 #Log the files we used
 ELIDS_STATUS=$ELIDS_DIR/ebmc_lids.status
-echo "Data files from $OPENPOWER_PNOR_SCRATCH_DIR" > $ELIDS_STATUS
 
-# Prepare lids that will be consumed by hostboot PLDM during IPL time
-HOST_FW_HDR_LIDS='HBI HBB SBE HCODE PAYLOAD HBRT HBD OCC VERSION HBBL WOFDATA HDAT OCMBFW BOOTKERNEL HCODE_LID'
-HOST_FW_NO_HDR_LIDS='DEVTREE'
-HOST_FW_EMPTY_LIDS='GUARD HBEL NVRAM ATTR_TMP RINGOVD SBKT EECACHE'
-
-printf "\nCreating Host FW IPL-time lids that include a SHA512 header..\n\n" >> $HB_LID_STATUS
-for lid_candidate in $HOST_FW_HDR_LIDS; do 
-    echo "Concatenating $OPENPOWER_PNOR_SCRATCH_DIR/${lid_candidate}.header and $OPENPOWER_PNOR_SCRATCH_DIR/${lid_candidate}.staged to generate $HOST_FW_LIDS_DIR/${lid_candidate}.content and padding to the nearest 4KB alignment" >> $HB_LID_STATUS
-    cat $OPENPOWER_PNOR_SCRATCH_DIR/${lid_candidate}.header $OPENPOWER_PNOR_SCRATCH_DIR/${lid_candidate}.staged > $HOST_FW_LIDS_DIR/${lid_candidate}.content.unaligned
-    dd if=$HOST_FW_LIDS_DIR/${lid_candidate}.content.unaligned ibs=4096 conv=sync of=$HOST_FW_LIDS_DIR/${lid_candidate}.content
-    # Remove the unaligned artifact as it is not useful and could lead to confusion
-    rm $HOST_FW_LIDS_DIR/${lid_candidate}.content.unaligned
-done
-
-printf "\nCreating Host FW IPL-time lids that DO NOT include a SHA512 header..\n\n" >> $HB_LID_STATUS
-for lid_candidate in $HOST_FW_NO_HDR_LIDS; do
-     echo "Copying $OPENPOWER_PNOR_SCRATCH_DIR/${lid_candidate}.bin to $HOST_FW_LIDS_DIR/${lid_candidate}.content and padding to the nearest 4KB alignment" >> $HB_LID_STATUS
-     cp $OPENPOWER_PNOR_SCRATCH_DIR/${lid_candidate}.bin $HOST_FW_LIDS_DIR/${lid_candidate}.content.unaligned
-     dd if=$HOST_FW_LIDS_DIR/${lid_candidate}.content.unaligned ibs=4096 conv=sync of=$HOST_FW_LIDS_DIR/${lid_candidate}.content
-     # Remove the unaligned artifact as it is not useful and could lead to confusion
-     rm $HOST_FW_LIDS_DIR/${lid_candidate}.content.unaligned
-done
-
-printf "\nCreating empty Host FW IPL-time lids ..\n\n" >> $HB_LID_STATUS
-for lid_candidate in $HOST_FW_EMPTY_LIDS; do
-    echo "Creating an empty file $HOST_FW_LIDS_DIR/${lid_candidate}.content the same size as $OPENPOWER_PNOR_SCRATCH_DIR/${lid_candidate}.bin and padding to the nearest 4KB alignment" >> $HB_LID_STATUS
-    file_size=`stat -c %s $OPENPOWER_PNOR_SCRATCH_DIR/${lid_candidate}.bin`
-    truncate -s $file_size $HOST_FW_LIDS_DIR/${lid_candidate}.content
+printf "\nCopying Host FW IPL-time lids to $HOST_FW_LIDS_DIR \n\n" >> $ELIDS_STATUS
+for lid_candidate in $OPENPOWER_PNOR_SCRATCH_DIR/*.ipllid; do
+    cp -v "$lid_candidate" "$HOST_FW_LIDS_DIR/$(basename -- "$lid_candidate" .ipllid).content" | tee -a $ELIDS_STATUS
 done
 
 # Prepare lids that will be consumed at runtime
 RUNTIME_LIDS='HBRT HCODE HBD WOFDATA OCC'
+printf "\nCopying Host FW runtime lids to $ELIDS_DIR \n\n" >> $ELIDS_STATUS
 for lid_candidate in $RUNTIME_LIDS; do
     cp -v $OPENPOWER_PNOR_SCRATCH_DIR/${lid_candidate}.staged $ELIDS_DIR/${lid_candidate}.content | tee -a $ELIDS_STATUS
     cp -v $OPENPOWER_PNOR_SCRATCH_DIR/${lid_candidate}.header $ELIDS_DIR/${lid_candidate}.header | tee -a $ELIDS_STATUS

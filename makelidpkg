@@ -19,7 +19,14 @@ ELIDS_STATUS=$ELIDS_DIR/ebmc_lids.status
 
 printf "\nCopying Host FW IPL-time lids to $HOST_FW_LIDS_DIR \n\n" >> $ELIDS_STATUS
 for lid_candidate in $OPENPOWER_PNOR_SCRATCH_DIR/*.ipllid; do
-    cp -v "$lid_candidate" "$HOST_FW_LIDS_DIR/$(basename -- "$lid_candidate" .ipllid).content" | tee -a $ELIDS_STATUS
+    is_hbb=0
+    echo $lid_candidate | grep -q "HBB.ipllid" && is_hbb=1
+    if [ "$is_hbb" == "1" ] ; then
+        # use HBB.bin for the HBB content instead of the normal ipllid
+        cp -v "$OPENPOWER_PNOR_SCRATCH_DIR/HBB.bin" "$HOST_FW_LIDS_DIR/HBB.content"  | tee -a $ELIDS_STATUS
+    else
+        cp -v "$lid_candidate" "$HOST_FW_LIDS_DIR/$(basename -- "$lid_candidate" .ipllid).content" | tee -a $ELIDS_STATUS
+    fi
 done
 
 # Prepare lids that will be consumed at runtime

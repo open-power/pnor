@@ -87,6 +87,7 @@ Layout Description
         <ecc/>
         <reprovision/>
         <clearOnEccErr/>
+        <preserved/>
     </section>
     <section>
         <description>Eeprom Cache(2.75MiB)</description>

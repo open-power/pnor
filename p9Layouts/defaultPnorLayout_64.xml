@@ -86,6 +86,7 @@ Layout Description
         <ecc/>
         <reprovision/>
         <clearOnEccErr/>
+        <preserved/>
     </section>
     <section>
         <description>Guard Data (20KiB)</description>

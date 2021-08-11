@@ -172,9 +172,9 @@ Layout Description
         <ecc/>
     </section>
     <section>
-        <description>Payload (512KiB)</description>
+        <description>Payload (1MiB)</description>
         <eyeCatch>PAYLOAD</eyeCatch>
-        <physicalRegionSize>0x80000</physicalRegionSize>
+        <physicalRegionSize>0x100000</physicalRegionSize>
         <sha512Version/>
         <side>sideless</side>
         <readOnly/>

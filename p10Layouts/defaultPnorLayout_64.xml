@@ -84,9 +84,7 @@ Layout Description
         <physicalOffset>0x8000</physicalOffset>
         <physicalRegionSize>0x24000</physicalRegionSize>
         <side>sideless</side>
-        <ecc/>
         <reprovision/>
-        <clearOnEccErr/>
         <preserved/>
     </section>
     <section>
@@ -103,12 +101,8 @@ Layout Description
         <eyeCatch>GUARD</eyeCatch>
         <physicalRegionSize>0x5000</physicalRegionSize>
         <side>sideless</side>
-        <!-- Disabling ECC for testing the new format patches
-        <ecc/> -->
         <preserved/>
         <reprovision/>
-        <!-- Disabling ECC for testing the new format patches
-        <clearOnEccErr/> -->
     </section>
     <section>
         <description>Nvram (576KiB)</description>
@@ -123,7 +117,6 @@ Layout Description
         <eyeCatch>SECBOOT</eyeCatch>
         <physicalRegionSize>0x24000</physicalRegionSize>
         <side>sideless</side>
-        <ecc/>
         <preserved/>
     </section>
     <section>
@@ -141,14 +134,12 @@ Layout Description
         <physicalRegionSize>0x200000</physicalRegionSize>
         <sha512Version/>
         <side>sideless</side>
-        <ecc/>
     </section>
     <section>
         <description>Hostboot Data RW (2MiB)</description>
         <eyeCatch>HBD_RW</eyeCatch>
         <physicalRegionSize>0x200000</physicalRegionSize>
         <side>sideless</side>
-        <ecc/>
     </section>
     <section>
         <description>SBE-IPL (Staging Area) (752KiB)</description>
@@ -158,7 +149,6 @@ Layout Description
         <sha512Version/>
         <side>sideless</side>
         <readOnly/>
-        <ecc/>
     </section>
     <section>
         <description>HCODE Ref Image (1.125MiB)</description>
@@ -167,7 +157,6 @@ Layout Description
         <sha512Version/>
         <side>sideless</side>
         <readOnly/>
-        <ecc/>
     </section>
     <section>
         <description>Hostboot Runtime Services for Sapphire (8.0MiB)</description>
@@ -176,7 +165,6 @@ Layout Description
         <sha512Version/>
         <side>sideless</side>
         <readOnly/>
-        <ecc/>
     </section>
     <section>
         <description>Payload (1MiB)</description>
@@ -187,7 +175,7 @@ Layout Description
         <readOnly/>
     </section>
     <section>
-        <description>Bootloader Kernel (16MiB - 4KiB for ECC header)</description>
+        <description>Bootloader Kernel (16MiB - 4KiB for secure header)</description>
         <eyeCatch>BOOTKERNEL</eyeCatch>
         <physicalRegionSize>0xFFF000</physicalRegionSize>
         <side>sideless</side>
@@ -201,7 +189,6 @@ Layout Description
         <side>sideless</side>
         <sha512Version/>
         <readOnly/>
-        <ecc/>
     </section>
     <section>
         <description>BMC Inventory (36KiB)</description>
@@ -216,12 +203,10 @@ Layout Description
         <eyeCatch>HBBL</eyeCatch>
         <!-- Physical Size includes Header rounded to ECC valid size -->
         <!-- Max size of actual HBBL content is 4KiB secure header + 32KiB -->
-        <!-- logical content + ECC overhead = 44KiB -->
         <physicalRegionSize>0xB000</physicalRegionSize>
         <side>sideless</side>
         <sha512Version/>
         <readOnly/>
-        <ecc/>
     </section>
     <section>
         <description>Temporary Attribute Override (32KiB)</description>
@@ -243,9 +228,7 @@ Layout Description
         <eyeCatch>ATTR_PERM</eyeCatch>
         <physicalRegionSize>0x8000</physicalRegionSize>
         <side>sideless</side>
-        <ecc/>
         <reprovision/>
-        <clearOnEccErr/>
     </section>
     <section>
         <description>IMA Catalog (256KiB)</description>
@@ -254,7 +237,6 @@ Layout Description
         <side>sideless</side>
         <sha512Version/>
         <readOnly/>
-        <ecc/>
     </section>
     <section>
         <description>Ref Image Ring Overrides (128KiB)</description>
@@ -265,13 +247,12 @@ Layout Description
     <section>
         <description>VFRT data for WOF (3MiB)</description>
         <!-- We need 266KiB per module sort, going to support
-                          10 tables by default, plus ECC  -->
+             10 tables by default -->
         <eyeCatch>WOFDATA</eyeCatch>
         <physicalRegionSize>0x300000</physicalRegionSize>
         <side>sideless</side>
         <sha512Version/>
         <readOnly/>
-        <ecc/>
     </section>
     <section>
         <description>Hostboot deconfig area (20KiB)</description>
@@ -279,9 +260,7 @@ Layout Description
         <physicalRegionSize>0x5000</physicalRegionSize>
         <side>sideless</side>
         <reprovision/>
-        <ecc/>
         <volatile/>
-        <clearOnEccErr/>
     </section>
     <section>
         <description>SecureBoot Key Transition Partition (16KiB)</description>
@@ -289,7 +268,6 @@ Layout Description
         <physicalRegionSize>0x4000</physicalRegionSize>
         <side>sideless</side>
         <readOnly/>
-        <ecc/>
     </section>
     <section>
         <description>HDAT Data (32KiB)</description>
@@ -298,7 +276,6 @@ Layout Description
         <side>sideless</side>
         <sha512Version/>
         <readOnly/>
-        <ecc/>
     </section>
     <section>
         <description>Ultravisor binary image (1MiB)</description>
@@ -315,16 +292,14 @@ Layout Description
         <side>sideless</side>
         <sha512Version/>
         <readOnly/>
-        <ecc/>
     </section>
     <section>
-        <description>Hostboot Extended image (16 MiB - 4KiB for ECC header)</description>
+        <description>Hostboot Extended image (16 MiB - 4KiB for secure header)</description>
         <eyeCatch>HBI</eyeCatch>
         <physicalRegionSize>0xFFF000</physicalRegionSize>
         <sha512Version/>
         <side>sideless</side>
         <readOnly/>
-        <ecc/>
     </section>
     <section>
         <description>Device tree partition (1 MiB)</description>
@@ -341,6 +316,5 @@ Layout Description
         <sha512Version/>
         <side>sideless</side>
         <readOnly/>
-        <ecc/>
     </section>
 </pnor>

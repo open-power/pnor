@@ -161,10 +161,10 @@ $build_pnor_command .= " --pnorOutBin $pnor_filename --pnorLayout $xml_layout_fi
 # Process HBD section and possibly HBD_RW section
 if (checkForPnorPartition("HBD_RW", $parsed_pnor_layout))
 {
-    $build_pnor_command .= " --binFile_HBD $scratch_dir/$targeting_RO_binary_filename";
     $build_pnor_command .= " --binFile_HBD_RW $scratch_dir/$targeting_RW_binary_filename";
 }
-else
+
+if (checkForPnorPartition("HBD", $parsed_pnor_layout))
 {
     $build_pnor_command .= " --binFile_HBD $scratch_dir/$targeting_binary_filename";
 }

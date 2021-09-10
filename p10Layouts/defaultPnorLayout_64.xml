@@ -144,6 +144,13 @@ Layout Description
         <ecc/>
     </section>
     <section>
+        <description>Hostboot Data RW (2MiB)</description>
+        <eyeCatch>HBD_RW</eyeCatch>
+        <physicalRegionSize>0x200000</physicalRegionSize>
+        <side>sideless</side>
+        <ecc/>
+    </section>
+    <section>
         <description>SBE-IPL (Staging Area) (752KiB)</description>
         <eyeCatch>SBE</eyeCatch>
         <physicalRegionSize>0xBC000</physicalRegionSize>

@@ -142,6 +142,7 @@ Layout Description
         <sha512Version/>
         <side>sideless</side>
         <ecc/>
+        <readOnly/>
     </section>
     <section>
         <description>Hostboot Data RW (2MiB)</description>

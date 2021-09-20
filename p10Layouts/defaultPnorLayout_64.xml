@@ -134,6 +134,7 @@ Layout Description
         <physicalRegionSize>0x200000</physicalRegionSize>
         <sha512Version/>
         <side>sideless</side>
+        <readOnly/>
     </section>
     <section>
         <description>Hostboot Data RW (2MiB)</description>

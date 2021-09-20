@@ -490,21 +490,21 @@ sub processConvergedSections {
         else
         {
             # Stage the input file
-            run_command("cp $sections{$section}{in} "
-             . "$scratch_dir/$section.staged");
+            run_command("dd if=$sections{$section}{in} "
+                ."of=$scratch_dir/$section.staged ibs=4k conv=sync");
 
             # If secureboot compile, there can be extra protected
             # and unprotected versions of the input to stage
             if(-e "$sections{$section}{in}.protected")
             {
-                run_command("cp $sections{$section}{in}.protected "
-                    . "$scratch_dir/$section.staged.protected");
+                run_command("dd if=$sections{$section}{in}.protected "
+                    . "of=$scratch_dir/$section.staged.protected ibs=4k conv=sync");
             }
 
             if(-e "$sections{$section}{in}.unprotected")
             {
-                run_command("cp $sections{$section}{in}.unprotected "
-                    . "$scratch_dir/$section.staged.unprotected");
+                run_command("dd if=$sections{$section}{in}.unprotected "
+                    . "of=$scratch_dir/$section.staged.unprotected ibs=4k conv=sync");
             }
             # Build up the systemBinFiles argument
             $system_bin_files .= "$separator$section=$scratch_dir/"

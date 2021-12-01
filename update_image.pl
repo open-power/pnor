@@ -359,7 +359,6 @@ sub processConvergedSections {
     if (checkForPnorPartition("HBD_RW", $parsed_pnor_layout))
     {
         # COMBO RO and RW (HBD, from above) and possibly the RW by itself
-        $sections{HBD_RW}{in}       = "$op_target_dir/$targeting_RW_binary_source";
         $sections{HBD_RW}{out}      = "$scratch_dir/$targeting_RW_binary_filename";
     }
     if (checkForPnorPartition("CAPP", $parsed_pnor_layout))

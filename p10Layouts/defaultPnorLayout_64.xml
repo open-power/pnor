@@ -141,6 +141,7 @@ Layout Description
         <eyeCatch>HBD_RW</eyeCatch>
         <physicalRegionSize>0x200000</physicalRegionSize>
         <side>sideless</side>
+        <preserved/>
     </section>
     <section>
         <description>SBE-IPL (Staging Area) (752KiB)</description>

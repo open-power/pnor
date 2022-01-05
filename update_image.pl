@@ -19,7 +19,6 @@ my $targeting_binary_source = "";
 my $targeting_RO_binary_filename = "";
 my $targeting_RO_binary_source = "";
 my $targeting_RW_binary_filename = "";
-my $targeting_RW_binary_source = "";
 my $sbe_binary_filename = "";
 my $sbec_binary_filename = "";
 my $wink_binary_filename = "";
@@ -104,10 +103,6 @@ while (@ARGV > 0){
     }
     elsif (/^-targeting_RW_binary_filename/i){
         $targeting_RW_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting a config type.\n";
-        shift;
-    }
-    elsif (/^-targeting_RW_binary_source/i){
-        $targeting_RW_binary_source = $ARGV[1] or die "Bad command line arg given: expecting a config type.\n";
         shift;
     }
     elsif (/^-sbe_binary_filename/i){
@@ -579,13 +574,6 @@ else
         run_command("dd if=$op_target_dir/$targeting_RO_binary_source of=$scratch_dir/$targeting_RO_binary_source ibs=4k conv=sync");
         run_command("ecc --inject $scratch_dir/$targeting_RO_binary_source --output $scratch_dir/$targeting_RO_binary_filename --p8");
 
-    }
-
-    if(-e "$op_target_dir/$targeting_RW_binary_source")
-    {
-        print "Processing targeting_RW_binary_source: $op_target_dir/$targeting_RW_binary_source\n";
-        run_command("dd if=$op_target_dir/$targeting_RW_binary_source of=$scratch_dir/$targeting_RW_binary_source ibs=4k conv=sync");
-        run_command("ecc --inject $scratch_dir/$targeting_RW_binary_source --output $scratch_dir/$targeting_RW_binary_filename --p8");
     }
 
     # Add SBE/normal headers and inject ECC into HBB (hostboot base) partition binary

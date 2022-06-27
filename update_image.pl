@@ -292,7 +292,7 @@ if (   ($release eq "p9")
     || ($release eq "p10")) {
     my $hw_ref_image = $wink_binary_filename;
     $hw_ref_image =~ s/.hdr.bin.ecc//;
-    run_command("python $sbe_binary_dir/sbeOpDistribute.py --install --buildSbePart $hb_image_dir/buildSbePart.pl --hw_ref_image $hcode_dir/$hw_ref_image.bin --sbe_binary_filename $sbe_binary_filename --scratch_dir $scratch_dir --sbe_binary_dir $sbe_binary_dir --img_dir $sbe_img_dir");
+    run_command("python2 $sbe_binary_dir/sbeOpDistribute.py --install --buildSbePart $hb_image_dir/buildSbePart.pl --hw_ref_image $hcode_dir/$hw_ref_image.bin --sbe_binary_filename $sbe_binary_filename --scratch_dir $scratch_dir --sbe_binary_dir $sbe_binary_dir --img_dir $sbe_img_dir");
 }
 else {
     run_command("cp $hb_binary_dir/$sbe_binary_filename $scratch_dir/");
@@ -564,7 +564,7 @@ if ($release ne "p8") {
 
     #Create simics data for SBE (for P10 only)
     if ($release eq "p10") {
-        run_command("python $sbe_binary_dir/sbeOpDistribute.py --simics --sbe_binary_dir $sbe_binary_dir --img_dir $sbe_img_dir --scratch_dir $scratch_dir");
+        run_command("python2 $sbe_binary_dir/sbeOpDistribute.py --simics --sbe_binary_dir $sbe_binary_dir --img_dir $sbe_img_dir --scratch_dir $scratch_dir");
     }
 }
 else

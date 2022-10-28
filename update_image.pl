@@ -29,6 +29,7 @@ my $openpower_version_filename = "";
 my $payload = "";
 my $xz_compression = 0;
 my $wof_binary_filename = "";
+my $pspd_binary_filename = "";
 my $memd_binary_filename = "";
 my $payload_filename = "";
 my $bootkernel_filename = "";
@@ -168,6 +169,11 @@ while (@ARGV > 0){
     elsif (/^-wof_binary_filename/i){
         #This filename is necessary if the file exists, but if it's not given, we add a blank partition
         $wof_binary_filename = $ARGV[1];
+        shift;
+    }
+    elsif (/^-pspd_binary_filename/i){
+        #This filename is necessary if the file exists, but if it's not given, we add a blank partition
+        $pspd_binary_filename = $ARGV[1];
         shift;
     }
     elsif (/^-memd_binary_filename/i){
@@ -356,6 +362,19 @@ sub processConvergedSections {
     $sections{RINGOVD}{out}     = "$scratch_dir/ringOvd.bin";
 
     # Check if these optional sections exist in the PNOR layout file
+    if (checkForPnorPartition("PSPD", $parsed_pnor_layout))
+    {
+        if(-e $pspd_binary_filename)
+        {
+            $sections{PSPD}{in}  = "$pspd_binary_filename";
+        }
+        else
+        {
+            print "WARNING: update_image.pl PSPD LAYOUT pspd_binary_filename NOT found, including blank binary instead\n";
+        }
+        $sections{PSPD}{out} = "$scratch_dir/pspddata.bin.ecc";
+    }
+
     if (checkForPnorPartition("HBD_RW", $parsed_pnor_layout))
     {
         # COMBO RO and RW (HBD, from above) and possibly the RW by itself

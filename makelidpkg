@@ -30,7 +30,7 @@ for lid_candidate in $OPENPOWER_PNOR_SCRATCH_DIR/*.ipllid; do
 done
 
 # Prepare lids that will be consumed at runtime
-RUNTIME_LIDS='HBRT HCODE HBD WOFDATA OCC'
+RUNTIME_LIDS='HBRT HCODE HBD WOFDATA OCC PSPD'
 printf "\nCopying Host FW runtime lids to $ELIDS_DIR \n\n" >> $ELIDS_STATUS
 for lid_candidate in $RUNTIME_LIDS; do
     cp -v $OPENPOWER_PNOR_SCRATCH_DIR/${lid_candidate}.staged $ELIDS_DIR/${lid_candidate}.content | tee -a $ELIDS_STATUS

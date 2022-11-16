@@ -24,6 +24,7 @@ my $wink_lid_binary_filename = "";
 my $occ_binary_filename = "";
 my $openpower_version_filename = "";
 my $wofdata_binary_filename = "";
+my $pspd_binary_filename = "";
 my $memddata_binary_filename = "";
 my $hdat_binary_filename = "";
 my $ocmbfw_binary_filename = "";
@@ -108,6 +109,10 @@ while (@ARGV > 0){
     }
     elsif (/^-wofdata_binary_filename/i){
         $wofdata_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting a wofdata binary filename.\n";
+        shift;
+    }
+    elsif (/^-pspd_binary_filename/i){
+        $pspd_binary_filename = $ARGV[1] or die "Bad command line arg given: expecting a pspd binary filename.\n";
         shift;
     }
     elsif (/^-memddata_binary_filename/i){
@@ -223,6 +228,11 @@ if (checkForPnorPartition("OCMBFW", $parsed_pnor_layout))
 if (checkForPnorPartition("DEVTREE", $parsed_pnor_layout))
 {
     $build_pnor_command .= " --binFile_DEVTREE $devtree_binary_filename" if -e $devtree_binary_filename;
+}
+
+if (checkForPnorPartition("PSPD", $parsed_pnor_layout))
+{
+    $build_pnor_command .= " --binFile_PSPD $pspd_binary_filename" if -e $pspd_binary_filename;
 }
 
 # Add sections based on processor family type

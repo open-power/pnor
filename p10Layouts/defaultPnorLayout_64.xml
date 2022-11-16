@@ -319,4 +319,10 @@ Layout Description
         <side>sideless</side>
         <readOnly/>
     </section>
+    <section>
+        <description>Planar SPD (32K)</description>
+        <eyeCatch>PSPD</eyeCatch>
+        <physicalRegionSize>0x8000</physicalRegionSize>
+        <side>sideless</side>
+    </section>
 </pnor>

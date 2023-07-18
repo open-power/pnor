@@ -44,6 +44,8 @@ my $ocmbfw_original_filename = "";
 my $ocmbfw_binary_filename = "";
 my $ocmbfw_version = "0.1"; #default value if none passed via command line
 my $ocmbfw_url = "http://www.ibm.com"; #default value if none passed via command line
+my $ody_rt_pak_file = "";
+my $ody_bldr_pak_file = "";
 my $devtree_binary_filename = "";
 my $security_version = "";
 
@@ -204,6 +206,16 @@ while (@ARGV > 0){
     elsif(/^-ocmbfw_url/i){
         # This is the url string for the ocmbfw
         $ocmbfw_url = $ARGV[1];
+        shift;
+    }
+    elsif(/^-ody_rt_pak_file/i){
+        # This is the url string for the odyssey runtime pak file
+        $ody_rt_pak_file = $ARGV[1];
+        shift;
+    }
+    elsif(/^-ody_bldr_pak_file/i){
+        # This is the url string for the odyssey bootloader pak file
+        $ody_bldr_pak_file = $ARGV[1];
         shift;
     }
     elsif(/^-devtree_binary_filename/i){
@@ -443,29 +455,37 @@ sub processConvergedSections {
     # Populate OCMBFW partition if it exists in the layout
     if(checkForPnorPartition("OCMBFW", $parsed_pnor_layout))
     {
-        if(-e $ocmbfw_original_filename)
-        {
-            #Add header to delivered image
-            my $date = `date`;
-            run_command("$hb_image_dir/pkgOcmbFw.pl --unpackagedBin $ocmbfw_original_filename --packagedBin $ocmbfw_original_filename.header --timestamp \"$date\" --vendorVersion \"$ocmbfw_version\" --vendorUrl \"$ocmbfw_url\"");
-
-            #Verify ocmbfw header
-            run_command("$hb_image_dir/pkgOcmbFw.pl --verify --packagedBin $ocmbfw_original_filename.header");
-            $sections{OCMBFW}{in}    = "$ocmbfw_original_filename.header";
-        }
-        else
+        if(!(-e $ocmbfw_original_filename))
         {
             print "WARNING: OCMBFW binary not found, generating blank binary (w/ valid header) instead\n";
             #Create blank 4k image
             run_command("dd if=/dev/zero of=$ocmbfw_original_filename bs=1024 count=4");
-            #Add header to blank image
-            my $date = `date`;
-            run_command("$hb_image_dir/pkgOcmbFw.pl --unpackagedBin $ocmbfw_original_filename --packagedBin $ocmbfw_original_filename.header --timestamp \"$date\" --vendorVersion \"$ocmbfw_version\" --vendorUrl \"$ocmbfw_url\"");
-
-            # verify ocmbfw header
-            run_command("$hb_image_dir/pkgOcmbFw.pl --verify --packagedBin $ocmbfw_original_filename.header");
-            $sections{OCMBFW}{in}    = "$ocmbfw_original_filename.header";
         }
+
+        # If the Odyssey pak files exist, package those up into the
+        # image with the odyssey OCMBFW PNOR partition layout. If not,
+        # use a layout that only packages the Explorer firmware.
+
+        my $json_layout_template = "$hb_image_dir/ocmbfw-layout-exp-only.json.template";
+
+        if (-e $ody_bldr_pak_file)
+        {
+            $json_layout_template = "$hb_image_dir/ocmbfw-layout.json.template";
+        }
+
+        # Preprocess the JSON file to replace variables.
+
+        run_command("cpp \"-DUNPKGD_EXP_FW_IMG=\\\"$ocmbfw_original_filename\\\"\" \\
+                         \"-DUNPKGD_ODY_BLDR_IMG=\\\"$ody_bldr_pak_file\\\"\" \\
+                         \"-DUNPKGD_ODY_RT_IMG=\\\"$ody_rt_pak_file\\\"\" \\
+                         \"$json_layout_template\" >\"$scratch_dir/ocmbfw-layout.json\"");
+
+        # Package the firmware into the PNOR image.
+
+        run_command("cd $scratch_dir && $hb_image_dir/pkgOcmbFw_ext.py --layout \"$scratch_dir/ocmbfw-layout.json\" --output \"$ocmbfw_original_filename.header\"");
+
+        $sections{OCMBFW}{in}    = "$ocmbfw_original_filename.header";
+
         #Final image will be under a new name after ECC protection and any other processing required
         $sections{OCMBFW}{out}       = "$ocmbfw_binary_filename";
     }

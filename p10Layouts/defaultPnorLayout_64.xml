@@ -129,9 +129,9 @@ Layout Description
         <ecc/>
     </section>
     <section>
-        <description>Hostboot Data (2.5MiB)</description>
+        <description>Hostboot Data (3.5MiB)</description>
         <eyeCatch>HBD</eyeCatch>
-        <physicalRegionSize>0x280000</physicalRegionSize>
+        <physicalRegionSize>0x380000</physicalRegionSize>
         <sha512Version/>
         <side>sideless</side>
         <readOnly/>

@@ -44,6 +44,7 @@ my $ocmbfw_original_filename = "";
 my $ocmbfw_binary_filename = "";
 my $ocmbfw_version = "0.1"; #default value if none passed via command line
 my $ocmbfw_url = "http://www.ibm.com"; #default value if none passed via command line
+my $ody_build = "unknown";
 my $ody_rt_pak_file = "";
 my $ody_bldr_pak_file = "";
 my $devtree_binary_filename = "";
@@ -206,6 +207,11 @@ while (@ARGV > 0){
     elsif(/^-ocmbfw_url/i){
         # This is the url string for the ocmbfw
         $ocmbfw_url = $ARGV[1];
+        shift;
+    }
+    elsif(/^-ody_build/i){
+        # This is the name + git hash of the odyssey repo
+        $ody_build = $ARGV[1];
         shift;
     }
     elsif(/^-ody_rt_pak_file/i){
@@ -475,7 +481,11 @@ sub processConvergedSections {
 
         # Preprocess the JSON file to replace variables.
 
+        my $date = `date`;
+        chomp($date);
         run_command("cpp \"-DUNPKGD_EXP_FW_IMG=\\\"$ocmbfw_original_filename\\\"\" \\
+                         \"-DODY_FW_VSN_STRING=\\\"$ody_build\\\"\" \\
+                         \"-DEXP_FW_VSN_STRING=\\\"version=$ocmbfw_version,timestamp=$date,url=$ocmbfw_url\\\"\" \\
                          \"-DUNPKGD_ODY_BLDR_IMG=\\\"$ody_bldr_pak_file\\\"\" \\
                          \"-DUNPKGD_ODY_RT_IMG=\\\"$ody_rt_pak_file\\\"\" \\
                          \"$json_layout_template\" >\"$scratch_dir/ocmbfw-layout.json\"");

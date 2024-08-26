@@ -236,7 +236,7 @@ if (checkForPnorPartition("PSPD", $parsed_pnor_layout))
 }
 
 # Add sections based on processor family type
-if (($release eq "p9") or ($release eq "p10")) {
+if (($release eq "p9") or ($release eq "p10") or ($release eq "p11")) {
     $build_pnor_command .= " --binFile_WOFDATA $wofdata_binary_filename" if -e $wofdata_binary_filename;
     if (checkForPnorPartition("MEMD", $parsed_pnor_layout))
     {
@@ -248,7 +248,7 @@ if (($release eq "p9") or ($release eq "p10")) {
 if (checkForPnorPartition("HCODE_LID", $parsed_pnor_layout))
 {
     my $wink_lid_basename = $wink_binary_filename;
-    $wink_lid_basename =~ s/.hdr.bin.ecc//;           
+    $wink_lid_basename =~ s/.hdr.bin.ecc//;
     $wink_lid_binary_filename = "${wink_lid_basename}_lid.hdr.bin.ecc";
     $build_pnor_command .= " --binFile_HCODE_LID $scratch_dir/$wink_lid_binary_filename";
 }

@@ -261,7 +261,8 @@ my $parsed_pnor_layout = $xs->XMLin($pnor_layout);
 # use "dummy" secure headers which lack signatures, and don't do any page table
 # processing
 if(   ($release eq "p9")
-   || ($release eq "p10"))
+   || ($release eq "p10")
+   || ($release eq "p11"))
 {
     my $hbConfigFile = "$hb_image_dir/config.h";
     open (HB_CONFIG_FILE, "<", "$hbConfigFile")
@@ -293,7 +294,8 @@ if ($payload ne "")
 
 # Finalize HBBL logical content
 if (   ($release eq "p9")
-    || ($release eq "p10")) {
+    || ($release eq "p10")
+    || ($release eq "p11")) {
     # Strip first 12k (reserved for exception vectors) off the bootloader binary
     # Note: ibs=8 conv=sync to ensure bootloader binary ends at an 8-byte
     #     boundary to align the Secure Boot cryptographic algorithms code size
@@ -313,9 +315,11 @@ if (   ($release eq "p9")
 
 # SBE image prep
 if (   ($release eq "p9")
-    || ($release eq "p10")) {
+    || ($release eq "p10")
+    || ($release eq "p11")) {
     my $hw_ref_image = $wink_binary_filename;
     $hw_ref_image =~ s/.hdr.bin.ecc//;
+
     run_command("python2 $sbe_binary_dir/sbeOpDistribute.py --install --buildSbePart $hb_image_dir/buildSbePart.pl --hw_ref_image $hcode_dir/$hw_ref_image.bin --sbe_binary_filename $sbe_binary_filename --scratch_dir $scratch_dir --sbe_binary_dir $sbe_binary_dir --img_dir $sbe_img_dir");
 }
 else {
@@ -611,8 +615,9 @@ sub processConvergedSections {
 if ($release ne "p8") {
     processConvergedSections();
 
-    #Create simics data for SBE (for P10 only)
-    if ($release eq "p10") {
+    #Create simics data for SBE (for P10 and p11 only)
+    if (    ($release eq "p10")
+        ||  ($release eq "p11")) {
         run_command("python2 $sbe_binary_dir/sbeOpDistribute.py --simics --sbe_binary_dir $sbe_binary_dir --img_dir $sbe_img_dir --scratch_dir $scratch_dir");
     }
 }

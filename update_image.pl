@@ -567,7 +567,7 @@ sub processConvergedSections {
     if(length($system_bin_files))
     {
         # Point to the location of the signing tools
-        $ENV{'DEV_KEY_DIR'}="$ENV{'HOST_DIR'}/etc/keys/";
+        $ENV{'DEV_KEY_DIR'}="$ENV{'HOST_DIR'}/etc/";
         $ENV{'SIGNING_DIR'} = "$ENV{'HOST_DIR'}/usr/bin/";
 
         # Determine whether to securely sign the images

@@ -382,6 +382,8 @@ sub processConvergedSections {
     }
     $sections{SECBOOT}{out}     = "$scratch_dir/secboot.bin.ecc";
     $sections{RINGOVD}{out}     = "$scratch_dir/ringOvd.bin";
+    $sections{HB_HLL}{out}      = "$scratch_dir/HB_HLL.bin";
+
 
     # Check if these optional sections exist in the PNOR layout file
     if (checkForPnorPartition("PSPD", $parsed_pnor_layout))

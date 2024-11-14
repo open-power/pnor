@@ -327,4 +327,13 @@ Layout Description
         <side>sideless</side>
         <readOnly/>
     </section>
+    <section>
+        <description>HB_HLL (24K)</description>
+        <!-- Purposely skipping <sha512Version/> as this section will just
+             be a V3 Header + less than 4KB of data (+ECC) -->
+        <eyeCatch>HB_HLL</eyeCatch>
+        <physicalRegionSize>0x6000</physicalRegionSize>
+        <side>sideless</side>
+        <readOnly/>
+    </section>
 </pnor>

@@ -49,6 +49,8 @@ my $ody_rt_pak_file = "";
 my $ody_bldr_pak_file = "";
 my $devtree_binary_filename = "";
 my $security_version = "";
+my $common_sbe_files_dir = "";
+my $common_ocmbfw_files_dir = "";
 
 while (@ARGV > 0){
     $_ = $ARGV[0];
@@ -233,6 +235,14 @@ while (@ARGV > 0){
         $security_version = $ARGV[1];
         shift;
     }
+    elsif (/^-common_sbe_files_dir/i){
+        $common_sbe_files_dir = $ARGV[1] or die "Bad command line arg given: expecting a config type.\n";
+        shift;
+    }
+    elsif (/^-common_ocmbfw_files_dir/i){
+        $common_ocmbfw_files_dir = $ARGV[1] or die "Bad command line arg given: expecting a config type.\n";
+        shift;
+    }
     else {
         print "Unrecognized command line arg: $_ \n";
         #print "To view all the options and help text run \'$program_name -h\' \n";
@@ -320,7 +330,21 @@ if (   ($release eq "p9")
     my $hw_ref_image = $wink_binary_filename;
     $hw_ref_image =~ s/.hdr.bin.ecc//;
 
-    run_command("python2 $sbe_binary_dir/sbeOpDistribute.py --install --buildSbePart $hb_image_dir/buildSbePart.pl --hw_ref_image $hcode_dir/$hw_ref_image.bin --sbe_binary_filename $sbe_binary_filename --scratch_dir $scratch_dir --sbe_binary_dir $sbe_binary_dir --img_dir $sbe_img_dir");
+    # There is only 1 copy of the SBE section/lid on the BMC and it's used
+    # for all systems. So only create it once and then copy it to the
+    # system-specific scratch directories
+    if(!(-e "$common_sbe_files_dir/p10_sbe.img"))
+    {
+        # (1) Create a common sub-directory
+        run_command("mkdir -p $common_sbe_files_dir");
+
+        # (2) Create SBE image into the new common sub-directory
+        run_command("python2 $sbe_binary_dir/sbeOpDistribute.py --install --buildSbePart $hb_image_dir/buildSbePart.pl --hw_ref_image $hcode_dir/$hw_ref_image.bin --sbe_binary_filename $sbe_binary_filename --scratch_dir $common_sbe_files_dir --sbe_binary_dir $sbe_binary_dir --img_dir $sbe_img_dir");
+    }
+
+    # Copy over previously created files
+    run_command("cp $common_sbe_files_dir/* $scratch_dir/");
+
 }
 else {
     run_command("cp $hb_binary_dir/$sbe_binary_filename $scratch_dir/");
@@ -467,42 +491,61 @@ sub processConvergedSections {
     # Populate OCMBFW partition if it exists in the layout
     if(checkForPnorPartition("OCMBFW", $parsed_pnor_layout))
     {
-        if(!(-e $ocmbfw_original_filename))
+        # There is only 1 copy of the OCMBFW section/lid on the BMC and it's
+        # used for all systems. So only create it once and then copy it to the
+        # system-specific scratch directories
+
+        # First look to see if it has been created before
+        if(!(-e "$ocmbfw_original_filename.header"))
         {
-            print "WARNING: OCMBFW binary not found, generating blank binary (w/ valid header) instead\n";
-            #Create blank 4k image
-            run_command("dd if=/dev/zero of=$ocmbfw_original_filename bs=1024 count=4");
+            # Create the common directory in case it doesn't already exist
+            run_command("mkdir -p $common_ocmbfw_files_dir/");
+
+            if(!(-e $ocmbfw_original_filename))
+            {
+                print "WARNING: OCMBFW binary not found, generating blank binary (w/ valid header) instead\n";
+                #Create blank 4k image
+                run_command("dd if=/dev/zero of=$ocmbfw_original_filename bs=1024 count=4");
+            }
+
+            # If the Odyssey pak files exist, package those up into the
+            # image with the odyssey OCMBFW PNOR partition layout. If not,
+            # use a layout that only packages the Explorer firmware.
+
+            my $json_layout_template = "$hb_image_dir/ocmbfw-layout-exp-only.json.template";
+
+            if (-e $ody_bldr_pak_file)
+            {
+                $json_layout_template = "$hb_image_dir/ocmbfw-layout.json.template";
+            }
+
+            # Preprocess the JSON file to replace variables.
+
+            my $date = `date`;
+            chomp($date);
+            run_command("cpp \"-DUNPKGD_EXP_FW_IMG=\\\"$ocmbfw_original_filename\\\"\" \\
+                             \"-DODY_FW_VSN_STRING=\\\"$ody_build\\\"\" \\
+                             \"-DEXP_FW_VSN_STRING=\\\"version=$ocmbfw_version,timestamp=$date,url=$ocmbfw_url\\\"\" \\
+                             \"-DUNPKGD_ODY_BLDR_IMG=\\\"$ody_bldr_pak_file\\\"\" \\
+                             \"-DUNPKGD_ODY_RT_IMG=\\\"$ody_rt_pak_file\\\"\" \\
+                             \"$json_layout_template\" >\"$common_ocmbfw_files_dir/ocmbfw-layout.json\"");
+
+            # Package the firmware into the PNOR image.
+
+            run_command("cd $common_ocmbfw_files_dir && $hb_image_dir/pkgOcmbFw_ext.py --layout \"$common_ocmbfw_files_dir/ocmbfw-layout.json\" --output \"$ocmbfw_original_filename.header\"");
+
         }
 
-        # If the Odyssey pak files exist, package those up into the
-        # image with the odyssey OCMBFW PNOR partition layout. If not,
-        # use a layout that only packages the Explorer firmware.
+        # Copy related files from the common directory to the system-specific
+        # $scratch_dir in case other code needs it
+        run_command("cp -r $common_ocmbfw_files_dir/* $scratch_dir/");
 
-        my $json_layout_template = "$hb_image_dir/ocmbfw-layout-exp-only.json.template";
-
-        if (-e $ody_bldr_pak_file)
-        {
-            $json_layout_template = "$hb_image_dir/ocmbfw-layout.json.template";
-        }
-
-        # Preprocess the JSON file to replace variables.
-
-        my $date = `date`;
-        chomp($date);
-        run_command("cpp \"-DUNPKGD_EXP_FW_IMG=\\\"$ocmbfw_original_filename\\\"\" \\
-                         \"-DODY_FW_VSN_STRING=\\\"$ody_build\\\"\" \\
-                         \"-DEXP_FW_VSN_STRING=\\\"version=$ocmbfw_version,timestamp=$date,url=$ocmbfw_url\\\"\" \\
-                         \"-DUNPKGD_ODY_BLDR_IMG=\\\"$ody_bldr_pak_file\\\"\" \\
-                         \"-DUNPKGD_ODY_RT_IMG=\\\"$ody_rt_pak_file\\\"\" \\
-                         \"$json_layout_template\" >\"$scratch_dir/ocmbfw-layout.json\"");
-
-        # Package the firmware into the PNOR image.
-
-        run_command("cd $scratch_dir && $hb_image_dir/pkgOcmbFw_ext.py --layout \"$scratch_dir/ocmbfw-layout.json\" --output \"$ocmbfw_original_filename.header\"");
-
+        # Set the input image
         $sections{OCMBFW}{in}    = "$ocmbfw_original_filename.header";
 
-        #Final image will be under a new name after ECC protection and any other processing required
+        # Final image will be under a new name after ECC protection and
+        # any other processing required
+        # Note: this file already sent in with $scratch_dir path
         $sections{OCMBFW}{out}       = "$ocmbfw_binary_filename";
     }
 
